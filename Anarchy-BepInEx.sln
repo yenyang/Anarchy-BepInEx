@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33815.320
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anarchy-BepInEx", "Anarchy-BepInEx\Anarchy-BepInEx.csproj", "{3A0AE4D2-019B-43E8-8B30-4CEB38349599}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		BepInEx|Any CPU = BepInEx|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3A0AE4D2-019B-43E8-8B30-4CEB38349599}.BepInEx|Any CPU.ActiveCfg = BepInEx|Any CPU
+		{3A0AE4D2-019B-43E8-8B30-4CEB38349599}.BepInEx|Any CPU.Build.0 = BepInEx|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {364DA7B5-9D14-417E-82FE-A92E425182C5}
+	EndGlobalSection
+EndGlobal

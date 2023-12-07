@@ -1,0 +1,27 @@
+<Project>
+	<PropertyGroup>
+		<RestoreAdditionalProjectSources>
+			https://api.nuget.org/v3/index.json;
+			https://nuget.bepinex.dev/v3/index.json;
+			https://nuget.samboy.dev/v3/index.json
+		</RestoreAdditionalProjectSources>
+		<RootNamespace>Tree_Controller</RootNamespace>
+		<Configurations>$(Configurations);BepInEx</Configurations>
+	</PropertyGroup>
+
+	<ItemGroup Condition="'$(Configuration)' != 'BepInEx'">
+		<PackageReference Include="Lib.Harmony" Version="2.2.2" />
+	</ItemGroup>
+
+	<ItemGroup Condition="'$(Configuration)' == 'BepInEx'">
+		<PackageReference Include="BepInEx.Analyzers" Version="1.*" PrivateAssets="all" />
+		<PackageReference Include="BepInEx.PluginInfoProps" Version="2.*" />
+		<PackageReference Include="HarmonyX" Version="2.10.2" />
+		<PackageReference Include="BepInEx.Core" Version="5.*" IncludeAssets="compile" />
+	</ItemGroup>
+
+	<PropertyGroup Condition="'$(Configuration)' == 'BepInEx'">
+		<DefineConstants>$(DefineConstants);BEPINEX</DefineConstants>
+	</PropertyGroup>
+	
+</Project>
