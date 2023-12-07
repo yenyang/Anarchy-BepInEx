@@ -1,1 +1,23 @@
-{"manifestVersion":1,"name":"Yenyang-Anarchy","authorName":"Yenyang","websiteUrl":"","displayName":"Anarchy","description":"Disables Error Checks For Tools","gameVersion":"","networkMode":"","packageType":"","installMode":"","loaders":[],"dependencies":["BepInEx-BepInExPack-5.4.2100", "Unified_Icon_Library-1.0.3"],"incompatibilities":[],"optionalDependencies":[],"versionNumber":{"major":1,"minor":0,"patch":0},"enabled":true,"icon":"icon.png"}
+{
+  "manifestVersion": 1,
+  "name": "Yenyang-Anarchy",
+  "authorName": "Yenyang",
+  "websiteUrl": "https://github.com/yenyang/Anarchy-BepInEx",
+  "displayName": "Anarchy",
+  "description": "Disables Error Checks For Tools",
+  "gameVersion": "",
+  "networkMode": "",
+  "packageType": "",
+  "installMode": "",
+  "loaders": [],
+  "dependencies": [ "BepInEx-BepInExPack-5.4.2100", "Unified_Icon_Library-1.0.3" ],
+  "incompatibilities": [],
+  "optionalDependencies": [],
+  "versionNumber": {
+    "major": 1,
+    "minor": 0,
+    "patch": 0
+  },
+  "enabled": true,
+  "icon": "icon.png"
+}
