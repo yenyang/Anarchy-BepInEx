@@ -1,7 +1,7 @@
 // Function to set up Anarchy Button
 if (typeof setupAnarchyItemYYA !== 'function')
 {
-    function setupAnarchyItemYYA(id)
+    function setupAnarchyItemYYA()
     {
         const button = document.getElementById("YYA-Anarchy-Button");
         if (button == null) {
@@ -71,6 +71,35 @@ if (typeof CheckForElementByID !== 'function') {
             return;
         }
         engine.trigger('CheckForElement-' + id, false);
+    }
+}
+
+if (typeof setupButton !== 'function') {
+    function setupButton(buttonId, selected) {
+        const button = document.getElementById(buttonId);
+        if (button == null) {
+            engine.trigger('YYA-log', "JS Error: could not setup button " + buttonId);
+            return;
+        }
+        if (selected) {
+            button.classList.add("selected");
+        } else {
+            button.classList.remove("selected");
+        }
+        button.onclick = function () {
+            let selectedYYA = true;
+            if (this.classList.contains("selected")) {
+                selectedYYA = false; // This is intended to toggle and be the opposite of what it is now.
+            }
+            engine.trigger(this.id, selectedYYA);
+            const thisButton = document.getElementById(this.id);
+            if (selectedYYA) {
+                thisButton.classList.add("selected");
+            } else {
+                thisButton.classList.remove("selected");
+            }
+
+        }
     }
 }
 

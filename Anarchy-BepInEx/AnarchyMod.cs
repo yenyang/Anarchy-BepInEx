@@ -2,7 +2,7 @@
 // Copyright (c) Yenyang's Mods. MIT License. All rights reserved.
 // </copyright>
 
-#define RELEASE
+#define DEBUG
 namespace Anarchy
 {
     using System;
