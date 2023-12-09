@@ -146,7 +146,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="i18n\i18n.xlsm" />
-    <None Include="stylecop.json" />
     <AdditionalFiles Include="StyleCop\stylecop.json" />
   </ItemGroup>
   <ItemGroup>
@@ -154,6 +153,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="UI\ui.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\YYA-anarchy-bulldoze-row.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="UI\YYA-anarchy-tool-row.html">

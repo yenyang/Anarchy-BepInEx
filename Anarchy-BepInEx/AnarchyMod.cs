@@ -68,9 +68,9 @@ namespace Anarchy
         {
             Instance = this;
             Logger = LogManager.GetLogger("Mods_Yenyang_Anarchy", false);
-#if DEBUG && !VERBOSE
+
             Logger.effectivenessLevel = Level.Debug;
-#elif RELEASE
+#if RELEASE
             Logger.effectivenessLevel = Level.Info;
 #elif VERBOSE
             Logger.effectivenessLevel = Level.Verbose;
