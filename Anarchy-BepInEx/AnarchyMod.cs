@@ -68,29 +68,13 @@ namespace Anarchy
         {
             Instance = this;
             Logger = LogManager.GetLogger("Mods_Yenyang_Anarchy", false);
-
-            Logger.effectivenessLevel = Level.Debug;
             Logger.Info("Loading. . .");
-
-#if VERBOSE
-            Logger.Verbose(Settings.GetSettingsLocaleID());
-            Logger.Verbose(Settings.GetOptionLabelLocaleID(nameof(AnarchyModSettings.AnarchicBulldozer)));
-            Logger.Verbose(Settings.GetOptionDescLocaleID(nameof(AnarchyModSettings.AnarchicBulldozer)));
-            Logger.Verbose(Settings.GetOptionLabelLocaleID(nameof(AnarchyModSettings.FlamingChirper)));
-            Logger.Verbose(Settings.GetOptionDescLocaleID(nameof(AnarchyModSettings.FlamingChirper)));
-            Logger.Verbose(Settings.GetOptionLabelLocaleID(nameof(AnarchyModSettings.ShowTooltip)));
-            Logger.Verbose(Settings.GetOptionDescLocaleID(nameof(AnarchyModSettings.ShowTooltip)));
-            Logger.Verbose(Settings.GetOptionLabelLocaleID(nameof(AnarchyModSettings.ResetModSettings)));
-            Logger.Verbose(Settings.GetOptionDescLocaleID(nameof(AnarchyModSettings.ResetModSettings)));
-            Logger.Verbose(Settings.GetOptionWarningLocaleID(nameof(AnarchyModSettings.ResetModSettings)));
-#endif
         }
 
         /// <inheritdoc/>
         public void OnCreateWorld(UpdateSystem updateSystem)
         {
             Logger.Info("Initializing Settings.");
-            Logger.effectivenessLevel = Level.Debug;
             Settings = new (this);
             Settings.RegisterInOptionsUI();
             AssetDatabase.global.LoadSettings(nameof(AnarchyMod), Settings, new AnarchyModSettings(this));
