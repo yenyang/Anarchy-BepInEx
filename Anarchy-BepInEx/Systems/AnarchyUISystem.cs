@@ -12,11 +12,9 @@ namespace Anarchy.Systems
     using Anarchy.Utils;
     using cohtml.Net;
     using Colossal.Logging;
-    using Game.Prefabs;
     using Game.SceneFlow;
     using Game.Tools;
     using Game.UI;
-    using Game.UI.InGame;
     using Unity.Entities;
 
     /// <summary>
@@ -52,27 +50,28 @@ namespace Anarchy.Systems
             if (m_AnarchySystem.AnarchyEnabled)
             {
                 // This script finds sets Anarchy button selected if toggled using key board shortcut.
-                m_UiView.ExecuteScript($"var buttonYYA = document.getElementById(\"YYA-Anarchy-Button\"); if (buttonYYA != null) buttonYYA.classList.add(\"selected\");");
+                m_UiView.ExecuteScript($"yyAnarchy.buttonElement = document.getElementById(\"YYA-Anarchy-Button\"); if (yyAnarchy.buttonElement != null) yyAnarchy.buttonElement.classList.add(\"selected\");");
 
                 // This script finds sets Anarchy button colored if toggled using key board shortcut.
-                m_UiView.ExecuteScript($"var imageYYA = document.getElementById(\"YYA-Anarchy-Image\"); if (imageYYA != null) {{ imageYYA.src = \"coui://uil/Colored/Anarchy.svg\"; }} ");
+                m_UiView.ExecuteScript($"yyAnarchy.imageElement = document.getElementById(\"YYA-Anarchy-Image\"); if (yyAnarchy.imageElement != null) {{ yyAnarchy.imageElement.src = \"coui://uil/Colored/Anarchy.svg\"; }} ");
                 if (AnarchyMod.Settings.FlamingChirper)
                 {
                     // This script sets flaming chirper if toggled using key board shortcut.
-                    m_UiView.ExecuteScript($"var tagsYYA = document.getElementsByTagName(\"img\"); for (var iYYA = 0; iYYA < tagsYYA.length; iYYA++) {{ if (tagsYYA[iYYA].src == \"coui://GameUI/Media/Game/Icons/Chirper.svg\" || tagsYYA[iYYA].src == \"Media/Game/Icons/Chirper.svg\") tagsYYA[iYYA].src = \"coui://uil/Colored/AnarchyChirper.svg\"; }}");
+                    m_UiView.ExecuteScript($"yyAnarchy.tagElements = document.getElementsByTagName(\"img\"); for (yyAnarchy.i = 0; yyAnarchy.i < yyAnarchy.tagElements.length; yyAnarchy.i++) {{ if (yyAnarchy.tagElements[yyAnarchy.i].src == \"coui://GameUI/Media/Game/Icons/Chirper.svg\" || yyAnarchy.tagElements[yyAnarchy.i].src == \"Media/Game/Icons/Chirper.svg\") yyAnarchy.tagElements[yyAnarchy.i].src = \"coui://uil/Colored/AnarchyChirper.svg\"; }}");
                 }
 
                 return;
             }
 
             // This script resets Anarchy button if toggled using key board shortcut.
-            m_UiView.ExecuteScript($"var buttonYYA = document.getElementById(\"YYA-Anarchy-Button\"); if (buttonYYA != null) buttonYYA.classList.remove(\"selected\");");
+            m_UiView.ExecuteScript($"yyAnarchy.buttonElement = document.getElementById(\"YYA-Anarchy-Button\"); if (yyAnarchy.buttonElement != null) yyAnarchy.buttonElement.classList.remove(\"selected\");");
 
             // This script finds resets Anarchy button if toggled using key board shortcut.
-            m_UiView.ExecuteScript($"var imageYYA = document.getElementById(\"YYA-Anarchy-Image\"); if (imageYYA != null) {{ imageYYA.src = \"coui://uil/Standard/Anarchy.svg\"; }} ");
+            m_UiView.ExecuteScript($"yyAnarchy.imageElement = document.getElementById(\"YYA-Anarchy-Image\"); if (yyAnarchy.imageElement != null) {{ yyAnarchy.imageElement.src = \"coui://uil/Standard/Anarchy.svg\"; }} ");
 
             // This script resets chirper if toggled using key board shortcut.
-            m_UiView.ExecuteScript($"var tagsYYA = document.getElementsByTagName(\"img\"); for (var iYYA = 0; iYYA < tagsYYA.length; iYYA++) {{ if (tagsYYA[iYYA].src == \"coui://uil/Colored/AnarchyChirper.svg\") tagsYYA[iYYA].src = \"coui://GameUI/Media/Game/Icons/Chirper.svg\"; }}");
+            m_UiView.ExecuteScript($"yyAnarchy.tagElements = document.getElementsByTagName(\"img\"); for (yyAnarchy.i = 0; yyAnarchy.i < yyAnarchy.tagElements.length; yyAnarchy.i++) {{ if (yyAnarchy.tagElements[yyAnarchy.i].src == \"coui://uil/Colored/AnarchyChirper.svg\") yyAnarchy.tagElements[yyAnarchy.i].src = \"coui://GameUI/Media/Game/Icons/Chirper.svg\"; }}");
+
             m_DisableAnarchyWhenCompleted = false;
         }
 
@@ -87,19 +86,13 @@ namespace Anarchy.Systems
             ToolSystem toolSystem = m_ToolSystem; // I don't know why vanilla game did this.
             m_ToolSystem.EventToolChanged = (Action<ToolBaseSystem>)Delegate.Combine(toolSystem.EventToolChanged, new Action<ToolBaseSystem>(OnToolChanged));
 
-            /* ToolSystem toolSystem2 = m_ToolSystem;
-             toolSystem2.EventPrefabChanged = (Action<PrefabBase>)Delegate.Combine(toolSystem2.EventPrefabChanged, new Action<PrefabBase>(OnPrefabChanged));*/
-
             m_BoundEventHandles = new ();
 
             if (m_UiView != null)
             {
                 m_InjectedJS = UIFileUtils.ReadJS(Path.Combine(UIFileUtils.AssemblyPath, "ui.js"));
-                m_AnarchyItemScript = UIFileUtils.ReadHTML(Path.Combine(UIFileUtils.AssemblyPath, "YYA-anarchy-tool-row.html"), "if (document.getElementById(\"YYA-anarchy-item\") == null) { divYYA.className = \"item_bZY\"; divYYA.id = \"YYA-anarchy-item\"; var entitiesYYA = document.getElementsByClassName(\"tool-options-panel_Se6\"); if (entitiesYYA[0] != null) { entitiesYYA[0].insertAdjacentElement('afterbegin', divYYA); setupAnarchyItemYYA(); } }");
-                m_AnarchyBulldozeRowScript = UIFileUtils.ReadHTML(Path.Combine(UIFileUtils.AssemblyPath, "YYA-anarchy-bulldoze-row.html"), "if (document.getElementById(\"YYA-anarchy-item\") == null) { divYYA.className = \"item_bZY\"; divYYA.id = \"YYA-anarchy-item\"; var entitiesYYA = document.getElementsByClassName(\"tool-options-panel_Se6\"); if (entitiesYYA[0] != null) { entitiesYYA[0].insertAdjacentElement('afterbegin', divYYA); setupAnarchyItemYYA(); } }");
-
-                m_UiView.ExecuteScript("document.addEventListener(\"DOMContentLoaded\", (event) => {  engine.trigger('YYA-DOMContentLoaded', true); });");
-                m_UiView.RegisterForEvent("YYA-DOMContentLoaded", (Action)SendVariablesToJS);
+                m_AnarchyItemScript = UIFileUtils.ReadHTML(Path.Combine(UIFileUtils.AssemblyPath, "YYA-anarchy-tool-row.html"), "if (document.getElementById(\"YYA-anarchy-item\") == null) { yyAnarchy.div.className = \"item_bZY\"; yyAnarchy.div.id = \"YYA-anarchy-item\"; yyAnarchy.entities = document.getElementsByClassName(\"tool-options-panel_Se6\"); if (yyAnarchy.entities[0] != null) { yyAnarchy.entities[0].insertAdjacentElement('afterbegin', yyAnarchy.div); yyAnarchy.setupAnarchyItem(); } }");
+                m_AnarchyBulldozeRowScript = UIFileUtils.ReadHTML(Path.Combine(UIFileUtils.AssemblyPath, "YYA-anarchy-bulldoze-row.html"), "if (document.getElementById(\"YYA-anarchy-item\") == null) { yyAnarchy.div.className = \"item_bZY\"; yyAnarchy.div.id = \"YYA-anarchy-item\"; yyAnarchy.entities = document.getElementsByClassName(\"tool-options-panel_Se6\"); if (yyAnarchy.entities[0] != null) { yyAnarchy.entities[0].insertAdjacentElement('afterbegin', yyAnarchy.div); yyAnarchy.setupAnarchyItem(); } }");
             }
             else
             {
@@ -132,9 +125,11 @@ namespace Anarchy.Systems
                 return;
             }
 
+            // This script creates the Anarchy object if it doesn't exist.
+            UIFileUtils.ExecuteScript(m_UiView, "if (yyAnarchy == null) var yyAnarchy = {};");
+
             if (m_AnarchyOptionShown == false)
             {
-
                 if (AnarchyMod.Settings.ToolIcon)
                 {
                     SendVariablesToJS();
@@ -151,8 +146,8 @@ namespace Anarchy.Systems
                     {
                         // This script creates the anarchy bulldozer tool row and sets up the anarchy button.
                         UIFileUtils.ExecuteScript(m_UiView, m_AnarchyBulldozeRowScript);
-                        UIFileUtils.ExecuteScript(m_UiView, $"setupButton(\"YYA-Bypass-Confirmation-Button\", {BoolToString(m_BulldozeToolSystem.debugBypassBulldozeConfirmation)})");
-                        UIFileUtils.ExecuteScript(m_UiView, $"setupButton(\"YYA-Gameplay-Manipulation-Button\", {BoolToString(m_BulldozeToolSystem.allowManipulation)})");
+                        UIFileUtils.ExecuteScript(m_UiView, $"yyAnarchy.setupButton(\"YYA-Bypass-Confirmation-Button\", {BoolToString(m_BulldozeToolSystem.debugBypassBulldozeConfirmation)})");
+                        UIFileUtils.ExecuteScript(m_UiView, $"yyAnarchy.setupButton(\"YYA-Gameplay-Manipulation-Button\", {BoolToString(m_BulldozeToolSystem.allowManipulation)})");
                     }
 
                     m_BoundEventHandles.Add(m_UiView.RegisterForEvent("YYA-log", (Action<string>)LogFromJS));
@@ -171,28 +166,28 @@ namespace Anarchy.Systems
             else
             {
                 // This script checks to see if there is a tool options panel. If there isn't one then it adds one.
-                UIFileUtils.ExecuteScript(m_UiView, $"var entitiesYYA = document.getElementsByClassName(\"tool-options-panel_Se6\"); if (entitiesYYA[0] == null) {{ var divYYA = document.createElement(\"div\"); divYYA.className = \"tool-options-panel_Se6\"; document.getElementsByClassName(\"tool-side-column_l9i\")[0].appendChild(divYYA); }}");
+                UIFileUtils.ExecuteScript(m_UiView, $"yyAnarchy.entities = document.getElementsByClassName(\"tool-options-panel_Se6\"); if (yyAnarchy.entities[0] == null) {{ yyAnarchy.div = document.createElement(\"div\"); yyAnarchy.div.className = \"tool-options-panel_Se6\"; yyAnarchy.toolColumns = document.getElementsByClassName(\"tool-side-column_l9i\"); if (yyAnarchy.toolColumns[0] != null) yyAnarchy.toolColumns[0].appendChild(yyAnarchy.div); }}");
 
                 // This script checks if multiple tool options panels exist. If anarchy is the only one in that tool panel then it removes whole panel.
-                UIFileUtils.ExecuteScript(m_UiView, $"var entitiesYYA = document.getElementsByClassName(\"tool-options-panel_Se6\"); if (entitiesYYA.length > 1) {{  var itemYYA = document.getElementById(\"YYA-anarchy-item\"); if (itemYYA != null) {{ if (itemYYA.parentElement.children.length == 1) {{   itemYYA.parentElement.parentElement.removeChild(itemYYA.parentElement); }} }} }}");
+                UIFileUtils.ExecuteScript(m_UiView, $"yyAnarchy.entities = document.getElementsByClassName(\"tool-options-panel_Se6\"); if (yyAnarchy.entities.length > 1) {{  yyAnarchy.itemElement = document.getElementById(\"YYA-anarchy-item\"); if (yyAnarchy.itemElement != null) {{ if (yyAnarchy.itemElement.parentElement.children.length == 1) {{   yyAnarchy.itemElement.parentElement.parentElement.removeChild(yyAnarchy.itemElement.parentElement); }} }} }}");
 
                 // This script checks if anarchy item exists. If it doesn't it triggers anarchy item being recreated.
                 UIFileUtils.ExecuteScript(m_UiView, $"if (document.getElementById(\"YYA-anarchy-item\") == null) engine.trigger('CheckForElement-YYA-anarchy-item', false);");
 
                 // This script checks if anarchy is first child and if not removes it.
-                UIFileUtils.ExecuteScript(m_UiView, $"var itemYYA = document.getElementById(\"YYA-anarchy-item\"); if (itemYYA != null) {{  if (itemYYA.parentElement.firstChild != itemYYA) {{  itemYYA.parentElement.removeChild(itemYYA);   }}  }}");
+                UIFileUtils.ExecuteScript(m_UiView, $"yyAnarchy.itemElement = document.getElementById(\"YYA-anarchy-item\"); if (yyAnarchy.itemElement != null) {{  if (yyAnarchy.itemElement.parentElement.firstChild != yyAnarchy.itemElement) {{  yyAnarchy.itemElement.parentElement.removeChild(yyAnarchy.itemElement);   }}  }}");
 
                 if (m_LastBypassConfrimation != m_BulldozeToolSystem.debugBypassBulldozeConfirmation)
                 {
                     if (m_BulldozeToolSystem.debugBypassBulldozeConfirmation)
                     {
                         // This script finds sets Bypass-Confirmation-Button button selected if toggled using DevUI.
-                        m_UiView.ExecuteScript($"var buttonYYA = document.getElementById(\"YYA-Bypass-Confirmation-Button\"); if (buttonYYA != null) buttonYYA.classList.add(\"selected\");");
+                        m_UiView.ExecuteScript($"yyAnarchy.buttonElement = document.getElementById(\"YYA-Bypass-Confirmation-Button\"); if (yyAnarchy.buttonElement != null) yyAnarchy.buttonElement.classList.add(\"selected\");");
                     }
                     else
                     {
                         // This script finds sets Bypass-Confirmation-Button button unselected if toggled using DevUI
-                        m_UiView.ExecuteScript($"var buttonYYA = document.getElementById(\"YYA-Bypass-Confirmation-Button\"); if (buttonYYA != null) buttonYYA.classList.remove(\"selected\");");
+                        m_UiView.ExecuteScript($"yyAnarchy.buttonElement = document.getElementById(\"YYA-Bypass-Confirmation-Button\"); if (yyAnarchy.buttonElement != null) yyAnarchy.buttonElement.classList.remove(\"selected\");");
                     }
 
                     m_LastBypassConfrimation = m_BulldozeToolSystem.debugBypassBulldozeConfirmation;
@@ -203,12 +198,12 @@ namespace Anarchy.Systems
                     if (m_BulldozeToolSystem.allowManipulation)
                     {
                         // This script finds sets Gameplay-Manipulation-Button button selected if toggled using DevUI.
-                        m_UiView.ExecuteScript($"var buttonYYA = document.getElementById(\"YYA-Gameplay-Manipulation-Button\"); if (buttonYYA != null) buttonYYA.classList.add(\"selected\");");
+                        m_UiView.ExecuteScript($"yyAnarchy.buttonElement = document.getElementById(\"YYA-Gameplay-Manipulation-Button\"); if (yyAnarchy.buttonElement != null) yyAnarchy.buttonElement.classList.add(\"selected\");");
                     }
                     else
                     {
                         // This script finds sets Gameplay-Manipulation-Button button unselected if toggled using DevUI
-                        m_UiView.ExecuteScript($"var buttonYYA = document.getElementById(\"YYA-Gameplay-Manipulation-Button\"); if (buttonYYA != null) buttonYYA.classList.remove(\"selected\");");
+                        m_UiView.ExecuteScript($"yyAnarchy.buttonElement = document.getElementById(\"YYA-Gameplay-Manipulation-Button\"); if (yyAnarchy.buttonElement != null) yyAnarchy.buttonElement.classList.remove(\"selected\");");
                     }
 
                     m_LastGamePlayManipulation = m_BulldozeToolSystem.allowManipulation;
@@ -225,7 +220,7 @@ namespace Anarchy.Systems
         /// <returns>a script for Destroing element by id if that element exists.</returns>
         private string DestroyElementByID(string id)
         {
-            return $"var itemYYA = document.getElementById(\"{id}\"); if (itemYYA) itemYYA.parentElement.removeChild(itemYYA);";
+            return $"yyAnarchy.itemElement = document.getElementById(\"{id}\"); if (yyAnarchy.itemElement) yyAnarchy.itemElement.parentElement.removeChild(yyAnarchy.itemElement);";
         }
 
         /// <summary>
@@ -298,13 +293,12 @@ namespace Anarchy.Systems
         /// </summary>
         private void SendVariablesToJS()
         {
+
             // This script passes whether Anarchy is Enabled to JS.
-            UIFileUtils.ExecuteScript(m_UiView, $"var anarchyEnabledYYA = {BoolToString(m_AnarchySystem.AnarchyEnabled)};");
+            UIFileUtils.ExecuteScript(m_UiView, $"yyAnarchy.enabled = {BoolToString(m_AnarchySystem.AnarchyEnabled)};");
 
             // This script passes the option to have flaming Chirper to JS.
-            UIFileUtils.ExecuteScript(m_UiView, $"var flamingChirperYYA = {BoolToString(AnarchyMod.Settings.FlamingChirper)};");
-
-            m_Log.Debug($"{nameof(AnarchyUISystem)}.{nameof(SendVariablesToJS)}");
+            UIFileUtils.ExecuteScript(m_UiView, $"yyAnarchy.flamingChirper = {BoolToString(AnarchyMod.Settings.FlamingChirper)};");
         }
 
         /// <summary>
@@ -312,8 +306,6 @@ namespace Anarchy.Systems
         /// </summary>
         private void UnshowAnarchyOption()
         {
-            m_Log.Debug($"{nameof(AnarchyUISystem)}.{nameof(UnshowAnarchyOption)}");
-
             if (m_UiView == null)
             {
                 return;
@@ -323,7 +315,7 @@ namespace Anarchy.Systems
             UIFileUtils.ExecuteScript(m_UiView, DestroyElementByID("YYA-anarchy-item"));
 
             // This script resets chirper.
-            m_UiView.ExecuteScript($"var tagsYYA = document.getElementsByTagName(\"img\"); for (var iYYA = 0; iYYA < tagsYYA.length; iYYA++) {{ if (tagsYYA[iYYA].src == \"coui://uil/Colored/AnarchyChirper.svg\") tagsYYA[iYYA].src = \"coui://GameUI/Media/Game/Icons/Chirper.svg\"; }}");
+            m_UiView.ExecuteScript($"yyAnarchy.tagElements = document.getElementsByTagName(\"img\"); for (yyAnarchy.i = 0; yyAnarchy.i < yyAnarchy.tagElements.length; yyAnarchy.i++) {{ if (yyAnarchy.tagElements[yyAnarchy.i].src == \"coui://uil/Colored/AnarchyChirper.svg\") yyAnarchy.tagElements[yyAnarchy.i].src = \"coui://GameUI/Media/Game/Icons/Chirper.svg\"; }}");
 
             // This unregisters the events.
             foreach (BoundEventHandle eventHandle in m_BoundEventHandles)
@@ -339,6 +331,9 @@ namespace Anarchy.Systems
 
         private void OnToolChanged(ToolBaseSystem tool)
         {
+            // This script creates the Anarchy object if it doesn't exist.
+            UIFileUtils.ExecuteScript(m_UiView, "if (yyAnarchy == null) var yyAnarchy = {};");
+
             if (!m_AnarchySystem.IsToolAppropriate(tool.toolID))
             {
                 UnshowAnarchyOption();

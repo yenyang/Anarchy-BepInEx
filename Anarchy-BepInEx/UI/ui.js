@@ -1,20 +1,20 @@
 // Function to set up Anarchy Button
-if (typeof setupAnarchyItemYYA !== 'function')
+if (typeof yyAnarchy.setupAnarchyItem !== 'function')
 {
-    function setupAnarchyItemYYA()
+    yyAnarchy.setupAnarchyItem = function ()
     {
         const button = document.getElementById("YYA-Anarchy-Button");
         if (button == null) {
             engine.trigger('YYA-log', "JS Error: could not setup button YYA-Anarchy-Button");
             return;
         }
-        if (anarchyEnabledYYA) {
+        if (yyAnarchy.enabled) {
             button.classList.add("selected");
             const image = document.getElementById("YYA-Anarchy-Image");
             if (image != null) {
                 image.src = "coui://uil/Colored/Anarchy.svg";
             }
-            if (flamingChirperYYA) {
+            if (yyAnarchy.flamingChirper) {
                 var y = document.getElementsByTagName("img");
                 for (let i = 0; i < y.length; i++) {
                     if (y[i].src == "coui://GameUI/Media/Game/Icons/Chirper.svg" || y[i].src == "Media/Game/Icons/Chirper.svg") y[i].src = "coui://uil/Colored/AnarchyChirper.svg";
@@ -32,16 +32,16 @@ if (typeof setupAnarchyItemYYA !== 'function')
             }
         }
         button.onclick = function () {
-            anarchyEnabledYYA = !anarchyEnabledYYA;
-            engine.trigger('YYA-AnarchyToggled', anarchyEnabledYYA);
+            yyAnarchy.enabled = !yyAnarchy.enabled;
+            engine.trigger('YYA-AnarchyToggled', yyAnarchy.enabled);
             const thisButton = document.getElementById(this.id);
-            if (anarchyEnabledYYA) {
+            if (yyAnarchy.enabled) {
                 thisButton.classList.add("selected");
                 const image = document.getElementById("YYA-Anarchy-Image");
                 if (image != null) {
                     image.src = "coui://uil/Colored/Anarchy.svg";
                 }
-                if (flamingChirperYYA) {
+                if (yyAnarchy.flamingChirper) {
                     var y = document.getElementsByTagName("img");
                     for (let i = 0; i < y.length; i++) {
                         if (y[i].src == "coui://GameUI/Media/Game/Icons/Chirper.svg" || y[i].src == "Media/Game/Icons/Chirper.svg") y[i].src = "coui://uil/Colored/AnarchyChirper.svg";
@@ -63,8 +63,8 @@ if (typeof setupAnarchyItemYYA !== 'function')
     }
 }
 
-if (typeof CheckForElementByID !== 'function') {
-    function CheckForElementByID(id)
+if (typeof yyAnarchy.CheckForElementByID !== 'function') {
+    yyAnarchy.CheckForElementByID = function (id)
     {
         if (document.getElementById(id) != null) {
             engine.trigger('CheckForElement-'+id , true);
@@ -74,8 +74,8 @@ if (typeof CheckForElementByID !== 'function') {
     }
 }
 
-if (typeof setupButton !== 'function') {
-    function setupButton(buttonId, selected) {
+if (typeof yyAnarchy.setupButton !== 'function') {
+    yyAnarchy.setupButton = function(buttonId, selected) {
         const button = document.getElementById(buttonId);
         if (button == null) {
             engine.trigger('YYA-log', "JS Error: could not setup button " + buttonId);
@@ -87,13 +87,13 @@ if (typeof setupButton !== 'function') {
             button.classList.remove("selected");
         }
         button.onclick = function () {
-            let selectedYYA = true;
+            let selected = true;
             if (this.classList.contains("selected")) {
-                selectedYYA = false; // This is intended to toggle and be the opposite of what it is now.
+                selected = false; // This is intended to toggle and be the opposite of what it is now.
             }
-            engine.trigger(this.id, selectedYYA);
+            engine.trigger(this.id, selected);
             const thisButton = document.getElementById(this.id);
-            if (selectedYYA) {
+            if (selected) {
                 thisButton.classList.add("selected");
             } else {
                 thisButton.classList.remove("selected");

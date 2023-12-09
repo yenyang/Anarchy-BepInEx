@@ -27,7 +27,7 @@ namespace Anarchy.Utils
                 // Update cached path if the existing one is invalid.
                 if (string.IsNullOrWhiteSpace(s_assemblyPath))
                 {
-                    s_assemblyPath = Path.GetDirectoryName(typeof(AnarchyMod).Assembly.Location);
+                    s_assemblyPath = Path.GetDirectoryName(typeof(AnarchyPlugin).Assembly.Location);
                 }
 
                 // Return cached path.
@@ -103,7 +103,7 @@ namespace Anarchy.Utils
                 string html = ReadUIFile(fileName);
                 if (!string.IsNullOrEmpty(html))
                 {
-                    return "var divYYA = document.createElement('div'); divYYA.innerHTML = \"" + EscapeToJavaScript(html) + "\"; " + injectionPostfix;
+                    return "yyAnarchy.div = document.createElement('div'); yyAnarchy.div.innerHTML = \"" + EscapeToJavaScript(html) + "\"; " + injectionPostfix;
                 }
             }
             catch (Exception e)
@@ -129,7 +129,7 @@ namespace Anarchy.Utils
                 if (!string.IsNullOrEmpty(html))
                 {
                     // Return JavaScript code with HTML embedded.
-                    return $"var div = document.createElement('div'); div.innerHTML = \"{EscapeToJavaScript(html)}\"; document.body.appendChild(div);";
+                    return $"yyAnarchy.div = document.createElement('div'); yyAnarchy.div.innerHTML = \"{EscapeToJavaScript(html)}\"; document.body.appendChild(yyAnarchy.div);";
                 }
             }
             catch (Exception e)
@@ -185,7 +185,7 @@ namespace Anarchy.Utils
                 if (!string.IsNullOrEmpty(css))
                 {
                     // Return JavaScript code with CSS embedded.
-                    return $"var style = document.createElement('style'); style.type = 'text/css'; style.innerHTML = \"{EscapeToJavaScript(css)}\"; document.head.appendChild(style);";
+                    return $"yyAnarchy.style = document.createElement('style'); yyAnarchy.style.type = 'text/css'; yyAnarchy.div.innerHTML = \"{EscapeToJavaScript(css)}\"; document.head.appendChild(yyAnarchy.style);";
                 }
             }
             catch (Exception e)
