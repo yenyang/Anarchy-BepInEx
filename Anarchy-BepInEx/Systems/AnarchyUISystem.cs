@@ -304,7 +304,7 @@ namespace Anarchy.Systems
             // This script passes the option to have flaming Chirper to JS.
             UIFileUtils.ExecuteScript(m_UiView, $"var flamingChirperYYA = {BoolToString(AnarchyMod.Settings.FlamingChirper)};");
 
-            m_Log.Debug($"{nameof(AnarchyUISystem)}.{nameof(SendVariablesToJS)}");
+            m_Log.Info($"{nameof(AnarchyUISystem)}.{nameof(SendVariablesToJS)}");
         }
 
         /// <summary>

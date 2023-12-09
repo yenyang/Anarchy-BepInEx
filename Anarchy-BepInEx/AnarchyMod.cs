@@ -70,11 +70,6 @@ namespace Anarchy
             Logger = LogManager.GetLogger("Mods_Yenyang_Anarchy", false);
 
             Logger.effectivenessLevel = Level.Debug;
-#if RELEASE
-            Logger.effectivenessLevel = Level.Info;
-#elif VERBOSE
-            Logger.effectivenessLevel = Level.Verbose;
-#endif
             Logger.Info("Loading. . .");
 
 #if VERBOSE
@@ -95,6 +90,7 @@ namespace Anarchy
         public void OnCreateWorld(UpdateSystem updateSystem)
         {
             Logger.Info("Initializing Settings.");
+            Logger.effectivenessLevel = Level.Debug;
             Settings = new (this);
             Settings.RegisterInOptionsUI();
             AssetDatabase.global.LoadSettings(nameof(AnarchyMod), Settings, new AnarchyModSettings(this));
