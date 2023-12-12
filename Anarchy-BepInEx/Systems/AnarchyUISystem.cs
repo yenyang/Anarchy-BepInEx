@@ -32,7 +32,8 @@ namespace Anarchy.Systems
         private bool m_DisableAnarchyWhenCompleted;
         private string m_LastTool;
         private List<BoundEventHandle> m_BoundEventHandles;
-        private string m_AnarchyBulldozeRowScript;
+        private string m_BulldozeToolItemWithAnarchyScript;
+        private string m_BulldozeToolItemWithoutAnarchyScript;
         private BulldozeToolSystem m_BulldozeToolSystem;
         private bool m_LastGamePlayManipulation;
         private bool m_LastBypassConfrimation;
@@ -92,7 +93,9 @@ namespace Anarchy.Systems
             {
                 m_InjectedJS = UIFileUtils.ReadJS(Path.Combine(UIFileUtils.AssemblyPath, "ui.js"));
                 m_AnarchyItemScript = UIFileUtils.ReadHTML(Path.Combine(UIFileUtils.AssemblyPath, "YYA-anarchy-tool-row.html"), "if (document.getElementById(\"YYA-anarchy-item\") == null) { yyAnarchy.div.className = \"item_bZY\"; yyAnarchy.div.id = \"YYA-anarchy-item\"; yyAnarchy.entities = document.getElementsByClassName(\"tool-options-panel_Se6\"); if (yyAnarchy.entities[0] != null) { yyAnarchy.entities[0].insertAdjacentElement('afterbegin', yyAnarchy.div); yyAnarchy.setupAnarchyItem(); } }");
-                m_AnarchyBulldozeRowScript = UIFileUtils.ReadHTML(Path.Combine(UIFileUtils.AssemblyPath, "YYA-anarchy-bulldoze-row.html"), "if (document.getElementById(\"YYA-anarchy-item\") == null) { yyAnarchy.div.className = \"item_bZY\"; yyAnarchy.div.id = \"YYA-anarchy-item\"; yyAnarchy.entities = document.getElementsByClassName(\"tool-options-panel_Se6\"); if (yyAnarchy.entities[0] != null) { yyAnarchy.entities[0].insertAdjacentElement('afterbegin', yyAnarchy.div); yyAnarchy.setupAnarchyItem(); } }");
+                m_BulldozeToolItemWithAnarchyScript = UIFileUtils.ReadHTML(Path.Combine(UIFileUtils.AssemblyPath, "YYA-bulldoze-tool-mode-row.html"), "if (document.getElementById(\"YYA-bulldoze-tool-mode-item\") == null) { yyAnarchy.div.className = \"item_bZY\"; yyAnarchy.div.id = \"YYA-bulldoze-tool-mode-item\"; yyAnarchy.anarchyItem = document.getElementById(\"YYA-anarchy-item\"); if (yyAnarchy.anarchyItem != null) { yyAnarchy.anarchyItem.insertAdjacentElement('afterend', yyAnarchy.div); } }");
+                m_BulldozeToolItemWithoutAnarchyScript = UIFileUtils.ReadHTML(Path.Combine(UIFileUtils.AssemblyPath, "YYA-bulldoze-tool-mode-row.html"), "if (document.getElementById(\"YYA-bulldoze-tool-mode-item\") == null) { yyAnarchy.div.className = \"item_bZY\"; yyAnarchy.div.id = \"YYA-bulldoze-tool-mode-item\"; yyAnarchy.entities = document.getElementsByClassName(\"tool-options-panel_Se6\"); if (yyAnarchy.entities[0] != null) { yyAnarchy.entities[0].insertAdjacentElement('afterbegin', yyAnarchy.div); } }");
+
             }
             else
             {
@@ -130,35 +133,45 @@ namespace Anarchy.Systems
 
             if (m_AnarchyOptionShown == false)
             {
-                if (AnarchyMod.Settings.ToolIcon)
+                if (AnarchyMod.Settings.ToolIcon || m_ToolSystem.activeTool == m_BulldozeToolSystem)
                 {
                     SendVariablesToJS();
 
                     // This script defines the JS functions if they are not defined.
                     UIFileUtils.ExecuteScript(m_UiView, m_InjectedJS);
 
-                    if (m_ToolSystem.activeTool.toolID != "Bulldoze Tool")
-                    {
-                        // This script creates the anarchy item and sets up the buttons.
-                        UIFileUtils.ExecuteScript(m_UiView, m_AnarchyItemScript);
-                    }
-                    else
-                    {
-                        // This script creates the anarchy bulldozer tool row and sets up the anarchy button.
-                        UIFileUtils.ExecuteScript(m_UiView, m_AnarchyBulldozeRowScript);
-                        UIFileUtils.ExecuteScript(m_UiView, $"yyAnarchy.setupButton(\"YYA-Bypass-Confirmation-Button\", {BoolToString(m_BulldozeToolSystem.debugBypassBulldozeConfirmation)})");
-                        UIFileUtils.ExecuteScript(m_UiView, $"yyAnarchy.setupButton(\"YYA-Gameplay-Manipulation-Button\", {BoolToString(m_BulldozeToolSystem.allowManipulation)})");
-                    }
-
                     m_BoundEventHandles.Add(m_UiView.RegisterForEvent("YYA-log", (Action<string>)LogFromJS));
+                }
+
+                if (AnarchyMod.Settings.ToolIcon)
+                {
+                    // This script creates the anarchy item and sets up the buttons.
+                    UIFileUtils.ExecuteScript(m_UiView, m_AnarchyItemScript);
                     m_BoundEventHandles.Add(m_UiView.RegisterForEvent("YYA-AnarchyToggled", (Action<bool>)AnarchyToggled));
-                    m_BoundEventHandles.Add(m_UiView.RegisterForEvent("YYA-Bypass-Confirmation-Button", (Action<bool>)BypassConfirmationToggled));
-                    m_BoundEventHandles.Add(m_UiView.RegisterForEvent("YYA-Gameplay-Manipulation-Button", (Action<bool>)GameplayManipulationToggled));
                     m_BoundEventHandles.Add(m_UiView.RegisterForEvent("CheckForElement-YYA-anarchy-item", (Action<bool>)ElementCheck));
                 }
                 else if (AnarchyMod.Settings.FlamingChirper)
                 {
                     ToggleAnarchyButton();
+                }
+
+                if (m_ToolSystem.activeTool == m_BulldozeToolSystem)
+                {
+                    if (AnarchyMod.Settings.ToolIcon)
+                    {
+                        // This script creates the bulldozer tool mode row and sets up the buttons.
+                        UIFileUtils.ExecuteScript(m_UiView, m_BulldozeToolItemWithAnarchyScript);
+                    } else
+                    {
+                        // This script creates the bulldozer tool mode row and sets up the buttons.
+                        UIFileUtils.ExecuteScript(m_UiView, m_BulldozeToolItemWithoutAnarchyScript);
+                    }
+
+                    UIFileUtils.ExecuteScript(m_UiView, $"yyAnarchy.setupButton(\"YYA-Bypass-Confirmation-Button\", {BoolToString(m_BulldozeToolSystem.debugBypassBulldozeConfirmation)})");
+                    UIFileUtils.ExecuteScript(m_UiView, $"yyAnarchy.setupButton(\"YYA-Gameplay-Manipulation-Button\", {BoolToString(m_BulldozeToolSystem.allowManipulation)})");
+                    m_BoundEventHandles.Add(m_UiView.RegisterForEvent("YYA-Bypass-Confirmation-Button", (Action<bool>)BypassConfirmationToggled));
+                    m_BoundEventHandles.Add(m_UiView.RegisterForEvent("YYA-Gameplay-Manipulation-Button", (Action<bool>)GameplayManipulationToggled));
+                    m_BoundEventHandles.Add(m_UiView.RegisterForEvent("CheckForElement-YYA-bulldoze-tool-mode-item", (Action<bool>)ElementCheck));
                 }
 
                 m_AnarchyOptionShown = true;
@@ -176,6 +189,14 @@ namespace Anarchy.Systems
 
                 // This script checks if anarchy is first child and if not removes it.
                 UIFileUtils.ExecuteScript(m_UiView, $"yyAnarchy.itemElement = document.getElementById(\"YYA-anarchy-item\"); if (yyAnarchy.itemElement != null) {{  if (yyAnarchy.itemElement.parentElement.firstChild != yyAnarchy.itemElement) {{  yyAnarchy.itemElement.parentElement.removeChild(yyAnarchy.itemElement);   }}  }}");
+
+                if (m_ToolSystem.activeTool != m_BulldozeToolSystem)
+                {
+                    return;
+                }
+
+                // This script checks if bulldoze tool mode item exists. If it doesn't it triggers bulldoze tool mode being recreated.
+                UIFileUtils.ExecuteScript(m_UiView, $"if (document.getElementById(\"YYA-bulldoze-tool-mode-item\") == null) engine.trigger('CheckForElement-YYA-bulldoze-tool-mode-item', false);");
 
                 if (m_LastBypassConfrimation != m_BulldozeToolSystem.debugBypassBulldozeConfirmation)
                 {
@@ -293,7 +314,6 @@ namespace Anarchy.Systems
         /// </summary>
         private void SendVariablesToJS()
         {
-
             // This script passes whether Anarchy is Enabled to JS.
             UIFileUtils.ExecuteScript(m_UiView, $"yyAnarchy.enabled = {BoolToString(m_AnarchySystem.AnarchyEnabled)};");
 
@@ -313,6 +333,9 @@ namespace Anarchy.Systems
 
             // This script destroys the anarchy item if it exists.
             UIFileUtils.ExecuteScript(m_UiView, DestroyElementByID("YYA-anarchy-item"));
+
+            // This script destroys the bulldoze tool mode row if it exists.
+            UIFileUtils.ExecuteScript(m_UiView, DestroyElementByID("YYA-bulldoze-tool-mode-item"));
 
             // This script resets chirper.
             m_UiView.ExecuteScript($"yyAnarchy.tagElements = document.getElementsByTagName(\"img\"); for (yyAnarchy.i = 0; yyAnarchy.i < yyAnarchy.tagElements.length; yyAnarchy.i++) {{ if (yyAnarchy.tagElements[yyAnarchy.i].src == \"coui://uil/Colored/AnarchyChirper.svg\") yyAnarchy.tagElements[yyAnarchy.i].src = \"coui://GameUI/Media/Game/Icons/Chirper.svg\"; }}");
@@ -345,12 +368,15 @@ namespace Anarchy.Systems
             }
 
             // Makes it so Anarchic Bulldozer will work next frame when bulldoze tool is activated from other appropriate tool.
-            if ((tool.toolID == "Bulldoze Tool" && m_LastTool != "Bulldoze Tool") || (tool.toolID != "Bulldoze Tool" && m_LastTool == "Bulldoze Tool"))
+            if (tool.toolID == "Bulldoze Tool" && m_LastTool != "Bulldoze Tool")
             {
                 m_AnarchyOptionShown = false;
+            }
 
-                // This script destroys the anarchy item if it exists.
-                UIFileUtils.ExecuteScript(m_UiView, DestroyElementByID("YYA-anarchy-item"));
+            if (tool.toolID != "Bulldoze Tool" && m_LastTool == "Bulldoze Tool")
+            {
+                // This script destroys the bulldoze tool mode row if it exists.
+                UIFileUtils.ExecuteScript(m_UiView, DestroyElementByID("YYA-bulldoze-tool-mode-item"));
             }
 
             if (tool.toolID != "Bulldoze Tool" && m_DisableAnarchyWhenCompleted)

@@ -152,10 +152,10 @@
     <Content Include="UI\ui.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="UI\YYA-anarchy-bulldoze-row.html">
+    <Content Include="UI\YYA-anarchy-tool-row.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="UI\YYA-anarchy-tool-row.html">
+    <Content Include="UI\YYA-bulldoze-tool-mode-row.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
