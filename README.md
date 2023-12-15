@@ -1,4 +1,4 @@
-# Anarchy-BepInEx
+# Anarchy
 
 Anarchy disables error checks for tools. 
 
