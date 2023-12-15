@@ -5,7 +5,7 @@ Anarchy disables error checks for tools.
 For consistency within the community, please do not use this term to mean something else for C:SII.
 
 ## Dependencies
-Unified Icon Library - https://thunderstore.io/c/cities-skylines-ii/p/algernon/Unified_Icon_Library/ **Manual Install Only**
+Unified Icon Library - https://thunderstore.io/c/cities-skylines-ii/p/algernon/Unified_Icon_Library/ 
 
 BepInExPack - https://thunderstore.io/c/cities-skylines-ii/p/BepInEx/BepInExPack/
 
