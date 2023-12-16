@@ -5,9 +5,9 @@ Anarchy disables error checks for tools.
 For consistency within the community, please do not use this term to mean something else for C:SII.
 
 ## Dependencies
-Unified Icon Library - https://thunderstore.io/c/cities-skylines-ii/p/algernon/Unified_Icon_Library/ 
+[Unified Icon Library](https://thunderstore.io/c/cities-skylines-ii/p/algernon/Unified_Icon_Library/)
 
-BepInExPack - https://thunderstore.io/c/cities-skylines-ii/p/BepInEx/BepInExPack/
+[BepInExPack](https://thunderstore.io/c/cities-skylines-ii/p/BepInEx/BepInExPack/)
 
 ## Detailed Descrption
 Currently it applies to these tools:
@@ -53,9 +53,12 @@ This mod does NOT alter existing systems, tools, or UI other than disabling erro
 
 **Please save frequently, in multiple files, and learn to use responsibly.**
 
+## Support
+I will respond on the code modding channels on [**Cities: Skylines modding Discord**](https://discord.gg/ZaH2zjtk).
+
 ## Credits 
 * yenyang - Mod Author
-* Chamëleon TBN - Testing, Feedback, Icons, & Logo
+* Chameleon TBN - Testing, Feedback, Icons, & Logo
 * Bad Peanut - Image Credit for Flaming Chirper
 * Algernon - Help with UI, Cooperative Development & Code Sharing
 * T.D.W., Klyte45, krzychu124, & Quboid - Cooperative Development & Code Sharing
