@@ -1,6 +1,6 @@
 # Anarchy
 
-Anarchy disables error checks for tools. 
+Anarchy disables error checks for tools in a way that the errors are not shown at all.
 
 For consistency within the community, please do not use this term to mean something else for C:SII.
 
@@ -10,6 +10,14 @@ For consistency within the community, please do not use this term to mean someth
 [BepInExPack](https://thunderstore.io/c/cities-skylines-ii/p/BepInEx/BepInExPack/)
 
 ## Detailed Descrption
+The mod also has: 
+* Optional Tool icon
+* Keyboard shortcut (Ctrl+A)
+* Optional flaming chirper
+* Option to automatically enable with bulldozer
+* Optional mouse tooltip
+* Icons for game manipulation and bypass verification for bulldozer.
+
 Currently it applies to these tools:
 * Object Tool (For trees this mod doesn't give features of C:S1 Tree Anarchy, instead think Cross the Line).
 * Net Tool
@@ -54,7 +62,7 @@ This mod does NOT alter existing systems, tools, or UI other than disabling erro
 **Please save frequently, in multiple files, and learn to use responsibly.**
 
 ## Support
-I will respond on the code modding channels on [**Cities: Skylines modding Discord**](https://discord.gg/ZaH2zjtk).
+I will respond on the code modding channels on **Cities: Skylines modding Discord**
 
 ## Credits 
 * yenyang - Mod Author

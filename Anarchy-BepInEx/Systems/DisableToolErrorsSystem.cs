@@ -59,7 +59,17 @@ namespace Anarchy.Systems
         /// <inheritdoc/>
         protected override void OnUpdate()
         {
-            if (m_ToolSystem.activeTool.toolID != null && m_AnarchySystem.AnarchyEnabled)
+            if (m_ToolSystem.activeTool.toolID == null)
+            {
+                return;
+            }
+
+            if (!m_AnarchySystem.AnarchyEnabled && m_ToolSystem.ignoreErrors && m_AnarchySystem.IsToolAppropriate(m_ToolSystem.activeTool.toolID))
+            {
+                m_ToolSystem.ignoreErrors = false;
+            }
+
+            if (m_AnarchySystem.AnarchyEnabled)
             {
                 if (m_AnarchySystem.IsToolAppropriate(m_ToolSystem.activeTool.toolID))
                 {
