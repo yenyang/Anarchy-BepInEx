@@ -2,9 +2,9 @@
 
 Anarchy disables error checks for tools in a way that the errors are not shown at all.
 
-This mod allows you to place trees and props (with DevUI 'Add Object' menu) in buildings, nets or areas.
+This mod allows you to place vegetation and props (with DevUI 'Add Object' menu) in buildings, nets or areas.
 
-This mod allows you to place trees close together.
+This mod allows you to place vegetation such as trees and bushes close together.
 
 For consistency within the community, please do not use the term Anarchy to mean something else for CSL2.
 
@@ -23,7 +23,7 @@ The mod also has:
 * Icons for game manipulation and bypass verification for bulldozer.
 
 Currently it applies to these tools:
-* Object Tool (For trees this mod doesn't give features of C:S1 Tree Anarchy, instead think Cross the Line).
+* Object Tool
 * Net Tool
 * Area Tool (Can exceed limits for specialized industry areas)
 * Bulldoze Tool (Option to default Anarchy to ON when activated)
@@ -66,6 +66,7 @@ This mod does NOT allow you to do everything including:
 * Use the net tool to draw a bridge through a sea-lane clearance
 * If the vanilla net tool would remove an existing network, it will still do that.
 * Even if the mod disables the error check, the UI may still prevent you from doing something like placing a second copy of a unique building/upgrade.
+* Does not give additional control for prop placement.
 
 **Please save frequently, in multiple files, and learn to use responsibly.**
 
