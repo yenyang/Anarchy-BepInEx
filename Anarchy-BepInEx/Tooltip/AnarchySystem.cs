@@ -4,7 +4,6 @@
 
 namespace Anarchy.Tooltip
 {
-    using System;
     using System.Collections.Generic;
     using Anarchy;
     using Anarchy.Systems;
@@ -33,6 +32,7 @@ namespace Anarchy.Tooltip
             { "Bulldoze Tool" },
             { "Terrain Tool" },
             { "Upgrade Tool" },
+            { "Line Tool" },
         };
 
         /// <summary>

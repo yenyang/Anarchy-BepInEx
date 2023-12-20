@@ -74,6 +74,7 @@ namespace Anarchy
         /// <inheritdoc/>
         public void OnCreateWorld(UpdateSystem updateSystem)
         {
+            Logger.effectivenessLevel = Level.Debug;
             Logger.Info("Initializing Settings.");
             Settings = new (this);
             Settings.RegisterInOptionsUI();
@@ -87,6 +88,8 @@ namespace Anarchy
             updateSystem.UpdateBefore<DisableToolErrorsSystem>(SystemUpdatePhase.ModificationEnd);
             updateSystem.UpdateAfter<EnableToolErrorsSystem>(SystemUpdatePhase.ModificationEnd);
             updateSystem.UpdateAt<AnarchyUISystem>(SystemUpdatePhase.UIUpdate);
+            updateSystem.UpdateBefore<PreventOverrideSystem>(SystemUpdatePhase.ModificationEnd);
+            updateSystem.UpdateBefore<AnarchyPlopSystem>(SystemUpdatePhase.ModificationEnd);
         }
 
         /// <inheritdoc/>

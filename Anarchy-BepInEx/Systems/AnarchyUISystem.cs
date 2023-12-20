@@ -39,6 +39,14 @@ namespace Anarchy.Systems
         private bool m_LastBypassConfrimation;
 
         /// <summary>
+        /// Gets a value indicating whether whether Anarchy is only on because of Anarchic Bulldozer setting.
+        /// </summary>
+        public bool DisableAnarchyWhenCompleted
+        {
+            get { return m_DisableAnarchyWhenCompleted; }
+        }
+
+        /// <summary>
         /// So Anarchy System can toggle the button selection with Keybind.
         /// </summary>
         public void ToggleAnarchyButton()

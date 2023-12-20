@@ -12,7 +12,7 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Anarchy</RootNamespace>
-    <AssemblyName>Anarchy-BepInEx</AssemblyName>
+    <AssemblyName>Anarchy</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -127,11 +127,14 @@
   <ItemGroup>
     <Compile Include="AnarchyMod.cs" />
     <Compile Include="BepInEx\AnarchyPlugin.cs" />
+    <Compile Include="Components\PreventOverride.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings\AnarchyModSettings.cs" />
     <Compile Include="Settings\LocaleEN.cs" />
     <Compile Include="StyleCop\GlobalSuppressions.cs" />
     <Compile Include="Systems\AnarchyUISystem.cs" />
+    <Compile Include="Systems\AnarchyPlopSystem.cs" />
+    <Compile Include="Systems\PreventOverrideSystem.cs" />
     <Compile Include="Systems\DisableToolErrorsSystem.cs" />
     <Compile Include="Systems\EnableToolErrorsSystem.cs" />
     <Compile Include="Tooltip\AnarchySystem.cs" />

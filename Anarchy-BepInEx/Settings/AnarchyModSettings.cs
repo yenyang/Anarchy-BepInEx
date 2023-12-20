@@ -39,11 +39,14 @@ namespace Anarchy.Settings
         /// </summary>
         public bool FlamingChirper { get; set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether to use the tool icon.
+        public bool ToolIcon { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether to have chirper be on fire.
+        /// Gets or sets a value indicating whether to permanently prevent override.
         /// </summary>
-        public bool ToolIcon { get; set; }
+        public bool PermanetlyPreventOverride { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether: Used to force saving of Modsettings if settings would result in empty Json.
@@ -75,6 +78,7 @@ namespace Anarchy.Settings
             FlamingChirper = true;
             Contra = true;
             ToolIcon = true;
+            PermanetlyPreventOverride = true;
         }
     }
 }
