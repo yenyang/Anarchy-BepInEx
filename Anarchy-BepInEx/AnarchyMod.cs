@@ -5,14 +5,11 @@
 #define DEBUG
 namespace Anarchy
 {
-    using System;
     using System.IO;
-    using System.Linq;
     using Anarchy.Settings;
     using Anarchy.Systems;
     using Anarchy.Tooltip;
     using Colossal.IO.AssetDatabase;
-    using Colossal.Localization;
     using Colossal.Logging;
     using Game;
     using Game.Modding;
@@ -74,7 +71,7 @@ namespace Anarchy
         /// <inheritdoc/>
         public void OnCreateWorld(UpdateSystem updateSystem)
         {
-            Logger.effectivenessLevel = Level.Debug;
+            Logger.effectivenessLevel = Level.Info;
             Logger.Info("Initializing Settings.");
             Settings = new (this);
             Settings.RegisterInOptionsUI();

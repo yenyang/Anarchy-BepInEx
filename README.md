@@ -2,7 +2,11 @@
 
 Anarchy disables error checks for tools in a way that the errors are not shown at all.
 
-For consistency within the community, please do not use this term to mean something else for C:SII.
+This mod allows you to place trees and props (with DevUI 'Add Object' menu) in buildings, nets or areas.
+
+This mod allows you to place trees close together.
+
+For consistency within the community, please do not use the term Anarchy to mean something else for CSL2.
 
 ## Dependencies
 [Unified Icon Library](https://thunderstore.io/c/cities-skylines-ii/p/algernon/Unified_Icon_Library/)
@@ -30,6 +34,11 @@ You can activate anarchy with the keyboard shortcut "Ctrl+A" or with the optiona
 
 You can tell anarchy is active using optional Flaming Chirper, the tool icon, or a tooltip.
 
+There is an option to "Permenently Prevent Override". This applies to trees and props previously placed with Anarchy. 
+If you later interact with these objects with this option on, and Anarchy off, then the object will persist.
+If you later interact with these objects with this option off, and Anarchy off, then the object will be overriden per vanilla.
+When drawing buildings, nets, or areas the trees and props that are not prevented from overriding, will behave per vanilla.
+
 The following errors will not occur while Anarchy is enabled:
 * Overlap Existing
 * Invalid Shape
@@ -53,9 +62,8 @@ The following errors will not occur while Anarchy is enabled:
 If you find an error that you think should be added or if you find a tool that this should also be included, please let me know. 
 
 ## Disclaimer
-This mod does NOT alter existing systems, tools, or UI other than disabling error checks therefore you cannot:
+This mod does NOT allow you to do everything including:
 * Use the net tool to draw a bridge through a sea-lane clearance
-* Trees cannot be added onto other objects or too close to each other.
 * If the vanilla net tool would remove an existing network, it will still do that.
 * Even if the mod disables the error check, the UI may still prevent you from doing something like placing a second copy of a unique building/upgrade.
 

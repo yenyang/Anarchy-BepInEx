@@ -5,6 +5,11 @@ VisualStudioVersion = 17.6.33815.320
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Anarchy-BepInEx", "Anarchy-BepInEx\Anarchy-BepInEx.csproj", "{3A0AE4D2-019B-43E8-8B30-4CEB38349599}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{A87D93EF-9302-422D-B63E-9CEDC71189FF}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		BepInEx|Any CPU = BepInEx|Any CPU
