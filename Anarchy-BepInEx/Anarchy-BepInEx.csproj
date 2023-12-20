@@ -145,10 +145,6 @@
     <None Include="BepInEx\manifest.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Include="i18n\i18n.csv">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Include="i18n\i18n.xlsm" />
     <AdditionalFiles Include="StyleCop\stylecop.json" />
   </ItemGroup>
   <ItemGroup>
