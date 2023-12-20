@@ -106,11 +106,6 @@ namespace Anarchy.Systems
                         continue;
                     }
 
-                    if (prefabBase != m_ToolSystem.activePrefab)
-                    {
-                        continue;
-                    }
-
                     if (!m_AnarchyUISystem.DisableAnarchyWhenCompleted && EntityManager.HasComponent<Overridden>(currentEntity))
                     {
                         EntityManager.RemoveComponent<Overridden>(currentEntity);
