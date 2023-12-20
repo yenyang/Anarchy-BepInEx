@@ -22,7 +22,6 @@ namespace Anarchy.Systems
     /// </summary>
     public partial class PreventOverrideSystem : GameSystemBase
     {
-        private EntityQuery m_CreatedQuery;
         private ILog m_Log;
         private EntityQuery m_PreventOverrideQuery;
         private EntityQuery m_NeedToPreventOverrideQuery;
@@ -65,7 +64,7 @@ namespace Anarchy.Systems
                     ComponentType.ReadOnly<Temp>(),
                },
             });
-            RequireForUpdate(m_CreatedQuery);
+            RequireAnyForUpdate(new EntityQuery[] { m_NeedToPreventOverrideQuery, m_PreventOverrideQuery });
             base.OnCreate();
         }
 
@@ -74,7 +73,7 @@ namespace Anarchy.Systems
         {
             if (!m_NeedToPreventOverrideQuery.IsEmptyIgnoreFilter && AnarchyMod.Settings.PermanetlyPreventOverride)
             {
-                NativeArray<Entity> overridenEntities = m_CreatedQuery.ToEntityArray(Allocator.Temp);
+                NativeArray<Entity> overridenEntities = m_NeedToPreventOverrideQuery.ToEntityArray(Allocator.Temp);
                 foreach (Entity currentEntity in overridenEntities)
                 {
                     if (EntityManager.HasComponent<PreventOverride>(currentEntity))
