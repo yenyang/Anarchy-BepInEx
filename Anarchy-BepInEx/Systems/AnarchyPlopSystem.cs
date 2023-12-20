@@ -67,6 +67,7 @@ namespace Anarchy.Systems
                 {
                     ComponentType.ReadOnly<Temp>(),
                     ComponentType.ReadOnly<Owner>(),
+                    ComponentType.ReadOnly<BuildingData>(),
                 },
             });
             RequireForUpdate(m_CreatedQuery);
