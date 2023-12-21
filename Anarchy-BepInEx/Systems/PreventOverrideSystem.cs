@@ -76,6 +76,7 @@ namespace Anarchy.Systems
                     if (EntityManager.HasComponent<PreventOverride>(currentEntity))
                     {
                         EntityManager.RemoveComponent<Overridden>(currentEntity);
+                        EntityManager.AddComponent<BatchesUpdated>(currentEntity);
                     }
 #if VERBOSE
                     m_Log.Verbose($"{nameof(PreventOverrideSystem)}.{nameof(OnUpdate)} Removed  {nameof(Overridden)}  component from Entity {currentEntity.Index}.{currentEntity.Version}");
