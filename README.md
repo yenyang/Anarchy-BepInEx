@@ -29,6 +29,7 @@ Currently it applies to these tools:
 * Bulldoze Tool (Option to default Anarchy to ON when activated)
 * Terrain Tool (Cross the line within playable area.)
 * Upgrade Tool
+* Line Tool from [Line Tool Lite](https://thunderstore.io/c/cities-skylines-ii/p/algernon/Line_Tool_Lite/) by Algernon
 
 You can activate anarchy with the keyboard shortcut "Ctrl+A" or with the optional tool icon that only appears while using the above tools.
 
@@ -79,3 +80,4 @@ I will respond on the code modding channels on **Cities: Skylines modding Discor
 * Bad Peanut - Image Credit for Flaming Chirper
 * Algernon - Help with UI, Cooperative Development & Code Sharing
 * T.D.W., Klyte45, krzychu124, & Quboid - Cooperative Development & Code Sharing
+* Sully - Testing
