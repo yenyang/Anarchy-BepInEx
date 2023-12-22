@@ -22,7 +22,7 @@ namespace Anarchy.Systems
         private ILog m_Log;
         private EntityQuery m_PreventOverrideQuery;
         private EntityQuery m_NeedToPreventOverrideQuery;
-        private PrefabSystem m_PrefabSystem;
+        private RemovePreventOverrideSystem m_RemovePreventOverrideSystem;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PreventOverrideSystem"/> class.
@@ -36,18 +36,7 @@ namespace Anarchy.Systems
         {
             m_Log = AnarchyMod.Instance.Logger;
             m_Log.Info($"{nameof(PreventOverrideSystem)} Created.");
-            m_PrefabSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<PrefabSystem>();
-            m_PreventOverrideQuery = GetEntityQuery(new EntityQueryDesc
-            {
-                All = new ComponentType[]
-                {
-                    ComponentType.ReadOnly<PreventOverride>(),
-                },
-                None = new ComponentType[]
-                {
-                    ComponentType.ReadOnly<Temp>(),
-                },
-            });
+            m_RemovePreventOverrideSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<RemovePreventOverrideSystem>();
 
             m_NeedToPreventOverrideQuery = GetEntityQuery(new EntityQueryDesc
             {
@@ -61,7 +50,7 @@ namespace Anarchy.Systems
                     ComponentType.ReadOnly<Temp>(),
                },
             });
-            RequireAnyForUpdate(new EntityQuery[] { m_NeedToPreventOverrideQuery, m_PreventOverrideQuery });
+            RequireForUpdate(m_NeedToPreventOverrideQuery);
             base.OnCreate();
         }
 
@@ -85,19 +74,9 @@ namespace Anarchy.Systems
 
                 overridenEntities.Dispose();
             }
-
-            if (!m_PreventOverrideQuery.IsEmptyIgnoreFilter && !AnarchyMod.Settings.PermanetlyPreventOverride)
+            else if (!AnarchyMod.Settings.PermanetlyPreventOverride)
             {
-                NativeArray<Entity> entitiesWithComponent = m_PreventOverrideQuery.ToEntityArray(Allocator.Temp);
-                foreach (Entity currentEntity in entitiesWithComponent)
-                {
-                    EntityManager.RemoveComponent<PreventOverride>(currentEntity);
-#if VERBOSE
-                    m_Log.Verbose($"{nameof(PreventOverrideSystem)}.{nameof(OnUpdate)} Removed {nameof(PreventOverride)} component from Entity {currentEntity.Index}.{currentEntity.Version}");
-#endif
-                }
-
-                entitiesWithComponent.Dispose();
+                m_RemovePreventOverrideSystem.Enabled = true;
             }
         }
     }

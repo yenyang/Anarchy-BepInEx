@@ -134,6 +134,7 @@
     <Compile Include="StyleCop\GlobalSuppressions.cs" />
     <Compile Include="Systems\AnarchyUISystem.cs" />
     <Compile Include="Systems\AnarchyPlopSystem.cs" />
+    <Compile Include="Systems\RemovePreventOverrideSystem.cs" />
     <Compile Include="Systems\PreventOverrideSystem.cs" />
     <Compile Include="Systems\DisableToolErrorsSystem.cs" />
     <Compile Include="Systems\EnableToolErrorsSystem.cs" />
