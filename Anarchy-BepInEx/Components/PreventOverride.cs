@@ -8,7 +8,7 @@ namespace Anarchy.Components
     using Unity.Entities;
 
     /// <summary>
-    /// A component used to filter out Evergreen trees from queries.
+    /// A component used to filter out prevent overriding of entitiy in future from queries.
     /// </summary>
     public struct PreventOverride : IComponentData, IQueryTypeParameter, IEmptySerializable
     {
