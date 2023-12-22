@@ -26,6 +26,7 @@ namespace Anarchy.Systems
         private ToolSystem m_ToolSystem;
         private string m_InjectedJS = string.Empty;
         private string m_AnarchyItemScript = string.Empty;
+        private string m_AnarchyItemLineToolScript = string.Empty;
         private ILog m_Log;
         private AnarchySystem m_AnarchySystem;
         private bool m_AnarchyOptionShown;
@@ -75,7 +76,7 @@ namespace Anarchy.Systems
             // This script resets Anarchy button if toggled using key board shortcut.
             m_UiView.ExecuteScript($"yyAnarchy.buttonElement = document.getElementById(\"YYA-Anarchy-Button\"); if (yyAnarchy.buttonElement != null) yyAnarchy.buttonElement.classList.remove(\"selected\");");
 
-            // This script finds resets Anarchy button if toggled using key board shortcut.
+            // This script  resets Anarchy button image if toggled using key board shortcut.
             m_UiView.ExecuteScript($"yyAnarchy.imageElement = document.getElementById(\"YYA-Anarchy-Image\"); if (yyAnarchy.imageElement != null) {{ yyAnarchy.imageElement.src = \"coui://uil/Standard/Anarchy.svg\"; }} ");
 
             // This script resets chirper if toggled using key board shortcut.
@@ -101,9 +102,9 @@ namespace Anarchy.Systems
             {
                 m_InjectedJS = UIFileUtils.ReadJS(Path.Combine(UIFileUtils.AssemblyPath, "ui.js"));
                 m_AnarchyItemScript = UIFileUtils.ReadHTML(Path.Combine(UIFileUtils.AssemblyPath, "YYA-anarchy-tool-row.html"), "if (document.getElementById(\"YYA-anarchy-item\") == null) { yyAnarchy.div.className = \"item_bZY\"; yyAnarchy.div.id = \"YYA-anarchy-item\"; yyAnarchy.entities = document.getElementsByClassName(\"tool-options-panel_Se6\"); if (yyAnarchy.entities[0] != null) { yyAnarchy.entities[0].insertAdjacentElement('afterbegin', yyAnarchy.div); yyAnarchy.setupAnarchyItem(); } }");
+                m_AnarchyItemLineToolScript = UIFileUtils.ReadHTML(Path.Combine(UIFileUtils.AssemblyPath, "YYA-anarchy-tool-row.html"), "if (document.getElementById(\"YYA-anarchy-item\") == null) { yyAnarchy.div.className = \"item_bZY\"; yyAnarchy.div.id = \"YYA-anarchy-item\"; yyAnarchy.LineToolTitle = document.getElementById(\"line-tool-title\"); if (yyAnarchy.LineToolTitle != null) { yyAnarchy.LineToolTitle.parentElement.insertAdjacentElement('afterend', yyAnarchy.div); yyAnarchy.setupAnarchyItem(); } }");
                 m_BulldozeToolItemWithAnarchyScript = UIFileUtils.ReadHTML(Path.Combine(UIFileUtils.AssemblyPath, "YYA-bulldoze-tool-mode-row.html"), "if (document.getElementById(\"YYA-bulldoze-tool-mode-item\") == null) { yyAnarchy.div.className = \"item_bZY\"; yyAnarchy.div.id = \"YYA-bulldoze-tool-mode-item\"; yyAnarchy.anarchyItem = document.getElementById(\"YYA-anarchy-item\"); if (yyAnarchy.anarchyItem != null) { yyAnarchy.anarchyItem.insertAdjacentElement('afterend', yyAnarchy.div); } }");
                 m_BulldozeToolItemWithoutAnarchyScript = UIFileUtils.ReadHTML(Path.Combine(UIFileUtils.AssemblyPath, "YYA-bulldoze-tool-mode-row.html"), "if (document.getElementById(\"YYA-bulldoze-tool-mode-item\") == null) { yyAnarchy.div.className = \"item_bZY\"; yyAnarchy.div.id = \"YYA-bulldoze-tool-mode-item\"; yyAnarchy.entities = document.getElementsByClassName(\"tool-options-panel_Se6\"); if (yyAnarchy.entities[0] != null) { yyAnarchy.entities[0].insertAdjacentElement('afterbegin', yyAnarchy.div); } }");
-
             }
             else
             {
@@ -153,8 +154,17 @@ namespace Anarchy.Systems
 
                 if (AnarchyMod.Settings.ToolIcon)
                 {
-                    // This script creates the anarchy item and sets up the buttons.
-                    UIFileUtils.ExecuteScript(m_UiView, m_AnarchyItemScript);
+                    if (m_ToolSystem.activeTool.toolID != "Line Tool")
+                    {
+                        // This script creates the anarchy item and sets up the buttons.
+                        UIFileUtils.ExecuteScript(m_UiView, m_AnarchyItemScript);
+                    }
+                    else
+                    {
+                        // This script creates the anarchy item and sets up the buttons specifically for line tool.
+                        UIFileUtils.ExecuteScript(m_UiView, m_AnarchyItemLineToolScript);
+                    }
+
                     m_BoundEventHandles.Add(m_UiView.RegisterForEvent("YYA-AnarchyToggled", (Action<bool>)AnarchyToggled));
                     m_BoundEventHandles.Add(m_UiView.RegisterForEvent("CheckForElement-YYA-anarchy-item", (Action<bool>)ElementCheck));
                 }
@@ -169,7 +179,8 @@ namespace Anarchy.Systems
                     {
                         // This script creates the bulldozer tool mode row and sets up the buttons.
                         UIFileUtils.ExecuteScript(m_UiView, m_BulldozeToolItemWithAnarchyScript);
-                    } else
+                    }
+                    else
                     {
                         // This script creates the bulldozer tool mode row and sets up the buttons.
                         UIFileUtils.ExecuteScript(m_UiView, m_BulldozeToolItemWithoutAnarchyScript);
