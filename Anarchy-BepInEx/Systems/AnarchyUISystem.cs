@@ -206,8 +206,11 @@ namespace Anarchy.Systems
                 // This script checks if anarchy item exists. If it doesn't it triggers anarchy item being recreated.
                 UIFileUtils.ExecuteScript(m_UiView, $"if (document.getElementById(\"YYA-anarchy-item\") == null) engine.trigger('CheckForElement-YYA-anarchy-item', false);");
 
-                // This script checks if anarchy is first child and if not removes it.
-                UIFileUtils.ExecuteScript(m_UiView, $"yyAnarchy.itemElement = document.getElementById(\"YYA-anarchy-item\"); if (yyAnarchy.itemElement != null) {{  if (yyAnarchy.itemElement.parentElement.firstChild != yyAnarchy.itemElement) {{  yyAnarchy.itemElement.parentElement.removeChild(yyAnarchy.itemElement);   }}  }}");
+                if (m_ToolSystem.activeTool.toolID != "Line Tool")
+                {
+                    // This script checks if anarchy is first child and if not removes it.
+                    UIFileUtils.ExecuteScript(m_UiView, $"yyAnarchy.itemElement = document.getElementById(\"YYA-anarchy-item\"); if (yyAnarchy.itemElement != null) {{  if (yyAnarchy.itemElement.parentElement.firstChild != yyAnarchy.itemElement) {{  yyAnarchy.itemElement.parentElement.removeChild(yyAnarchy.itemElement);   }}  }}");
+                }
 
                 if (m_ToolSystem.activeTool != m_BulldozeToolSystem)
                 {
