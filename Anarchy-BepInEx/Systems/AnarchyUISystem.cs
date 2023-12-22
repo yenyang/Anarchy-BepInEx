@@ -390,8 +390,15 @@ namespace Anarchy.Systems
             }
 
             // Makes it so Anarchic Bulldozer will work next frame when bulldoze tool is activated from other appropriate tool.
-            if (tool.toolID == "Bulldoze Tool" && m_LastTool != "Bulldoze Tool")
+            if ((tool.toolID == "Bulldoze Tool" && m_LastTool != "Bulldoze Tool") || tool.toolID == "Line Tool")
             {
+                m_AnarchyOptionShown = false;
+            }
+
+            // Removes Anarchy item if activating line tool so that it can be recreated in the new location. 
+            if (tool.toolID == "Line Tool")
+            {
+                UIFileUtils.ExecuteScript(m_UiView, DestroyElementByID("YYA-anarchy-item"));
                 m_AnarchyOptionShown = false;
             }
 
