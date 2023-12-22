@@ -87,7 +87,7 @@ namespace Anarchy
             updateSystem.UpdateAt<AnarchyUISystem>(SystemUpdatePhase.UIUpdate);
             updateSystem.UpdateAt<PreventOverrideSystem>(SystemUpdatePhase.ToolUpdate);
             updateSystem.UpdateAt<PreventOverrideSystem>(SystemUpdatePhase.GameSimulation);
-            updateSystem.UpdateAt<PreventOverrideSystem>(SystemUpdatePhase.ModificationEnd);
+            updateSystem.UpdateBefore<PreventOverrideSystem>(SystemUpdatePhase.ModificationEnd);
             updateSystem.UpdateAt<RemovePreventOverrideSystem>(SystemUpdatePhase.ToolUpdate);
             updateSystem.UpdateBefore<AnarchyPlopSystem>(SystemUpdatePhase.ModificationEnd);
         }
