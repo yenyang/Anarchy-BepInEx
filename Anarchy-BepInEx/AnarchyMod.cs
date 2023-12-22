@@ -85,11 +85,11 @@ namespace Anarchy
             updateSystem.UpdateBefore<DisableToolErrorsSystem>(SystemUpdatePhase.ModificationEnd);
             updateSystem.UpdateAfter<EnableToolErrorsSystem>(SystemUpdatePhase.ModificationEnd);
             updateSystem.UpdateAt<AnarchyUISystem>(SystemUpdatePhase.UIUpdate);
+            updateSystem.UpdateBefore<AnarchyPlopSystem>(SystemUpdatePhase.ModificationEnd);
+            updateSystem.UpdateBefore<PreventOverrideSystem>(SystemUpdatePhase.ModificationEnd);
             updateSystem.UpdateAt<PreventOverrideSystem>(SystemUpdatePhase.ToolUpdate);
             updateSystem.UpdateAt<PreventOverrideSystem>(SystemUpdatePhase.GameSimulation);
-            updateSystem.UpdateBefore<PreventOverrideSystem>(SystemUpdatePhase.ModificationEnd);
             updateSystem.UpdateAt<RemovePreventOverrideSystem>(SystemUpdatePhase.ToolUpdate);
-            updateSystem.UpdateBefore<AnarchyPlopSystem>(SystemUpdatePhase.ModificationEnd);
         }
 
         /// <inheritdoc/>
