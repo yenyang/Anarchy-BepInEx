@@ -38,10 +38,6 @@ namespace Anarchy.Systems
                 {
                     ComponentType.ReadOnly<PreventOverride>(),
                 },
-                None = new ComponentType[]
-                {
-                    ComponentType.ReadOnly<Temp>(),
-                },
             });
             RequireForUpdate(m_PreventOverrideQuery);
             Enabled = false;
