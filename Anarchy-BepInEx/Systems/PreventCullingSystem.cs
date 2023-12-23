@@ -28,7 +28,7 @@ namespace Anarchy.Systems
         private ILog m_Log;
         private EntityQuery m_CullingInfoQuery;
         private TypeHandle __TypeHandle;
-        private ToolOutputBarrier m_ToolOutputBarrier;
+        private EndFrameBarrier m_EndFrameBarrier;
         private SimulationSystem m_SimulationSystem;
         private RenderingSystem m_RenderingSystem;
         private BatchDataSystem m_BatchDataSystem;
@@ -50,7 +50,7 @@ namespace Anarchy.Systems
         {
             m_Log = AnarchyMod.Instance.Logger;
             m_Log.Info($"{nameof(PreventCullingSystem)} Created.");
-            m_ToolOutputBarrier = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<ToolOutputBarrier>();
+            m_EndFrameBarrier = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<EndFrameBarrier>();
             m_SimulationSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<SimulationSystem>();
             m_CameraUpdateSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<CameraUpdateSystem>();
             m_BatchDataSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<BatchDataSystem>();
@@ -106,13 +106,13 @@ namespace Anarchy.Systems
                 m_CullingInfoType = __TypeHandle.__CullingInfo_RO_ComponentTypeHandle,
                 m_EntityType = __TypeHandle.__Unity_Entities_Entity_TypeHandle,
                 m_TransformType = __TypeHandle.__Game_Objects_Transform_RO_ComponentTypeHandle,
-                buffer = m_ToolOutputBarrier.CreateCommandBuffer().AsParallelWriter(),
+                buffer = m_EndFrameBarrier.CreateCommandBuffer().AsParallelWriter(),
                 m_CameraDirection = cameraDirection,
                 m_CameraPosition = cameraPosition,
                 m_LodParameters = currentLodParameters,
             };
             JobHandle jobHandle = preventCullingJob.ScheduleParallel(m_CullingInfoQuery, Dependency);
-            m_ToolOutputBarrier.AddJobHandleForProducer(jobHandle);
+            m_EndFrameBarrier.AddJobHandleForProducer(jobHandle);
             Dependency = jobHandle;
         }
 
