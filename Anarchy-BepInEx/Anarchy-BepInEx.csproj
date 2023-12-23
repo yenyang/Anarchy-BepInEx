@@ -95,6 +95,10 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
+    <Reference Include="Unity.Burst">
+      <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Cities Skylines II\Cities2_Data\Managed\Unity.Burst.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Unity.Collections">
       <HintPath>..\..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Cities Skylines II\Cities2_Data\Managed\Unity.Collections.dll</HintPath>
       <Private>False</Private>
@@ -134,7 +138,7 @@
     <Compile Include="StyleCop\GlobalSuppressions.cs" />
     <Compile Include="Systems\AnarchyUISystem.cs" />
     <Compile Include="Systems\AnarchyPlopSystem.cs" />
-    <Compile Include="Systems\RemovePreventOverrideSystem.cs" />
+    <Compile Include="Systems\PreventCullingSystem.cs" />
     <Compile Include="Systems\PreventOverrideSystem.cs" />
     <Compile Include="Systems\DisableToolErrorsSystem.cs" />
     <Compile Include="Systems\EnableToolErrorsSystem.cs" />

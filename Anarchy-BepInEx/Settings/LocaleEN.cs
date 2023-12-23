@@ -42,6 +42,8 @@ namespace Anarchy.Settings
                 { m_Setting.GetOptionWarningLocaleID(nameof(AnarchyModSettings.ResetModSettings)), "Reset Anarchy Settings?" },
                 { m_Setting.GetOptionLabelLocaleID(nameof(AnarchyModSettings.PermanetlyPreventOverride)), "Permanetly Prevent Override" },
                 { m_Setting.GetOptionDescLocaleID(nameof(AnarchyModSettings.PermanetlyPreventOverride)), "Newly affected trees and props will not get overriden later even if you have anarchy disabled" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(AnarchyModSettings.PreventAccidentalPropCulling)), "Prevent Accidental Prop Culling" },
+                { m_Setting.GetOptionDescLocaleID(nameof(AnarchyModSettings.PreventAccidentalPropCulling)), "This will routinely trigger a graphical update to props placed with Anarchy that have been culled to prevent accidental culling of props. This affects performance." },
             };
         }
 

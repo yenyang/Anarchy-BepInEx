@@ -49,6 +49,11 @@ namespace Anarchy.Settings
         public bool PermanetlyPreventOverride { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating whether to prevent prop culling.
+        /// </summary>
+        public bool PreventAccidentalPropCulling { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether: Used to force saving of Modsettings if settings would result in empty Json.
         /// </summary>
         [SettingsUIHidden]
@@ -79,6 +84,7 @@ namespace Anarchy.Settings
             Contra = true;
             ToolIcon = true;
             PermanetlyPreventOverride = true;
+            PreventAccidentalPropCulling = true;
         }
     }
 }

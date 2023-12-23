@@ -9,8 +9,6 @@ namespace Anarchy.Systems
     using Colossal.Logging;
     using Game;
     using Game.Common;
-    using Game.Prefabs;
-    using Game.Tools;
     using Unity.Collections;
     using Unity.Entities;
 
@@ -20,9 +18,7 @@ namespace Anarchy.Systems
     public partial class PreventOverrideSystem : GameSystemBase
     {
         private ILog m_Log;
-        private EntityQuery m_PreventOverrideQuery;
         private EntityQuery m_NeedToPreventOverrideQuery;
-        private RemovePreventOverrideSystem m_RemovePreventOverrideSystem;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PreventOverrideSystem"/> class.
@@ -36,8 +32,6 @@ namespace Anarchy.Systems
         {
             m_Log = AnarchyMod.Instance.Logger;
             m_Log.Info($"{nameof(PreventOverrideSystem)} Created.");
-            m_RemovePreventOverrideSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<RemovePreventOverrideSystem>();
-
             m_NeedToPreventOverrideQuery = GetEntityQuery(new EntityQueryDesc
             {
                 All = new ComponentType[]
@@ -69,10 +63,6 @@ namespace Anarchy.Systems
                 }
 
                 overridenEntities.Dispose();
-            }
-            else if (!AnarchyMod.Settings.PermanetlyPreventOverride)
-            {
-                m_RemovePreventOverrideSystem.Enabled = true;
             }
         }
     }
