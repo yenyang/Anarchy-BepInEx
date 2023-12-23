@@ -5,7 +5,6 @@
 #define DEBUG
 namespace Anarchy
 {
-    using System.IO;
     using Anarchy.Settings;
     using Anarchy.Systems;
     using Anarchy.Tooltip;
@@ -14,6 +13,7 @@ namespace Anarchy
     using Game;
     using Game.Modding;
     using Game.SceneFlow;
+    using System.IO;
 
     /// <summary>
     /// Mod entry point.
@@ -87,8 +87,9 @@ namespace Anarchy
             updateSystem.UpdateAt<AnarchyUISystem>(SystemUpdatePhase.UIUpdate);
             updateSystem.UpdateBefore<AnarchyPlopSystem>(SystemUpdatePhase.ModificationEnd);
             updateSystem.UpdateBefore<PreventOverrideSystem>(SystemUpdatePhase.ModificationEnd);
-            updateSystem.UpdateAt<PreventOverrideSystem>(SystemUpdatePhase.ToolUpdate);
-            updateSystem.UpdateAt<PreventOverrideSystem>(SystemUpdatePhase.GameSimulation);
+            updateSystem.UpdateBefore<PreventOverrideSystem>(SystemUpdatePhase.PreCulling);
+            updateSystem.UpdateBefore<PreventOverrideSystem>(SystemUpdatePhase.ToolUpdate);
+            updateSystem.UpdateBefore<PreventOverrideSystem>(SystemUpdatePhase.GameSimulation);
             updateSystem.UpdateAt<RemovePreventOverrideSystem>(SystemUpdatePhase.ToolUpdate);
         }
 
