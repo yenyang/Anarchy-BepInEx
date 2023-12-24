@@ -61,7 +61,7 @@ namespace Anarchy.Settings
         /// </summary>
         [SettingsUISlider(min = 1, max = 600, step = 1, scalarMultiplier = 1, unit = Unit.kInteger)]
         [SettingsUIHideByCondition(typeof(Setting), nameof(IsCullingNotBeingPrevented))]
-        public int PropUpdateFrequency { get; set; }
+        public int PropRefreshFrequency { get; set; }
 
         /// <summary>
         /// Sets a value indicating whether: to update props now.
@@ -113,7 +113,7 @@ namespace Anarchy.Settings
             ToolIcon = true;
             PermanetlyPreventOverride = true;
             PreventAccidentalPropCulling = true;
-            PropUpdateFrequency = 30;
+            PropRefreshFrequency = 30;
         }
     }
 }

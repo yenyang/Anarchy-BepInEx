@@ -43,9 +43,9 @@ namespace Anarchy.Settings
                 { m_Setting.GetOptionLabelLocaleID(nameof(AnarchyModSettings.PermanetlyPreventOverride)), "Permanetly Prevent Override" },
                 { m_Setting.GetOptionDescLocaleID(nameof(AnarchyModSettings.PermanetlyPreventOverride)), "Newly affected trees and props will not get overriden later even if you have anarchy disabled" },
                 { m_Setting.GetOptionLabelLocaleID(nameof(AnarchyModSettings.PreventAccidentalPropCulling)), "Prevent Accidental Prop Culling" },
-                { m_Setting.GetOptionDescLocaleID(nameof(AnarchyModSettings.PreventAccidentalPropCulling)), "This will routinely trigger a graphical update to props placed with Anarchy that have been culled to prevent accidental culling of props. This affects performance." },
-                { m_Setting.GetOptionLabelLocaleID(nameof(AnarchyModSettings.PropUpdateFrequency)), "Prop Update Frequency" },
-                { m_Setting.GetOptionDescLocaleID(nameof(AnarchyModSettings.PropUpdateFrequency)), "This is number of frames between graphical updates to props placed with Anarchy to prevent accidental culling. Higher numbers will have better performance, but longer possible time that props may be missing." },
+                { m_Setting.GetOptionDescLocaleID(nameof(AnarchyModSettings.PreventAccidentalPropCulling)), "This will routinely trigger a graphical refresh to props placed with Anarchy that have been culled to prevent accidental culling of props. This affects performance." },
+                { m_Setting.GetOptionLabelLocaleID(nameof(AnarchyModSettings.PropRefreshFrequency)), "Prop Refresh Frequency" },
+                { m_Setting.GetOptionDescLocaleID(nameof(AnarchyModSettings.PropRefreshFrequency)), "This is number of frames between graphical refresh to props placed with Anarchy to prevent accidental culling. Higher numbers will have better performance, but longer possible time that props may be missing." },
                 { m_Setting.GetOptionLabelLocaleID(nameof(AnarchyModSettings.RefreshProps)), "Refresh Props" },
                 { m_Setting.GetOptionDescLocaleID(nameof(AnarchyModSettings.RefreshProps)), "If props placed with Anarchy have been accidently culled, you can press this button to bring them back now. This doesn't negatively effect performance." },
             };

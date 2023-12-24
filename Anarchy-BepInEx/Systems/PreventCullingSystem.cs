@@ -60,7 +60,7 @@ namespace Anarchy.Systems
         /// <inheritdoc/>
         protected override void OnUpdate()
         {
-            if (m_FrameCount < AnarchyMod.Settings.PropUpdateFrequency && !RunNow)
+            if (m_FrameCount < AnarchyMod.Settings.PropRefreshFrequency && !RunNow)
             {
                 m_FrameCount++;
                 return;

@@ -21,6 +21,7 @@ The mod also has:
 * Option to automatically enable with bulldozer
 * Optional mouse tooltip
 * Icons for game manipulation and bypass verification for bulldozer.
+* Use Bulldoze tool to remove invisible paths/markers. See below.
 
 Currently it applies to these tools:
 * Object Tool
@@ -34,11 +35,6 @@ Currently it applies to these tools:
 You can activate anarchy with the keyboard shortcut "Ctrl+A" or with the optional tool icon that only appears while using the above tools.
 
 You can tell anarchy is active using optional Flaming Chirper, the tool icon, or a tooltip.
-
-There is an option to "Permenently Prevent Override". This applies to trees and props previously placed with Anarchy. 
-If you later interact with these objects with this option on, and Anarchy off, then the object will persist.
-If you later interact with these objects with this option off, and Anarchy off, then the object will be overriden per vanilla.
-When drawing buildings, nets, or areas the trees and props that are not prevented from overriding, will behave per vanilla.
 
 The following errors will not occur while Anarchy is enabled:
 * Overlap Existing
@@ -62,11 +58,30 @@ The following errors will not occur while Anarchy is enabled:
 
 If you find an error that you think should be added or if you find a tool that this should also be included, please let me know. 
 
+## Props
+Placing standalone props is an unsupported feature of the game. You need DevUI to access the 'Add Object' menu via the home button to place standalong props.
+
+There is an option to "Permenently Prevent Override". This applies to trees and props previously placed with Anarchy. 
+If you later interact with these objects with this option on, and Anarchy off, then the object will persist.
+If you later interact with these objects with this option off, and Anarchy off, then the object will be overriden per vanilla.
+When drawing buildings, nets, or areas the trees and props that are not prevented from overriding, will behave per vanilla.
+
+Props on top of buildings or nets may sometimes be culled by the game, and disappear until reloading or something interacts with or near them.
+The mod has an option to routinely refresh props that were culled so they don't disappear. This affects perforamnce but you can adjust the frequency.
+You can also manually trigger a prop refresh using a button in the options menu.
+
+## Invisible Paths and Markers
+Drawing invisible Paths and markers is an unsupported feature of the game. You need DevUI to access the 'Add Object' menu via the home button to draw invisible paths and markers.
+
+With the Bulldoze tool, the DevUI option to "Show Markers", and Anarchy enabled, you can remove Invisible paths and markers, **BUT SAVE BEFORE HAND!**
+
+Removing them in the wrong order may result in a crash to desktop.
+
 ## Disclaimer
 This mod does NOT allow you to do everything including:
 * Use the net tool to draw a bridge through a sea-lane clearance
 * If the vanilla net tool would remove an existing network, it will still do that.
-* Even if the mod disables the error check, the UI may still prevent you from doing something like placing a second copy of a unique building/upgrade.
+* Even if the mod disables the error check, the UI may still prevent you from doing something.
 * Does not give additional control for prop placement.
 
 **Please save frequently, in multiple files, and learn to use responsibly.**
@@ -77,7 +92,7 @@ I will respond on the code modding channels on **Cities: Skylines modding Discor
 ## Credits 
 * yenyang - Mod Author
 * Chameleon TBN - Testing, Feedback, Icons, & Logo
-* Bad Peanut - Image Credit for Flaming Chirper
+* Sully - Testing and Promotional material.
 * Algernon - Help with UI, Cooperative Development & Code Sharing
+* Bad Peanut - Image Credit for Flaming Chirper
 * T.D.W., Klyte45, krzychu124, & Quboid - Cooperative Development & Code Sharing
-* Sully - Testing
