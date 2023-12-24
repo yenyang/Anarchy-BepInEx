@@ -51,11 +51,8 @@ namespace Anarchy.Systems
         /// <inheritdoc/>
         protected override void OnUpdate()
         {
-            if (AnarchyMod.Settings.PermanetlyPreventOverride)
-            {
-                EntityManager.RemoveComponent(m_NeedToPreventOverrideQuery, ComponentType.ReadOnly<Overridden>());
-                EntityManager.AddComponent(m_NeedToPreventOverrideQuery, ComponentType.ReadOnly<Updated>());
-            }
+            EntityManager.RemoveComponent(m_NeedToPreventOverrideQuery, ComponentType.ReadOnly<Overridden>());
+            EntityManager.AddComponent(m_NeedToPreventOverrideQuery, ComponentType.ReadOnly<Updated>());
         }
     }
 }

@@ -2,9 +2,7 @@
 
 Anarchy disables error checks for tools in a way that the errors are not shown at all.
 
-This mod allows you to place vegetation and props (with DevUI 'Add Object' menu) in buildings, nets or areas.
-
-This mod allows you to place vegetation such as trees and bushes close together.
+This mod allows you to place vegetation and props (with DevUI 'Add Object' menu) overlapping with other objects and close together.
 
 For consistency within the community, please do not use the term Anarchy to mean something else for CSL2.
 
@@ -58,22 +56,19 @@ The following errors will not occur while Anarchy is enabled:
 
 If you find an error that you think should be added or if you find a tool that this should also be included, please let me know. 
 
-## Props
+## Props and Trees
 Placing standalone props is an unsupported feature of the game. You need DevUI to access the 'Add Object' menu via the home button to place standalong props.
 
-There is an option to "Permenently Prevent Override". This applies to trees and props previously placed with Anarchy. 
-If you later interact with these objects with this option on, and Anarchy off, then the object will persist.
-If you later interact with these objects with this option off, and Anarchy off, then the object will be overriden per vanilla.
-When drawing buildings, nets, or areas the trees and props that are not prevented from overriding, will behave per vanilla.
+With Anarchy enabled, you can place props and trees overlapping with buildings, nets, areas, other trees, other props, etc. Props and trees placed with Anarchy enabled cannot be overriden later (even if later Anarchy is disabled), but can be removed with bulldozer or, if applicable, tree brush.
 
-Props added to buildings or nets may sometimes be culled by the game, and disappear until reloading or something interacts with or near them.
-The mod has an option to routinely refresh props that were culled so they don't disappear. This affects perforamnce but you can adjust the frequency.
+Props overlapping with buildings or nets may sometimes be culled by the game, and disappear until reloading or something interacts with or near them.
+The mod has an option to routinely refresh props that were culled so they don't disappear. This affects performance but you can adjust the frequency.
 You can also manually trigger a prop refresh using a button in the options menu.
 
 ## Invisible Paths and Markers
-Drawing invisible Paths and markers is an unsupported feature of the game. You need DevUI to access the 'Add Object' menu via the home button to draw invisible paths and markers.
+Drawing invisible paths and markers is an unsupported feature of the game. You need DevUI to access the 'Add Object' menu via the home button to draw invisible paths and markers.
 
-With the Bulldoze tool, the DevUI option to "Show Markers", and Anarchy enabled, you can remove Invisible paths and markers, **BUT SAVE BEFORE HAND!**
+With the Bulldoze tool, the DevUI option to "Show Markers", and Anarchy enabled, you can remove invisible paths and markers, **BUT SAVE BEFORE HAND!**
 
 Removing them in the wrong order may result in a crash to desktop.
 
@@ -92,7 +87,7 @@ I will respond on the code modding channels on **Cities: Skylines modding Discor
 ## Credits 
 * yenyang - Mod Author
 * Chameleon TBN - Testing, Feedback, Icons, & Logo
-* Sully - Testing and Promotional material.
+* Sully - Testing and Promotional Material.
 * Algernon - Help with UI, Cooperative Development & Code Sharing
 * Bad Peanut - Image Credit for Flaming Chirper
 * T.D.W., Klyte45, krzychu124, & Quboid - Cooperative Development & Code Sharing

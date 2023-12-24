@@ -1,6 +1,6 @@
 {
   "name": "Anarchy",
-  "description": "Disables Error Checks and does not show errors. Place vegetation and props on other objects and close together.",
+  "description": "Disables Error Checks and does not show errors. Place vegetation and props overlapping other objects and close together.",
   "version_number": "1.1.0",
   "dependencies": [
     "BepInEx-BepInExPack-5.4.2100",
