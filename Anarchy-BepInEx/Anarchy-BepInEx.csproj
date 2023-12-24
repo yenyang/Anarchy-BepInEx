@@ -145,7 +145,6 @@
     <Compile Include="Systems\EnableToolErrorsSystem.cs" />
     <Compile Include="Tooltip\AnarchySystem.cs" />
     <Compile Include="Tooltip\AnarchyTooltipSystem.cs" />
-    <Compile Include="Utils\ReflectionExtensions.cs" />
     <Compile Include="Utils\UIFileUtils.cs" />
   </ItemGroup>
   <ItemGroup>

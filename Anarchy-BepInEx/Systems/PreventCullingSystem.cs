@@ -25,26 +25,19 @@ namespace Anarchy.Systems
     /// <summary>
     /// A system that prevents objects from being overriden that has a custom component.
     /// </summary>
-    public partial class PreventCullingSystem : GameSystemBase, IPostDeserialize
+    public partial class PreventCullingSystem : GameSystemBase
     {
         private ILog m_Log;
         private EntityQuery m_CullingInfoQuery;
         private TypeHandle __TypeHandle;
         private ToolOutputBarrier m_ToolOutputBarrier;
         private int m_FrameCount = 10;
-        private bool m_Loaded = false;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PreventCullingSystem"/> class.
         /// </summary>
         public PreventCullingSystem()
         {
-        }
-
-        /// <inheritdoc/>
-        public void PostDeserialize(Context context)
-        {
-            m_Loaded = true;
         }
 
         /// <inheritdoc/>
@@ -76,7 +69,7 @@ namespace Anarchy.Systems
 
             m_FrameCount = 0;
 
-            if (!AnarchyMod.Settings.PreventAccidentalPropCulling || !m_Loaded)
+            if (!AnarchyMod.Settings.PreventAccidentalPropCulling)
             {
                 return;
             }
