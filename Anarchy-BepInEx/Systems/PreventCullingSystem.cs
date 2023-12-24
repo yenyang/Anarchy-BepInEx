@@ -25,7 +25,7 @@ namespace Anarchy.Systems
         private EntityQuery m_CullingInfoQuery;
         private TypeHandle __TypeHandle;
         private ToolOutputBarrier m_ToolOutputBarrier;
-        private int m_FrameCount = 10;
+        private int m_FrameCount = 0;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PreventCullingSystem"/> class.
@@ -52,6 +52,11 @@ namespace Anarchy.Systems
                     ComponentType.ReadOnly<AnarchyObject>(),
                     ComponentType.ReadOnly<CullingInfo>(),
                },
+                None = new ComponentType[]
+                {
+                    ComponentType.ReadOnly<Temp>(),
+                    ComponentType.ReadOnly<Deleted>(),
+                },
             });
             RequireForUpdate(m_CullingInfoQuery);
             base.OnCreate();

@@ -9,7 +9,7 @@ namespace Anarchy.Systems
     using Colossal.Logging;
     using Game;
     using Game.Common;
-    using Unity.Collections;
+    using Game.Tools;
     using Unity.Entities;
 
     /// <summary>
@@ -39,6 +39,11 @@ namespace Anarchy.Systems
                     ComponentType.ReadOnly<PreventOverride>(),
                     ComponentType.ReadOnly<Overridden>(),
                },
+                None = new ComponentType[]
+                {
+                    ComponentType.ReadOnly<Temp>(),
+                    ComponentType.ReadOnly<Deleted>(),
+                },
             });
             RequireForUpdate(m_NeedToPreventOverrideQuery);
             base.OnCreate();
@@ -49,20 +54,8 @@ namespace Anarchy.Systems
         {
             if (!m_NeedToPreventOverrideQuery.IsEmptyIgnoreFilter && AnarchyMod.Settings.PermanetlyPreventOverride)
             {
-                NativeArray<Entity> overridenEntities = m_NeedToPreventOverrideQuery.ToEntityArray(Allocator.Temp);
-                foreach (Entity currentEntity in overridenEntities)
-                {
-                    if (EntityManager.HasComponent<PreventOverride>(currentEntity))
-                    {
-                        EntityManager.RemoveComponent<Overridden>(currentEntity);
-                        EntityManager.AddComponent<Updated>(currentEntity);
-                    }
-#if VERBOSE
-                    m_Log.Verbose($"{nameof(PreventOverrideSystem)}.{nameof(OnUpdate)} Removed  {nameof(Overridden)}  component from Entity {currentEntity.Index}.{currentEntity.Version}");
-#endif
-                }
-
-                overridenEntities.Dispose();
+                EntityManager.RemoveComponent(m_NeedToPreventOverrideQuery, ComponentType.ReadOnly<Overridden>());
+                EntityManager.AddComponent(m_NeedToPreventOverrideQuery, ComponentType.ReadOnly<Updated>());
             }
         }
     }

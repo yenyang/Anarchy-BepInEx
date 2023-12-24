@@ -14,7 +14,6 @@ namespace Anarchy.Systems
     using Game.Common;
     using Game.Prefabs;
     using Game.Tools;
-    using Unity.Collections;
     using Unity.Entities;
 
     /// <summary>
@@ -34,10 +33,10 @@ namespace Anarchy.Systems
         private AnarchyUISystem m_AnarchyUISystem;
         private NetToolSystem m_NetToolSystem;
         private ObjectToolSystem m_ObjectToolSystem;
-        private EntityQuery m_BuildingDataQuery;
         private PrefabSystem m_PrefabSystem;
         private EntityQuery m_CreatedQuery;
         private EntityQuery m_OwnedAndOverridenQuery;
+        private EntityQuery m_AnarchyObjectQuery;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AnarchyPlopSystem"/> class.
@@ -83,7 +82,23 @@ namespace Anarchy.Systems
                 {
                     ComponentType.ReadOnly<Temp>(),
                     ComponentType.ReadOnly<BuildingData>(),
+                    ComponentType.ReadOnly<Deleted>(),
                 },
+            });
+            m_AnarchyObjectQuery = GetEntityQuery(new EntityQueryDesc
+            {
+                All = new ComponentType[]
+               {
+                    ComponentType.ReadOnly<AnarchyObject>(),
+                    ComponentType.ReadOnly<Updated>(),
+                    ComponentType.ReadOnly<Overridden>(),
+               },
+                None = new ComponentType[]
+               {
+                    ComponentType.ReadOnly<Temp>(),
+                    ComponentType.ReadOnly<BuildingData>(),
+                    ComponentType.ReadOnly<Deleted>(),
+               },
             });
             RequireForUpdate(m_CreatedQuery);
             base.OnCreate();
@@ -109,38 +124,23 @@ namespace Anarchy.Systems
 
             if (m_AnarchySystem.AnarchyEnabled && m_AppropriateTools.Contains(m_ToolSystem.activeTool.toolID) && !m_NetToolSystem.TrySetPrefab(m_ToolSystem.activePrefab) && !placingBuilding)
             {
-                NativeArray<Entity> createdEntities = m_CreatedQuery.ToEntityArray(Allocator.Temp);
-                foreach (Entity currentEntity in createdEntities)
+                EntityManager.RemoveComponent(m_CreatedQuery, ComponentType.ReadOnly<Overridden>());
+
+                if (AnarchyMod.Settings.PermanetlyPreventOverride)
                 {
-                    if (EntityManager.HasComponent<Overridden>(currentEntity))
-                    {
-                        EntityManager.RemoveComponent<Overridden>(currentEntity);
-                    }
-
-                    if (AnarchyMod.Settings.PermanetlyPreventOverride)
-                    {
-                        EntityManager.AddComponent<PreventOverride>(currentEntity);
-                    }
-
-                    EntityManager.AddComponent<AnarchyObject>(currentEntity);
-#if VERBOSE
-                    m_Log.Verbose($"{nameof(PreventOverrideSystem)}.{nameof(OnUpdate)} Removed overriden component from Entity {currentEntity.Index}.{currentEntity.Version}");
-#endif
+                    EntityManager.AddComponent(m_CreatedQuery, ComponentType.ReadOnly<Overridden>());
                 }
 
-                createdEntities.Dispose();
+                EntityManager.AddComponent(m_CreatedQuery, ComponentType.ReadOnly<AnarchyObject>());
 
-                NativeArray<Entity> ownedAndOverridenEntities = m_OwnedAndOverridenQuery.ToEntityArray(Allocator.Temp);
-                foreach (Entity currentEntity in ownedAndOverridenEntities)
-                {
-                    EntityManager.RemoveComponent<Overridden>(currentEntity);
-                    EntityManager.AddComponent<PreventOverride>(currentEntity);
-#if VERBOSE
-                    m_Log.Verbose($"{nameof(PreventOverrideSystem)}.{nameof(OnUpdate)} Removed overriden component from Entity {currentEntity.Index}.{currentEntity.Version}");
-#endif
-                }
+                EntityManager.RemoveComponent(m_OwnedAndOverridenQuery, ComponentType.ReadOnly<Overridden>());
+                EntityManager.AddComponent(m_OwnedAndOverridenQuery, ComponentType.ReadOnly<PreventOverride>());
+            }
 
-                ownedAndOverridenEntities.Dispose();
+            if (m_AnarchySystem.AnarchyEnabled && m_AnarchySystem.IsToolAppropriate(m_ToolSystem.activeTool.toolID))
+            {
+                EntityManager.RemoveComponent(m_AnarchyObjectQuery, ComponentType.ReadOnly<Overridden>());
+                EntityManager.AddComponent(m_AnarchyObjectQuery, ComponentType.ReadOnly<Updated>());
             }
         }
     }
