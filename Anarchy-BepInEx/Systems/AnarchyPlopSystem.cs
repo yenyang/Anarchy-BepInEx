@@ -128,7 +128,7 @@ namespace Anarchy.Systems
 
                 if (AnarchyMod.Settings.PermanetlyPreventOverride)
                 {
-                    EntityManager.AddComponent(m_CreatedQuery, ComponentType.ReadOnly<Overridden>());
+                    EntityManager.AddComponent(m_CreatedQuery, ComponentType.ReadOnly<PreventOverride>());
                 }
 
                 EntityManager.AddComponent(m_CreatedQuery, ComponentType.ReadOnly<AnarchyObject>());
