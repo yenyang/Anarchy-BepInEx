@@ -2,7 +2,7 @@
 
 Anarchy disables error checks for tools in a way that the errors are not shown at all.
 
-This mod allows you to place vegetation and props (with DevUI 'Add Object' menu) overlapping with other objects and close together.
+This mod allows you to place vegetation and props (with DevUI 'Add Object' menu) overlapping or inside the boundaries of other objects and close together.
 
 For consistency within the community, please do not use the term Anarchy to mean something else for CSL2.
 
@@ -59,7 +59,7 @@ If you find an error that you think should be added or if you find a tool that t
 ## Props and Trees
 Placing standalone props is an unsupported feature of the game. You need DevUI to access the 'Add Object' menu via the home button to place standalong props.
 
-With Anarchy enabled, you can place props and trees overlapping with buildings, nets, areas, other trees, other props, etc. Props and trees placed with Anarchy enabled cannot be overriden later (even if later Anarchy is disabled), but can be removed with bulldozer or, if applicable, tree brush.
+With Anarchy enabled, you can place props and trees overlapping or inside the boundaries of buildings, nets, areas, other trees, other props, etc. Props and trees placed with Anarchy enabled cannot be overriden later (even if later Anarchy is disabled), but can be removed with bulldozer or, if applicable, tree brush.
 
 Props overlapping with buildings or nets may sometimes be culled by the game, and disappear until reloading or something interacts with or near them.
 The mod has an option to routinely refresh props that were culled so they don't disappear. This affects performance but you can adjust the frequency.

@@ -9,7 +9,6 @@ namespace Anarchy.Systems
     using Colossal.Logging;
     using Game;
     using Game.Common;
-    using Game.Tools;
     using Unity.Entities;
 
     /// <summary>
