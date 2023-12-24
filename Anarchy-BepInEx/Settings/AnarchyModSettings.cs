@@ -60,7 +60,7 @@ namespace Anarchy.Settings
         /// Gets or sets a value indicating the frequency to update props.
         /// </summary>
         [SettingsUISlider(min = 1, max = 600, step = 1, scalarMultiplier = 1, unit = Unit.kInteger)]
-        [SettingsUIHideByCondition(typeof(Setting), nameof(IsCullingNotBeingPrevented))]
+        [SettingsUIHideByCondition(typeof(AnarchyModSettings), nameof(IsCullingNotBeingPrevented))]
         public int PropRefreshFrequency { get; set; }
 
         /// <summary>
