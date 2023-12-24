@@ -66,7 +66,7 @@ If you later interact with these objects with this option on, and Anarchy off, t
 If you later interact with these objects with this option off, and Anarchy off, then the object will be overriden per vanilla.
 When drawing buildings, nets, or areas the trees and props that are not prevented from overriding, will behave per vanilla.
 
-Props on top of buildings or nets may sometimes be culled by the game, and disappear until reloading or something interacts with or near them.
+Props added to buildings or nets may sometimes be culled by the game, and disappear until reloading or something interacts with or near them.
 The mod has an option to routinely refresh props that were culled so they don't disappear. This affects perforamnce but you can adjust the frequency.
 You can also manually trigger a prop refresh using a button in the options menu.
 

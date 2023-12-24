@@ -117,7 +117,12 @@ namespace Anarchy.Systems
                         EntityManager.RemoveComponent<Overridden>(currentEntity);
                     }
 
-                    EntityManager.AddComponent<PreventOverride>(currentEntity);
+                    if (AnarchyMod.Settings.PermanetlyPreventOverride)
+                    {
+                        EntityManager.AddComponent<PreventOverride>(currentEntity);
+                    }
+
+                    EntityManager.AddComponent<AnarchyObject>(currentEntity);
 #if VERBOSE
                     m_Log.Verbose($"{nameof(PreventOverrideSystem)}.{nameof(OnUpdate)} Removed overriden component from Entity {currentEntity.Index}.{currentEntity.Version}");
 #endif
