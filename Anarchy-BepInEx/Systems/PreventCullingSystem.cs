@@ -7,20 +7,14 @@ namespace Anarchy.Systems
     using Anarchy;
     using Anarchy.Components;
     using Colossal.Logging;
-    using Colossal.Mathematics;
-    using Colossal.Serialization.Entities;
     using Game;
     using Game.Common;
     using Game.Rendering;
-    using Game.Serialization;
-    using Game.Simulation;
     using Game.Tools;
     using Unity.Burst.Intrinsics;
     using Unity.Collections;
     using Unity.Entities;
     using Unity.Jobs;
-    using Unity.Mathematics;
-    using UnityEngine.Rendering;
 
     /// <summary>
     /// A system that prevents objects from being overriden that has a custom component.
@@ -39,6 +33,11 @@ namespace Anarchy.Systems
         public PreventCullingSystem()
         {
         }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to trigger the system running now.
+        /// </summary>
+        public bool RunNow { get; set; }
 
         /// <inheritdoc/>
         protected override void OnCreate()
@@ -61,7 +60,7 @@ namespace Anarchy.Systems
         /// <inheritdoc/>
         protected override void OnUpdate()
         {
-            if (m_FrameCount < 10)
+            if (m_FrameCount < AnarchyMod.Settings.PropUpdateFrequency && !RunNow)
             {
                 m_FrameCount++;
                 return;
@@ -69,10 +68,12 @@ namespace Anarchy.Systems
 
             m_FrameCount = 0;
 
-            if (!AnarchyMod.Settings.PreventAccidentalPropCulling)
+            if (!AnarchyMod.Settings.PreventAccidentalPropCulling && !RunNow)
             {
                 return;
             }
+
+            RunNow = false;
 
             __TypeHandle.__CullingInfo_RO_ComponentTypeHandle.Update(ref CheckedStateRef);
             __TypeHandle.__Unity_Entities_Entity_TypeHandle.Update(ref CheckedStateRef);
