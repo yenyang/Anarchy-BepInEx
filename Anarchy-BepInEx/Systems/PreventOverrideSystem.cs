@@ -37,11 +37,10 @@ namespace Anarchy.Systems
                 All = new ComponentType[]
                {
                     ComponentType.ReadOnly<PreventOverride>(),
-                    ComponentType.ReadOnly<Overridden>(),
+                    ComponentType.ReadWrite<Overridden>(),
                },
                 None = new ComponentType[]
                 {
-                    ComponentType.ReadOnly<Temp>(),
                     ComponentType.ReadOnly<Deleted>(),
                 },
             });
@@ -52,7 +51,7 @@ namespace Anarchy.Systems
         /// <inheritdoc/>
         protected override void OnUpdate()
         {
-            if (!m_NeedToPreventOverrideQuery.IsEmptyIgnoreFilter && AnarchyMod.Settings.PermanetlyPreventOverride)
+            if (AnarchyMod.Settings.PermanetlyPreventOverride)
             {
                 EntityManager.RemoveComponent(m_NeedToPreventOverrideQuery, ComponentType.ReadOnly<Overridden>());
                 EntityManager.AddComponent(m_NeedToPreventOverrideQuery, ComponentType.ReadOnly<Updated>());

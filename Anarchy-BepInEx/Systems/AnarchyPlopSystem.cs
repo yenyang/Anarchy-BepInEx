@@ -76,11 +76,10 @@ namespace Anarchy.Systems
                 {
                     ComponentType.ReadOnly<Owner>(),
                     ComponentType.ReadOnly<Updated>(),
-                    ComponentType.ReadOnly<Overridden>(),
+                    ComponentType.ReadWrite<Overridden>(),
                 },
                 None = new ComponentType[]
                 {
-                    ComponentType.ReadOnly<Temp>(),
                     ComponentType.ReadOnly<BuildingData>(),
                     ComponentType.ReadOnly<Deleted>(),
                 },
@@ -91,11 +90,10 @@ namespace Anarchy.Systems
                {
                     ComponentType.ReadOnly<AnarchyObject>(),
                     ComponentType.ReadOnly<Updated>(),
-                    ComponentType.ReadOnly<Overridden>(),
+                    ComponentType.ReadWrite<Overridden>(),
                },
                 None = new ComponentType[]
                {
-                    ComponentType.ReadOnly<Temp>(),
                     ComponentType.ReadOnly<BuildingData>(),
                     ComponentType.ReadOnly<Deleted>(),
                },
@@ -124,23 +122,12 @@ namespace Anarchy.Systems
 
             if (m_AnarchySystem.AnarchyEnabled && m_AppropriateTools.Contains(m_ToolSystem.activeTool.toolID) && !m_NetToolSystem.TrySetPrefab(m_ToolSystem.activePrefab) && !placingBuilding)
             {
-                EntityManager.RemoveComponent(m_CreatedQuery, ComponentType.ReadOnly<Overridden>());
+                EntityManager.RemoveComponent(m_CreatedQuery, ComponentType.ReadWrite<Overridden>());
+                EntityManager.AddComponent(m_CreatedQuery, ComponentType.ReadWrite<PreventOverride>());
+                EntityManager.AddComponent(m_CreatedQuery, ComponentType.ReadWrite<AnarchyObject>());
 
-                if (AnarchyMod.Settings.PermanetlyPreventOverride)
-                {
-                    EntityManager.AddComponent(m_CreatedQuery, ComponentType.ReadOnly<PreventOverride>());
-                }
-
-                EntityManager.AddComponent(m_CreatedQuery, ComponentType.ReadOnly<AnarchyObject>());
-
-                EntityManager.RemoveComponent(m_OwnedAndOverridenQuery, ComponentType.ReadOnly<Overridden>());
-                EntityManager.AddComponent(m_OwnedAndOverridenQuery, ComponentType.ReadOnly<PreventOverride>());
-            }
-
-            if (m_AnarchySystem.AnarchyEnabled && m_AnarchySystem.IsToolAppropriate(m_ToolSystem.activeTool.toolID))
-            {
-                EntityManager.RemoveComponent(m_AnarchyObjectQuery, ComponentType.ReadOnly<Overridden>());
-                EntityManager.AddComponent(m_AnarchyObjectQuery, ComponentType.ReadOnly<Updated>());
+                EntityManager.RemoveComponent(m_OwnedAndOverridenQuery, ComponentType.ReadWrite<Overridden>());
+                EntityManager.AddComponent(m_OwnedAndOverridenQuery, ComponentType.ReadWrite<PreventOverride>());
             }
         }
     }

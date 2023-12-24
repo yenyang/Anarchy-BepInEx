@@ -71,7 +71,7 @@ namespace Anarchy
         /// <inheritdoc/>
         public void OnCreateWorld(UpdateSystem updateSystem)
         {
-            Logger.effectivenessLevel = Level.Info;
+            Logger.effectivenessLevel = Level.Debug;
             Logger.Info("Initializing Settings.");
             Settings = new (this);
             Settings.RegisterInOptionsUI();

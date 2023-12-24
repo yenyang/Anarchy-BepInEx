@@ -24,7 +24,6 @@ namespace Anarchy.Patches
         /// </summary>
         public static void Postfix()
         {
-            AnarchyMod.Instance.Logger.Debug($"{nameof(BulldozeToolSystemInitializeRaycastPatch)}.{nameof(Postfix)}");
             AnarchySystem anarchySystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<AnarchySystem>();
             ToolSystem toolSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<ToolSystem>();
             ToolRaycastSystem toolRaycastSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<ToolRaycastSystem>();

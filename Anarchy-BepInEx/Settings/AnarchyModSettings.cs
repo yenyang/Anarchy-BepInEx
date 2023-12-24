@@ -47,11 +47,6 @@ namespace Anarchy.Settings
         public bool ToolIcon { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether to permanently prevent override.
-        /// </summary>
-        public bool PermanetlyPreventOverride { get; set; }
-
-        /// <summary>
         /// Gets or sets a value indicating whether to prevent prop culling.
         /// </summary>
         public bool PreventAccidentalPropCulling { get; set; }
@@ -111,7 +106,6 @@ namespace Anarchy.Settings
             FlamingChirper = true;
             Contra = true;
             ToolIcon = true;
-            PermanetlyPreventOverride = true;
             PreventAccidentalPropCulling = true;
             PropRefreshFrequency = 30;
         }
