@@ -132,6 +132,7 @@
     <Compile Include="AnarchyMod.cs" />
     <Compile Include="BepInEx\AnarchyPlugin.cs" />
     <Compile Include="Components\PreventOverride.cs" />
+    <Compile Include="Patches\BulldozeToolSystemInitializeRaycastPatch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings\AnarchyModSettings.cs" />
     <Compile Include="Settings\LocaleEN.cs" />
@@ -144,6 +145,7 @@
     <Compile Include="Systems\EnableToolErrorsSystem.cs" />
     <Compile Include="Tooltip\AnarchySystem.cs" />
     <Compile Include="Tooltip\AnarchyTooltipSystem.cs" />
+    <Compile Include="Utils\ReflectionExtensions.cs" />
     <Compile Include="Utils\UIFileUtils.cs" />
   </ItemGroup>
   <ItemGroup>
