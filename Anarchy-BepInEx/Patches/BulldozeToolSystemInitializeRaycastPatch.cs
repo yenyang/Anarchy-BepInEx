@@ -28,9 +28,11 @@ namespace Anarchy.Patches
             ToolSystem toolSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<ToolSystem>();
             ToolRaycastSystem toolRaycastSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<ToolRaycastSystem>();
             RenderingSystem renderingSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<RenderingSystem>();
+            AnarchyMod.Instance.Logger.Debug($"{nameof(BulldozeToolSystem)}.{nameof(Postfix)} {toolSystem.actionMode.IsEditor()}");
             if (renderingSystem.markersVisible && anarchySystem.AnarchyEnabled && !toolSystem.actionMode.IsEditor())
             {
                 toolRaycastSystem.raycastFlags |= RaycastFlags.Markers;
+                AnarchyMod.Instance.Logger.Debug($"{nameof(BulldozeToolSystem)}.{nameof(Postfix)} added Markers");
             }
         }
     }

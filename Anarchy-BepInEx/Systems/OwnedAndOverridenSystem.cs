@@ -13,13 +13,12 @@ namespace Anarchy.Systems
     using Game.Common;
     using Game.Prefabs;
     using Game.Tools;
-    using Unity.Collections;
     using Unity.Entities;
 
     /// <summary>
     /// A system that prevents objects from being overriden when placed on each other.
     /// </summary>
-    public partial class AnarchyPlopSystem : GameSystemBase
+    public partial class OwnedAndOverrideSystem : GameSystemBase
     {
         private readonly List<string> m_AppropriateTools = new List<string>()
         {
