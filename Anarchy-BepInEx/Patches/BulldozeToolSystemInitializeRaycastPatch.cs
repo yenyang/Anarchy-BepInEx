@@ -7,6 +7,7 @@ namespace Anarchy.Patches
     using Anarchy;
     using Anarchy.Tooltip;
     using Game;
+    using Game.Areas;
     using Game.Common;
     using Game.Rendering;
     using Game.Tools;
@@ -31,6 +32,11 @@ namespace Anarchy.Patches
             if (renderingSystem.markersVisible && anarchySystem.AnarchyEnabled && !toolSystem.actionMode.IsEditor())
             {
                 toolRaycastSystem.raycastFlags |= RaycastFlags.Markers;
+            }
+            else
+            {
+                toolRaycastSystem.typeMask |= TypeMask.Areas;
+                toolRaycastSystem.areaTypeMask = AreaTypeMask.Surfaces;
             }
         }
     }
