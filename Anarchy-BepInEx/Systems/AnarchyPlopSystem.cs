@@ -30,7 +30,6 @@ namespace Anarchy.Systems
         private AnarchySystem m_AnarchySystem;
         private ILog m_Log;
         private ToolSystem m_ToolSystem;
-        private AnarchyUISystem m_AnarchyUISystem;
         private NetToolSystem m_NetToolSystem;
         private ObjectToolSystem m_ObjectToolSystem;
         private PrefabSystem m_PrefabSystem;
@@ -53,7 +52,6 @@ namespace Anarchy.Systems
             m_ToolSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<ToolSystem>();
             m_NetToolSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<NetToolSystem>();
             m_ObjectToolSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<ObjectToolSystem>();
-            m_AnarchyUISystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<AnarchyUISystem>();
             m_PrefabSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<PrefabSystem>();
             m_CreatedQuery = GetEntityQuery(new EntityQueryDesc
             {
@@ -95,17 +93,16 @@ namespace Anarchy.Systems
                 return;
             }
 
-            bool placingBuilding = false;
             if (m_ToolSystem.activePrefab != null)
             {
                 Entity prefabEntity = m_PrefabSystem.GetEntity(m_ToolSystem.activePrefab);
                 if (EntityManager.HasComponent<BuildingData>(prefabEntity))
                 {
-                    placingBuilding = true;
+                    return;
                 }
             }
 
-            if (m_AnarchySystem.AnarchyEnabled && m_AppropriateTools.Contains(m_ToolSystem.activeTool.toolID) && !m_NetToolSystem.TrySetPrefab(m_ToolSystem.activePrefab) && !placingBuilding)
+            if (m_AnarchySystem.AnarchyEnabled && m_AppropriateTools.Contains(m_ToolSystem.activeTool.toolID) && !m_NetToolSystem.TrySetPrefab(m_ToolSystem.activePrefab))
             {
                 EntityManager.RemoveComponent(m_CreatedQuery, ComponentType.ReadWrite<Overridden>());
                 EntityManager.AddComponent(m_CreatedQuery, ComponentType.ReadWrite<PreventOverride>());
