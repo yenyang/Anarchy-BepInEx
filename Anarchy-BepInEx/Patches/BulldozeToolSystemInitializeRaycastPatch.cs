@@ -9,6 +9,8 @@ namespace Anarchy.Patches
     using Game;
     using Game.Areas;
     using Game.Common;
+    using Game.Net;
+    using Game.Notifications;
     using Game.Rendering;
     using Game.Tools;
     using HarmonyLib;
@@ -35,8 +37,8 @@ namespace Anarchy.Patches
             }
             else
             {
-                toolRaycastSystem.typeMask |= TypeMask.Areas;
-                toolRaycastSystem.areaTypeMask = AreaTypeMask.Surfaces;
+                toolRaycastSystem.typeMask = TypeMask.StaticObjects; // | TypeMask.Areas;
+                toolRaycastSystem.raycastFlags |= RaycastFlags.SubElements | RaycastFlags.NoMainElements;
             }
         }
     }
