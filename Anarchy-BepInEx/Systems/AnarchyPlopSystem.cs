@@ -13,7 +13,6 @@ namespace Anarchy.Systems
     using Game.Common;
     using Game.Prefabs;
     using Game.Tools;
-    using Unity.Collections;
     using Unity.Entities;
 
     /// <summary>
@@ -106,11 +105,8 @@ namespace Anarchy.Systems
             {
                 EntityManager.RemoveComponent(m_CreatedQuery, ComponentType.ReadWrite<Overridden>());
                 EntityManager.AddComponent(m_CreatedQuery, ComponentType.ReadWrite<PreventOverride>());
-                EntityManager.AddComponent(m_CreatedQuery, ComponentType.ReadWrite<AnarchyObject>());
-
 
                 EntityManager.RemoveComponent(m_OwnedAndOverridenQuery, ComponentType.ReadWrite<Overridden>());
-                EntityManager.AddComponent(m_OwnedAndOverridenQuery, ComponentType.ReadWrite<PreventOverride>());
             }
         }
     }

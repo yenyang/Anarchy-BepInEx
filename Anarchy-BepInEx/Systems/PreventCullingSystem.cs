@@ -49,7 +49,7 @@ namespace Anarchy.Systems
             {
                 All = new ComponentType[]
                {
-                    ComponentType.ReadOnly<AnarchyObject>(),
+                    ComponentType.ReadOnly<PreventOverride>(),
                     ComponentType.ReadOnly<CullingInfo>(),
                },
                 None = new ComponentType[]

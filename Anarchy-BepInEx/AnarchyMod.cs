@@ -80,7 +80,7 @@ namespace Anarchy
             AssetDatabase.global.LoadSettings(nameof(AnarchyMod), Settings, new AnarchyModSettings(this));
             Settings.Contra = false;
             GameUIResourceHandler uiResourceHandler = GameManager.instance.userInterface.view.uiSystem.resourceHandler as GameUIResourceHandler;
-            uiResourceHandler?.HostLocationsMap.Add("yyAnarchy", new System.Collections.Generic.List<string> { UIFileUtils.AssemblyPath });
+            uiResourceHandler?.HostLocationsMap.Add("yy-anarchy", new System.Collections.Generic.List<string> { UIFileUtils.AssemblyPath });
             Logger.Info("Handling create world");
             Logger.Info("ModInstallFolder = " + ModInstallFolder);
             LoadLocales();

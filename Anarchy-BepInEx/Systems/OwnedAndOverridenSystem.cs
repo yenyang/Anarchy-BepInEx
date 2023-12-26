@@ -90,7 +90,6 @@ namespace Anarchy.Systems
             if (m_AnarchySystem.AnarchyEnabled && m_AppropriateTools.Contains(m_ToolSystem.activeTool.toolID) && !m_NetToolSystem.TrySetPrefab(m_ToolSystem.activePrefab))
             {
                 EntityManager.RemoveComponent(m_OwnedAndOverridenQuery, ComponentType.ReadWrite<Overridden>());
-                EntityManager.AddComponent(m_OwnedAndOverridenQuery, ComponentType.ReadWrite<PreventOverride>());
             }
         }
     }

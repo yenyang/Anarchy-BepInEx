@@ -131,7 +131,6 @@
   <ItemGroup>
     <Compile Include="AnarchyMod.cs" />
     <Compile Include="BepInEx\AnarchyPlugin.cs" />
-    <Compile Include="Components\AnarchyObject.cs" />
     <Compile Include="Components\PreventOverride.cs" />
     <Compile Include="Patches\BulldozeToolSystemInitializeRaycastPatch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
