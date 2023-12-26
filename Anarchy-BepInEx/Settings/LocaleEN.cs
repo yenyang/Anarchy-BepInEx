@@ -46,6 +46,16 @@ namespace Anarchy.Settings
                 { m_Setting.GetOptionDescLocaleID(nameof(AnarchyModSettings.PropRefreshFrequency)), "This is number of frames between graphical refreshes to props placed with Anarchy to prevent accidental culling. Higher numbers will have better performance, but longer possible time that props may be missing." },
                 { m_Setting.GetOptionLabelLocaleID(nameof(AnarchyModSettings.RefreshProps)), "Refresh Props" },
                 { m_Setting.GetOptionDescLocaleID(nameof(AnarchyModSettings.RefreshProps)), "If props placed with Anarchy have been accidently culled, you can press this button to bring them back now. This doesn't negatively effect performance." },
+                { "YY_ANARCHY.AnarchyButton", "Anarchy" },
+                { "YY_ANARCHY_DESCRIPTION.AnarchyButton", "Disabled error checks for tools and does not display errors." },
+                { "YY_ANARCHY.RaycastSurfacesButton", "Target Surfaces" },
+                { "YY_ANARCHY_DESCRIPTION.RaycastSurfacesButton", "Allows you to bulldoze surfaces in one click. With Anarchy on you can bulldoze surfaces within buidings or areas."},
+                { "YY_ANARCHY.ShowMarkersButton", "Show Markers" },
+                { "YY_ANARCHY_DESCRIPTION.ShowMarkersButton", "Shows markers and invisible roads. With this and Anarchy enabled you can demolish invisible roads, but SAVE FIRST!" },
+                { "YY_ANARCHY.GameplayManipulationButton", "Gameplay Manipulation" },
+                { "YY_ANARCHY_DESCRIPTION.GameplayManipulationButton", "Allows you to use the bulldozer on moving objects such as vehicles or cims." },
+                { "YY_ANARCHY.BypassConfirmationButton", "Bypass Confirmation" },
+                { "YY_ANARCHY_DESCRIPTION.BypassConfirmationButton", "Disables the prompt for whether you are sure you want to demolish a building." },
             };
 
         }
