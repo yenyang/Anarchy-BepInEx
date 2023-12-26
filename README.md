@@ -58,13 +58,15 @@ The following errors will not occur while Anarchy is enabled:
 If you find an error that you think should be added or if you find a tool that this should also be included, please let me know. 
 
 ## Props and Trees
-Placing standalone props is an unsupported feature of the game. You need DevUI to access the 'Add Object' menu via the home button to place standalong props.
+Placing standalone props is an unsupported feature of the game. You need DevUI to access the 'Add Object' menu via the home button to place standalone props.
 
 With Anarchy enabled, you can place props and trees overlapping or inside the boundaries of buildings, nets, areas, other trees, other props, etc. Props and trees placed with Anarchy enabled cannot be overriden later (even if later Anarchy is disabled), but can be removed with bulldozer or, if applicable, tree brush.
 
 Props overlapping with buildings or nets may sometimes be culled by the game, and disappear until reloading or something interacts with or near them.
 The mod has an option to routinely refresh props that were culled so they don't disappear. This affects performance but you can adjust the frequency.
 You can also manually trigger a prop refresh using a button in the options menu.
+
+Pro tip: Use the brush mode to remove trees and standalone props. If you unselect the brush snapping option for "Remove only matching type", and right click you can remove them within a radius and it only targets standalone props and trees.
 
 ## Invisible Paths and Markers
 Drawing invisible paths and markers is an unsupported feature of the game. You need DevUI to access the 'Add Object' menu via the home button to draw invisible paths and markers.
