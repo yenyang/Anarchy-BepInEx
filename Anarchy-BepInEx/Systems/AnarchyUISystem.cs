@@ -12,6 +12,7 @@ namespace Anarchy.Systems
     using Anarchy.Utils;
     using cohtml.Net;
     using Colossal.Logging;
+    using Game.Rendering;
     using Game.SceneFlow;
     using Game.Tools;
     using Game.UI;
@@ -29,6 +30,7 @@ namespace Anarchy.Systems
         private string m_AnarchyItemLineToolScript = string.Empty;
         private ILog m_Log;
         private AnarchySystem m_AnarchySystem;
+        private RenderingSystem m_RenderingSystem;
         private bool m_AnarchyOptionShown;
         private bool m_DisableAnarchyWhenCompleted;
         private string m_LastTool;
@@ -38,6 +40,8 @@ namespace Anarchy.Systems
         private BulldozeToolSystem m_BulldozeToolSystem;
         private bool m_LastGamePlayManipulation;
         private bool m_LastBypassConfrimation;
+        private bool m_LastShowMarkers;
+        private bool m_RaycastSurfaces = false;
 
         /// <summary>
         /// Gets a value indicating whether whether Anarchy is only on because of Anarchic Bulldozer setting.
@@ -46,6 +50,11 @@ namespace Anarchy.Systems
         {
             get { return m_DisableAnarchyWhenCompleted; }
         }
+
+        /// <summary>
+        /// Gets a value indicating whether to raycast surfaces.
+        /// </summary>
+        public bool RaycastSurfaces { get => m_RaycastSurfaces; }
 
         /// <summary>
         /// So Anarchy System can toggle the button selection with Keybind.
@@ -93,6 +102,7 @@ namespace Anarchy.Systems
             m_UiView = GameManager.instance.userInterface.view.View;
             m_AnarchySystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<AnarchySystem>();
             m_BulldozeToolSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<BulldozeToolSystem>();
+            m_RenderingSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<RenderingSystem>();
             ToolSystem toolSystem = m_ToolSystem; // I don't know why vanilla game did this.
             m_ToolSystem.EventToolChanged = (Action<ToolBaseSystem>)Delegate.Combine(toolSystem.EventToolChanged, new Action<ToolBaseSystem>(OnToolChanged));
 
@@ -188,8 +198,12 @@ namespace Anarchy.Systems
 
                     UIFileUtils.ExecuteScript(m_UiView, $"yyAnarchy.setupButton(\"YYA-Bypass-Confirmation-Button\", {BoolToString(m_BulldozeToolSystem.debugBypassBulldozeConfirmation)})");
                     UIFileUtils.ExecuteScript(m_UiView, $"yyAnarchy.setupButton(\"YYA-Gameplay-Manipulation-Button\", {BoolToString(m_BulldozeToolSystem.allowManipulation)})");
+                    UIFileUtils.ExecuteScript(m_UiView, $"yyAnarchy.setupButton(\"YYA-Show-Markers-Button\", {BoolToString(m_RenderingSystem.markersVisible)})");
+                    UIFileUtils.ExecuteScript(m_UiView, $"yyAnarchy.setupButton(\"YYA-Raycast-Surfaces-Button\", {BoolToString(m_RaycastSurfaces)})");
                     m_BoundEventHandles.Add(m_UiView.RegisterForEvent("YYA-Bypass-Confirmation-Button", (Action<bool>)BypassConfirmationToggled));
                     m_BoundEventHandles.Add(m_UiView.RegisterForEvent("YYA-Gameplay-Manipulation-Button", (Action<bool>)GameplayManipulationToggled));
+                    m_BoundEventHandles.Add(m_UiView.RegisterForEvent("YYA-Show-Markers-Button", (Action<bool>)ShowMarkersButtonToggled));
+                    m_BoundEventHandles.Add(m_UiView.RegisterForEvent("YYA-Raycast-Surfaces-Button", (Action<bool>)RaycastSurfacesButtonToggled));
                     m_BoundEventHandles.Add(m_UiView.RegisterForEvent("CheckForElement-YYA-bulldoze-tool-mode-item", (Action<bool>)ElementCheck));
                 }
 
@@ -250,6 +264,22 @@ namespace Anarchy.Systems
                     }
 
                     m_LastGamePlayManipulation = m_BulldozeToolSystem.allowManipulation;
+                }
+
+                if (m_LastShowMarkers != m_RenderingSystem.markersVisible)
+                {
+                    if (m_RenderingSystem.markersVisible)
+                    {
+                        // This script finds sets Gameplay-Manipulation-Button button selected if toggled using DevUI.
+                        m_UiView.ExecuteScript($"yyAnarchy.buttonElement = document.getElementById(\"YYA-Show-Markers-Button\"); if (yyAnarchy.buttonElement != null) yyAnarchy.buttonElement.classList.add(\"selected\");");
+                    }
+                    else
+                    {
+                        // This script finds sets Gameplay-Manipulation-Button button unselected if toggled using DevUI
+                        m_UiView.ExecuteScript($"yyAnarchy.buttonElement = document.getElementById(\"YYA-Show-Markers-Button\"); if (yyAnarchy.buttonElement != null) yyAnarchy.buttonElement.classList.remove(\"selected\");");
+                    }
+
+                    m_LastShowMarkers = m_RenderingSystem.markersVisible;
                 }
             }
 
@@ -314,7 +344,6 @@ namespace Anarchy.Systems
             m_LastBypassConfrimation = flag;
         }
 
-
         /// <summary>
         /// C# event handler for event callback from UI JavaScript. Toggles the game playmanipulation field of the bulldozer system.
         /// </summary>
@@ -324,6 +353,22 @@ namespace Anarchy.Systems
             m_BulldozeToolSystem.allowManipulation = flag;
             m_LastGamePlayManipulation = flag;
         }
+
+        /// <summary>
+        /// C# event handler for event callback from UI JavaScript. Toggles the m_RenderingSystem.MarkersVisible.
+        /// </summary>
+        /// <param name="flag">A bool for what to set the field to.</param>
+        private void ShowMarkersButtonToggled(bool flag)
+        {
+            m_RenderingSystem.markersVisible = flag;
+            m_LastShowMarkers = flag;
+        }
+
+        /// <summary>
+        /// C# event handler for event callback from UI JavaScript. Toggles the m_RaycastSurfaces.
+        /// </summary>
+        /// <param name="flag">A bool for what to set the field to.</param>
+        private void RaycastSurfacesButtonToggled(bool flag) => m_RaycastSurfaces = flag;
 
         /// <summary>
         /// C# event handler for event callback from UI JavaScript. If element YYA-anarchy-item is found then set value to true.

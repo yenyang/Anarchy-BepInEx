@@ -8,11 +8,13 @@ namespace Anarchy
     using Anarchy.Settings;
     using Anarchy.Systems;
     using Anarchy.Tooltip;
+    using Anarchy.Utils;
     using Colossal.IO.AssetDatabase;
     using Colossal.Logging;
     using Game;
     using Game.Modding;
     using Game.SceneFlow;
+    using Game.UI;
     using System.IO;
 
     /// <summary>
@@ -77,6 +79,8 @@ namespace Anarchy
             Settings.RegisterInOptionsUI();
             AssetDatabase.global.LoadSettings(nameof(AnarchyMod), Settings, new AnarchyModSettings(this));
             Settings.Contra = false;
+            GameUIResourceHandler uiResourceHandler = GameManager.instance.userInterface.view.uiSystem.resourceHandler as GameUIResourceHandler;
+            uiResourceHandler?.HostLocationsMap.Add("yyAnarchy", new System.Collections.Generic.List<string> { UIFileUtils.AssemblyPath });
             Logger.Info("Handling create world");
             Logger.Info("ModInstallFolder = " + ModInstallFolder);
             LoadLocales();

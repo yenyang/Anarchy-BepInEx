@@ -133,7 +133,6 @@
     <Compile Include="BepInEx\AnarchyPlugin.cs" />
     <Compile Include="Components\AnarchyObject.cs" />
     <Compile Include="Components\PreventOverride.cs" />
-    <Compile Include="Patches\GameModeExtensionsIsEditorPatch.cs" />
     <Compile Include="Patches\BulldozeToolSystemInitializeRaycastPatch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings\AnarchyModSettings.cs" />
@@ -158,6 +157,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="BepInEx\icon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\DiamondShapeSurface.svg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="UI\DottedLinesMarkers.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="UI\ui.js">

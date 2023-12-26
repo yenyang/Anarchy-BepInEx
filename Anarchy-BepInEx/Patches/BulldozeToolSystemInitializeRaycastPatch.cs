@@ -5,6 +5,7 @@
 namespace Anarchy.Patches
 {
     using Anarchy;
+    using Anarchy.Systems;
     using Anarchy.Tooltip;
     using Game;
     using Game.Areas;
@@ -30,15 +31,20 @@ namespace Anarchy.Patches
             AnarchySystem anarchySystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<AnarchySystem>();
             ToolSystem toolSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<ToolSystem>();
             ToolRaycastSystem toolRaycastSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<ToolRaycastSystem>();
+            AnarchyUISystem anarchyUISystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<AnarchyUISystem>();
             RenderingSystem renderingSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<RenderingSystem>();
             if (renderingSystem.markersVisible && anarchySystem.AnarchyEnabled && !toolSystem.actionMode.IsEditor())
             {
                 toolRaycastSystem.raycastFlags |= RaycastFlags.Markers;
             }
-            else
+            else if (anarchyUISystem.RaycastSurfaces && !toolSystem.actionMode.IsEditor())
             {
-                toolRaycastSystem.typeMask = TypeMask.StaticObjects; // | TypeMask.Areas;
-                toolRaycastSystem.raycastFlags |= RaycastFlags.SubElements | RaycastFlags.NoMainElements;
+                toolRaycastSystem.typeMask = TypeMask.Areas;
+                toolRaycastSystem.areaTypeMask = AreaTypeMask.Surfaces;
+                if (anarchySystem.AnarchyEnabled)
+                {
+                    toolRaycastSystem.raycastFlags |= RaycastFlags.SubElements;
+                }
             }
         }
     }
