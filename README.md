@@ -18,8 +18,9 @@ The mod also has:
 * Optional flaming chirper
 * Option to automatically enable with bulldozer
 * Optional mouse tooltip
-* Icons for game manipulation and bypass verification for bulldozer.
-* Use Bulldoze tool to remove invisible paths/markers. See below.
+* Icons for game manipulation and bypass confirmation for bulldozer.
+* Icon to show invisible paths/markers. Use Bulldoze tool to remove invisible paths/markers. See below.
+* Icon to EXCLUSIVELY target surfaces with the bulldozer and remove with one click. With Anarchy, this also can remove surfaces in buildings and areas.
 
 Currently it applies to these tools:
 * Object Tool

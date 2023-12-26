@@ -39,7 +39,7 @@ namespace Anarchy.Patches
             }
             else if (anarchyUISystem.RaycastSurfaces && !toolSystem.actionMode.IsEditor())
             {
-                toolRaycastSystem.typeMask |= TypeMask.Areas;
+                toolRaycastSystem.typeMask = TypeMask.Areas;
                 toolRaycastSystem.areaTypeMask = AreaTypeMask.Surfaces;
                 if (anarchySystem.AnarchyEnabled)
                 {
