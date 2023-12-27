@@ -25,6 +25,7 @@ namespace Anarchy.Systems
             { "Object Tool" },
             { "Line Tool" },
             { "Bulldoze Tool" },
+            { "Default Tool" },
         };
 
         private AnarchySystem m_AnarchySystem;
