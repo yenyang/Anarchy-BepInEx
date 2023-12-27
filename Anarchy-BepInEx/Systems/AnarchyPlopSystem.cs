@@ -33,7 +33,7 @@ namespace Anarchy.Systems
         private ObjectToolSystem m_ObjectToolSystem;
         private PrefabSystem m_PrefabSystem;
         private EntityQuery m_CreatedQuery;
-        private EntityQuery m_OwnedAndOverridenQuery;
+        private EntityQuery m_OverridenQuery;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AnarchyPlopSystem"/> class.
@@ -66,11 +66,10 @@ namespace Anarchy.Systems
                     ComponentType.ReadOnly<BuildingData>(),
                 },
             });
-            m_OwnedAndOverridenQuery = GetEntityQuery(new EntityQueryDesc
+            m_OverridenQuery = GetEntityQuery(new EntityQueryDesc
             {
                 All = new ComponentType[]
                 {
-                    ComponentType.ReadOnly<Owner>(),
                     ComponentType.ReadOnly<Updated>(),
                     ComponentType.ReadOnly<Overridden>(),
                 },
@@ -106,7 +105,7 @@ namespace Anarchy.Systems
                 EntityManager.RemoveComponent(m_CreatedQuery, ComponentType.ReadWrite<Overridden>());
                 EntityManager.AddComponent(m_CreatedQuery, ComponentType.ReadWrite<PreventOverride>());
 
-                EntityManager.RemoveComponent(m_OwnedAndOverridenQuery, ComponentType.ReadWrite<Overridden>());
+                EntityManager.RemoveComponent(m_OverridenQuery, ComponentType.ReadWrite<Overridden>());
             }
         }
     }

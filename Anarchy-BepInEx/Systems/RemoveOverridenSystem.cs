@@ -1,4 +1,4 @@
-﻿// <copyright file="AnarchyPlopSystem.cs" company="Yenyang's Mods. MIT License">
+﻿// <copyright file="RemoveOverridenSystem.cs" company="Yenyang's Mods. MIT License">
 // Copyright (c) Yenyang's Mods. MIT License. All rights reserved.
 // </copyright>
 
@@ -18,7 +18,7 @@ namespace Anarchy.Systems
     /// <summary>
     /// A system that prevents objects from being overriden when placed on each other.
     /// </summary>
-    public partial class OwnedAndOverrideSystem : GameSystemBase
+    public partial class RemoveOverridenSystem : GameSystemBase
     {
         private readonly List<string> m_AppropriateTools = new List<string>()
         {
@@ -34,12 +34,12 @@ namespace Anarchy.Systems
         private NetToolSystem m_NetToolSystem;
         private ObjectToolSystem m_ObjectToolSystem;
         private PrefabSystem m_PrefabSystem;
-        private EntityQuery m_OwnedAndOverridenQuery;
+        private EntityQuery m_OverridenQuery;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="OwnedAndOverrideSystem"/> class.
+        /// Initializes a new instance of the <see cref="RemoveOverridenSystem"/> class.
         /// </summary>
-        public OwnedAndOverrideSystem()
+        public RemoveOverridenSystem()
         {
         }
 
@@ -47,17 +47,16 @@ namespace Anarchy.Systems
         protected override void OnCreate()
         {
             m_Log = AnarchyMod.Instance.Logger;
-            m_Log.Info($"{nameof(OwnedAndOverrideSystem)} Created.");
+            m_Log.Info($"{nameof(RemoveOverridenSystem)} Created.");
             m_AnarchySystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<AnarchySystem>();
             m_ToolSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<ToolSystem>();
             m_NetToolSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<NetToolSystem>();
             m_ObjectToolSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<ObjectToolSystem>();
             m_PrefabSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<PrefabSystem>();
-            m_OwnedAndOverridenQuery = GetEntityQuery(new EntityQueryDesc
+            m_OverridenQuery = GetEntityQuery(new EntityQueryDesc
             {
                 All = new ComponentType[]
                 {
-                    ComponentType.ReadOnly<Owner>(),
                     ComponentType.ReadOnly<Updated>(),
                     ComponentType.ReadOnly<Overridden>(),
                 },
@@ -67,7 +66,7 @@ namespace Anarchy.Systems
                     ComponentType.ReadOnly<BuildingData>(),
                 },
             });
-            RequireForUpdate(m_OwnedAndOverridenQuery);
+            RequireForUpdate(m_OverridenQuery);
             base.OnCreate();
         }
 
@@ -90,7 +89,7 @@ namespace Anarchy.Systems
 
             if (m_AnarchySystem.AnarchyEnabled && m_AppropriateTools.Contains(m_ToolSystem.activeTool.toolID) && !m_NetToolSystem.TrySetPrefab(m_ToolSystem.activePrefab))
             {
-                EntityManager.RemoveComponent(m_OwnedAndOverridenQuery, ComponentType.ReadWrite<Overridden>());
+                EntityManager.RemoveComponent(m_OverridenQuery, ComponentType.ReadWrite<Overridden>());
             }
         }
     }

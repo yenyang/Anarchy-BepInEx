@@ -137,7 +137,7 @@
     <Compile Include="Settings\AnarchyModSettings.cs" />
     <Compile Include="Settings\LocaleEN.cs" />
     <Compile Include="StyleCop\GlobalSuppressions.cs" />
-    <Compile Include="Systems\OwnedAndOverridenSystem.cs" />
+    <Compile Include="Systems\RemoveOverridenSystem.cs" />
     <Compile Include="Systems\AnarchyUISystem.cs" />
     <Compile Include="Systems\AnarchyPlopSystem.cs" />
     <Compile Include="Systems\PreventCullingSystem.cs" />
