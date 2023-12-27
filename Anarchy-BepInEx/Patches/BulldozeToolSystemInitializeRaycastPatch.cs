@@ -33,11 +33,17 @@ namespace Anarchy.Patches
             ToolRaycastSystem toolRaycastSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<ToolRaycastSystem>();
             AnarchyUISystem anarchyUISystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<AnarchyUISystem>();
             RenderingSystem renderingSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<RenderingSystem>();
-            if (renderingSystem.markersVisible && anarchySystem.AnarchyEnabled && !toolSystem.actionMode.IsEditor())
+            if (renderingSystem.markersVisible && anarchyUISystem.SelectedRaycastTarget == AnarchyUISystem.RaycastTarget.Markers)
             {
-                toolRaycastSystem.raycastFlags |= RaycastFlags.Markers;
+                toolRaycastSystem.typeMask = TypeMask.Net;
+                toolRaycastSystem.netLayerMask = Layer.MarkerPathway | Layer.MarkerTaxiway;
+                toolRaycastSystem.raycastFlags = RaycastFlags.Markers;
+                if (anarchySystem.AnarchyEnabled)
+                {
+                    toolRaycastSystem.raycastFlags |= RaycastFlags.SubElements;
+                }
             }
-            else if (anarchyUISystem.RaycastSurfaces && !toolSystem.actionMode.IsEditor())
+            else if (anarchyUISystem.SelectedRaycastTarget == AnarchyUISystem.RaycastTarget.Surfaces)
             {
                 toolRaycastSystem.typeMask = TypeMask.Areas;
                 toolRaycastSystem.areaTypeMask = AreaTypeMask.Surfaces;

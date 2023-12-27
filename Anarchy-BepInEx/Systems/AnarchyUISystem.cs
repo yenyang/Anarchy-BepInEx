@@ -41,7 +41,28 @@ namespace Anarchy.Systems
         private bool m_LastGamePlayManipulation;
         private bool m_LastBypassConfrimation;
         private bool m_LastShowMarkers;
-        private bool m_RaycastSurfaces = false;
+        private RaycastTarget m_RaycastTarget;
+
+        /// <summary>
+        /// An enum to handle different raycast target options.
+        /// </summary>
+        public enum RaycastTarget
+        {
+            /// <summary>
+            /// Do not change the raycast targets.
+            /// </summary>
+            Vanilla,
+
+            /// <summary>
+            /// Exclusively target surfaces.
+            /// </summary>
+            Surfaces,
+
+            /// <summary>
+            /// Exclusively target markers.
+            /// </summary>
+            Markers,
+        }
 
         /// <summary>
         /// Gets a value indicating whether whether Anarchy is only on because of Anarchic Bulldozer setting.
@@ -54,7 +75,7 @@ namespace Anarchy.Systems
         /// <summary>
         /// Gets a value indicating whether to raycast surfaces.
         /// </summary>
-        public bool RaycastSurfaces { get => m_RaycastSurfaces; }
+        public RaycastTarget SelectedRaycastTarget { get => m_RaycastTarget; }
 
         /// <summary>
         /// So Anarchy System can toggle the button selection with Keybind.
@@ -198,11 +219,11 @@ namespace Anarchy.Systems
 
                     UIFileUtils.ExecuteScript(m_UiView, $"yyAnarchy.setupButton(\"YYA-Bypass-Confirmation-Button\", {BoolToString(m_BulldozeToolSystem.debugBypassBulldozeConfirmation)}, \"BypassConfirmationButton\")");
                     UIFileUtils.ExecuteScript(m_UiView, $"yyAnarchy.setupButton(\"YYA-Gameplay-Manipulation-Button\", {BoolToString(m_BulldozeToolSystem.allowManipulation)}, \"GameplayManipulationButton\")");
-                    UIFileUtils.ExecuteScript(m_UiView, $"yyAnarchy.setupButton(\"YYA-Show-Markers-Button\", {BoolToString(m_RenderingSystem.markersVisible)}, \"ShowMarkersButton\")");
-                    UIFileUtils.ExecuteScript(m_UiView, $"yyAnarchy.setupButton(\"YYA-Raycast-Surfaces-Button\", {BoolToString(m_RaycastSurfaces)}, \"RaycastSurfacesButton\")");
+                    UIFileUtils.ExecuteScript(m_UiView, $"yyAnarchy.setupButton(\"YYA-Raycast-Markers-Button\", {IsRaycastTargetSelected(RaycastTarget.Markers)}, \"ShowMarkersButton\")");
+                    UIFileUtils.ExecuteScript(m_UiView, $"yyAnarchy.setupButton(\"YYA-Raycast-Surfaces-Button\", {IsRaycastTargetSelected(RaycastTarget.Surfaces)}, \"RaycastSurfacesButton\")");
                     m_BoundEventHandles.Add(m_UiView.RegisterForEvent("YYA-Bypass-Confirmation-Button", (Action<bool>)BypassConfirmationToggled));
                     m_BoundEventHandles.Add(m_UiView.RegisterForEvent("YYA-Gameplay-Manipulation-Button", (Action<bool>)GameplayManipulationToggled));
-                    m_BoundEventHandles.Add(m_UiView.RegisterForEvent("YYA-Show-Markers-Button", (Action<bool>)ShowMarkersButtonToggled));
+                    m_BoundEventHandles.Add(m_UiView.RegisterForEvent("YYA-Raycast-Markers-Button", (Action<bool>)RaycastMarkersButtonToggled));
                     m_BoundEventHandles.Add(m_UiView.RegisterForEvent("YYA-Raycast-Surfaces-Button", (Action<bool>)RaycastSurfacesButtonToggled));
                     m_BoundEventHandles.Add(m_UiView.RegisterForEvent("CheckForElement-YYA-bulldoze-tool-mode-item", (Action<bool>)ElementCheck));
                 }
@@ -265,22 +286,6 @@ namespace Anarchy.Systems
 
                     m_LastGamePlayManipulation = m_BulldozeToolSystem.allowManipulation;
                 }
-
-                if (m_LastShowMarkers != m_RenderingSystem.markersVisible)
-                {
-                    if (m_RenderingSystem.markersVisible)
-                    {
-                        // This script finds sets Gameplay-Manipulation-Button button selected if toggled using DevUI.
-                        m_UiView.ExecuteScript($"yyAnarchy.buttonElement = document.getElementById(\"YYA-Show-Markers-Button\"); if (yyAnarchy.buttonElement != null) yyAnarchy.buttonElement.classList.add(\"selected\");");
-                    }
-                    else
-                    {
-                        // This script finds sets Gameplay-Manipulation-Button button unselected if toggled using DevUI
-                        m_UiView.ExecuteScript($"yyAnarchy.buttonElement = document.getElementById(\"YYA-Show-Markers-Button\"); if (yyAnarchy.buttonElement != null) yyAnarchy.buttonElement.classList.remove(\"selected\");");
-                    }
-
-                    m_LastShowMarkers = m_RenderingSystem.markersVisible;
-                }
             }
 
             base.OnUpdate();
@@ -310,6 +315,21 @@ namespace Anarchy.Systems
         private string BoolToString(bool flag)
         {
             if (flag)
+            {
+                return "true";
+            }
+
+            return "false";
+        }
+
+        /// <summary>
+        /// Returns a JS string for whether the raycast target is selected or not.
+        /// </summary>
+        /// <param name="target">A Raycast target</param>
+        /// <returns>true or false as a string.</returns>
+        private string IsRaycastTargetSelected(RaycastTarget target)
+        {
+            if (m_RaycastTarget == target)
             {
                 return "true";
             }
@@ -358,17 +378,37 @@ namespace Anarchy.Systems
         /// C# event handler for event callback from UI JavaScript. Toggles the m_RenderingSystem.MarkersVisible.
         /// </summary>
         /// <param name="flag">A bool for what to set the field to.</param>
-        private void ShowMarkersButtonToggled(bool flag)
+        private void RaycastMarkersButtonToggled(bool flag)
         {
             m_RenderingSystem.markersVisible = flag;
-            m_LastShowMarkers = flag;
+            if (flag)
+            {
+                m_RaycastTarget = RaycastTarget.Surfaces;
+                m_UiView.ExecuteScript($"yyAnarchy.buttonElement = document.getElementById(\"YYA-Raycast-Surfaces-Button\"); if (yyAnarchy.buttonElement != null) yyAnarchy.buttonElement.classList.remove(\"selected\");");
+            }
+            else
+            {
+                m_RaycastTarget = RaycastTarget.Vanilla;
+            }
         }
 
         /// <summary>
         /// C# event handler for event callback from UI JavaScript. Toggles the m_RaycastSurfaces.
         /// </summary>
         /// <param name="flag">A bool for what to set the field to.</param>
-        private void RaycastSurfacesButtonToggled(bool flag) => m_RaycastSurfaces = flag;
+        private void RaycastSurfacesButtonToggled(bool flag)
+        {
+            if (flag)
+            {
+                m_RaycastTarget = RaycastTarget.Surfaces;
+                m_UiView.ExecuteScript($"yyAnarchy.buttonElement = document.getElementById(\"YYA-Raycast-Markers-Button\"); if (yyAnarchy.buttonElement != null) yyAnarchy.buttonElement.classList.remove(\"selected\");");
+                m_RenderingSystem.markersVisible = m_LastShowMarkers;
+            }
+            else
+            {
+                m_RaycastTarget = RaycastTarget.Vanilla;
+            }
+        }
 
         /// <summary>
         /// C# event handler for event callback from UI JavaScript. If element YYA-anarchy-item is found then set value to true.
@@ -435,9 +475,14 @@ namespace Anarchy.Systems
             }
 
             // Makes it so Anarchic Bulldozer will work next frame when bulldoze tool is activated from other appropriate tool.
-            if ((tool.toolID == "Bulldoze Tool" && m_LastTool != "Bulldoze Tool") || tool.toolID == "Line Tool")
+            if (tool.toolID == "Bulldoze Tool" && m_LastTool != "Bulldoze Tool")
             {
                 m_AnarchyOptionShown = false;
+                m_LastShowMarkers = m_RenderingSystem.markersVisible;
+                if (m_RaycastTarget == RaycastTarget.Markers)
+                {
+                    m_RenderingSystem.markersVisible = true;
+                }
             }
 
             // Removes Anarchy item if activating line tool so that it can be recreated in the new location. 
@@ -451,6 +496,11 @@ namespace Anarchy.Systems
             {
                 // This script destroys the bulldoze tool mode row if it exists.
                 UIFileUtils.ExecuteScript(m_UiView, DestroyElementByID("YYA-bulldoze-tool-mode-item"));
+
+                if (!m_LastShowMarkers || m_RaycastTarget != RaycastTarget.Markers)
+                {
+                    m_RenderingSystem.markersVisible = false;
+                }
             }
 
             if (tool.toolID != "Bulldoze Tool" && m_DisableAnarchyWhenCompleted)
