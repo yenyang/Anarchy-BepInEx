@@ -219,7 +219,7 @@ namespace Anarchy.Systems
 
                     UIFileUtils.ExecuteScript(m_UiView, $"yyAnarchy.setupButton(\"YYA-Bypass-Confirmation-Button\", {BoolToString(m_BulldozeToolSystem.debugBypassBulldozeConfirmation)}, \"BypassConfirmationButton\")");
                     UIFileUtils.ExecuteScript(m_UiView, $"yyAnarchy.setupButton(\"YYA-Gameplay-Manipulation-Button\", {BoolToString(m_BulldozeToolSystem.allowManipulation)}, \"GameplayManipulationButton\")");
-                    UIFileUtils.ExecuteScript(m_UiView, $"yyAnarchy.setupButton(\"YYA-Raycast-Markers-Button\", {IsRaycastTargetSelected(RaycastTarget.Markers)}, \"ShowMarkersButton\")");
+                    UIFileUtils.ExecuteScript(m_UiView, $"yyAnarchy.setupButton(\"YYA-Raycast-Markers-Button\", {IsRaycastTargetSelected(RaycastTarget.Markers)}, \"RaycastMarkersButton\")");
                     UIFileUtils.ExecuteScript(m_UiView, $"yyAnarchy.setupButton(\"YYA-Raycast-Surfaces-Button\", {IsRaycastTargetSelected(RaycastTarget.Surfaces)}, \"RaycastSurfacesButton\")");
                     m_BoundEventHandles.Add(m_UiView.RegisterForEvent("YYA-Bypass-Confirmation-Button", (Action<bool>)BypassConfirmationToggled));
                     m_BoundEventHandles.Add(m_UiView.RegisterForEvent("YYA-Gameplay-Manipulation-Button", (Action<bool>)GameplayManipulationToggled));

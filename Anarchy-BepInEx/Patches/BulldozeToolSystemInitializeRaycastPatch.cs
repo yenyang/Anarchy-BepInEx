@@ -38,10 +38,6 @@ namespace Anarchy.Patches
                 toolRaycastSystem.typeMask = TypeMask.Net;
                 toolRaycastSystem.netLayerMask = Layer.MarkerPathway | Layer.MarkerTaxiway;
                 toolRaycastSystem.raycastFlags = RaycastFlags.Markers;
-                if (anarchySystem.AnarchyEnabled)
-                {
-                    toolRaycastSystem.raycastFlags |= RaycastFlags.SubElements;
-                }
             }
             else if (anarchyUISystem.SelectedRaycastTarget == AnarchyUISystem.RaycastTarget.Surfaces)
             {
