@@ -133,6 +133,7 @@
     <Compile Include="BepInEx\AnarchyPlugin.cs" />
     <Compile Include="Components\PreventOverride.cs" />
     <Compile Include="Patches\BulldozeToolSystemInitializeRaycastPatch.cs" />
+    <Compile Include="Patches\GameModeExtensionsIsEditorPatch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings\AnarchyModSettings.cs" />
     <Compile Include="Settings\LocaleEN.cs" />
