@@ -19,6 +19,7 @@ namespace Anarchy.Systems
     using Game.Tools;
     using Game.UI;
     using Unity.Entities;
+    using static Colossal.AssetPipeline.Diagnostic.Report;
 
     /// <summary>
     /// UI system for Object Tool while using tree prefabs.
@@ -527,9 +528,36 @@ namespace Anarchy.Systems
                 ToggleAnarchyButton();
             }
 
+            // Shows markers if appropriate prefab is selected.
+            if (tool.GetPrefab() != null)
+            {
+                Entity prefabEntity = m_PrefabSystem.GetEntity(tool.GetPrefab());
+                if (EntityManager.HasComponent<MarkerNetData>(prefabEntity))
+                {
+                    if (!m_PrefabIsMarker)
+                    {
+                        m_LastShowMarkers = m_RenderingSystem.markersVisible;
+                    }
+
+                    m_RenderingSystem.markersVisible = true;
+                    m_PrefabIsMarker = true;
+                }
+                else if (m_PrefabIsMarker)
+                {
+                    m_PrefabIsMarker = false;
+                    m_RenderingSystem.markersVisible = m_LastShowMarkers;
+                }
+            }
+            else if (m_PrefabIsMarker)
+            {
+                m_PrefabIsMarker = false;
+                m_RenderingSystem.markersVisible = m_LastShowMarkers;
+            }
+
             m_LastTool = tool.toolID;
         }
 
+        // Shows markers if appropriate prefab is selected.
         private void OnPrefabChanged(PrefabBase prefab)
         {
             m_Log.Debug($"{nameof(AnarchyUISystem)}.{nameof(OnPrefabChanged)} {prefab.name}");
