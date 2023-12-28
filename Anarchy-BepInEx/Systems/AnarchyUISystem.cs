@@ -535,7 +535,7 @@ namespace Anarchy.Systems
             m_Log.Debug($"{nameof(AnarchyUISystem)}.{nameof(OnPrefabChanged)} {prefab.name}");
 
             Entity prefabEntity = m_PrefabSystem.GetEntity(prefab);
-            if (EntityManager.HasComponent<Marker>(prefabEntity))
+            if (EntityManager.HasComponent<MarkerNetData>(prefabEntity))
             {
                 m_LastShowMarkers = m_RenderingSystem.markersVisible;
                 m_RenderingSystem.markersVisible = true;
