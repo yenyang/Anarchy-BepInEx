@@ -537,7 +537,11 @@ namespace Anarchy.Systems
             Entity prefabEntity = m_PrefabSystem.GetEntity(prefab);
             if (EntityManager.HasComponent<MarkerNetData>(prefabEntity))
             {
-                m_LastShowMarkers = m_RenderingSystem.markersVisible;
+                if (!m_PrefabIsMarker)
+                {
+                    m_LastShowMarkers = m_RenderingSystem.markersVisible;
+                }
+
                 m_RenderingSystem.markersVisible = true;
                 m_PrefabIsMarker = true;
             }
