@@ -438,6 +438,9 @@ namespace Anarchy.Systems
                 return;
             }
 
+            // This script checks if tool options panel(s) exist. If anarchy is the only one in that tool panel then it removes whole panel.
+            UIFileUtils.ExecuteScript(m_UiView, $"yyAnarchy.entities = document.getElementsByClassName(\"tool-options-panel_Se6\"); if (yyAnarchy.entities.length >= 1) {{  yyAnarchy.itemElement = document.getElementById(\"YYA-anarchy-item\"); if (yyAnarchy.itemElement != null) {{ if (yyAnarchy.itemElement.parentElement.children.length == 1) {{   yyAnarchy.itemElement.parentElement.parentElement.removeChild(yyAnarchy.itemElement.parentElement); }} }} }}");
+
             // This script destroys the anarchy item if it exists.
             UIFileUtils.ExecuteScript(m_UiView, DestroyElementByID("YYA-anarchy-item"));
 
