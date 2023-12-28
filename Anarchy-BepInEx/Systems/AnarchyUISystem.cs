@@ -12,6 +12,8 @@ namespace Anarchy.Systems
     using Anarchy.Utils;
     using cohtml.Net;
     using Colossal.Logging;
+    using Game.Net;
+    using Game.Prefabs;
     using Game.Rendering;
     using Game.SceneFlow;
     using Game.Tools;
@@ -31,6 +33,7 @@ namespace Anarchy.Systems
         private ILog m_Log;
         private AnarchySystem m_AnarchySystem;
         private RenderingSystem m_RenderingSystem;
+        private PrefabSystem m_PrefabSystem;
         private bool m_AnarchyOptionShown;
         private bool m_DisableAnarchyWhenCompleted;
         private string m_LastTool;
@@ -41,6 +44,7 @@ namespace Anarchy.Systems
         private bool m_LastGamePlayManipulation;
         private bool m_LastBypassConfrimation;
         private bool m_LastShowMarkers;
+        private bool m_PrefabIsMarker = false;
         private RaycastTarget m_RaycastTarget;
 
         /// <summary>
@@ -124,10 +128,12 @@ namespace Anarchy.Systems
             m_AnarchySystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<AnarchySystem>();
             m_BulldozeToolSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<BulldozeToolSystem>();
             m_RenderingSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<RenderingSystem>();
+            m_PrefabSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<PrefabSystem>();
             ToolSystem toolSystem = m_ToolSystem; // I don't know why vanilla game did this.
             m_ToolSystem.EventToolChanged = (Action<ToolBaseSystem>)Delegate.Combine(toolSystem.EventToolChanged, new Action<ToolBaseSystem>(OnToolChanged));
-
-            m_BoundEventHandles = new ();
+            ToolSystem toolSystem2 = m_ToolSystem;
+            toolSystem2.EventPrefabChanged = (Action<PrefabBase>)Delegate.Combine(toolSystem2.EventPrefabChanged, new Action<PrefabBase>(OnPrefabChanged));
+            m_BoundEventHandles = new();
 
             if (m_UiView != null)
             {
@@ -522,6 +528,24 @@ namespace Anarchy.Systems
             }
 
             m_LastTool = tool.toolID;
+        }
+
+        private void OnPrefabChanged(PrefabBase prefab)
+        {
+            m_Log.Debug($"{nameof(AnarchyUISystem)}.{nameof(OnPrefabChanged)} {prefab.name}");
+
+            Entity prefabEntity = m_PrefabSystem.GetEntity(prefab);
+            if (EntityManager.HasComponent<Marker>(prefabEntity))
+            {
+                m_LastShowMarkers = m_RenderingSystem.markersVisible;
+                m_RenderingSystem.markersVisible = true;
+                m_PrefabIsMarker = true;
+            }
+            else if (m_PrefabIsMarker)
+            {
+                m_PrefabIsMarker = false;
+                m_RenderingSystem.markersVisible = m_LastShowMarkers;
+            }
         }
     }
 }
