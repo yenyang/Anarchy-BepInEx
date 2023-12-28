@@ -383,7 +383,7 @@ namespace Anarchy.Systems
             m_RenderingSystem.markersVisible = flag;
             if (flag)
             {
-                m_RaycastTarget = RaycastTarget.Surfaces;
+                m_RaycastTarget = RaycastTarget.Markers;
                 m_UiView.ExecuteScript($"yyAnarchy.buttonElement = document.getElementById(\"YYA-Raycast-Surfaces-Button\"); if (yyAnarchy.buttonElement != null) yyAnarchy.buttonElement.classList.remove(\"selected\");");
             }
             else
