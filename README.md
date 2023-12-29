@@ -62,7 +62,7 @@ If you find an error that you think should be added or if you find a tool that t
 ## Props and Trees
 Placing standalone props is an unsupported feature of the game. You need DevUI to access the 'Add Object' menu via the home button to place standalone props.
 
-With Anarchy enabled, you can place props and trees overlapping or inside the boundaries of buildings, nets, areas, other trees, other props, etc. Props and trees placed with Anarchy enabled cannot be overriden later (even if later Anarchy is disabled), but can be removed with bulldozer or, if applicable, tree brush.
+With Anarchy enabled, you can place props and trees overlapping or inside the boundaries of buildings, nets, areas, other trees, other props, etc. Props and trees placed with Anarchy enabled cannot be overriden later (even if later Anarchy is disabled), but can be removed with bulldozer or brush.
 
 Props overlapping with buildings or nets may sometimes be culled by the game, and disappear until reloading or something interacts with or near them.
 The mod has an option to routinely refresh props that were culled so they don't disappear. This affects performance but you can adjust the frequency.
@@ -75,7 +75,7 @@ Drawing invisible paths and markers is an unsupported feature of the game. You n
 
 With the Bulldoze tool you can select an icon to show and EXCLUSIVELY target these invisible paths and markers. With this selected and Anarchy enabled you can remove them, **BUT SAVE BEFORE HAND!**
 
-One configuration I build/demolished resulted in a crash to desktop because I left a segment that was too short. Deleting them in a different order worked. 
+One configuration I built/demolished resulted in a crash to desktop because I left a segment that was too short. Deleting them in a different order worked. 
 
 You cannot demolish invisible paths and markers within buildings.
 
@@ -94,7 +94,7 @@ This mod does NOT allow you to do everything including:
 * A custom bulldoze tool to allow for removing props, trees, invisible paths and markers, etc. from individual copies of assets while in-game. 
 
 ## Support
-I will respond on the code modding channels on **Cities: Skylines modding Discord**
+I will respond on the code modding channels on **Cities: Skylines Modding Discord**
 
 ## Credits 
 * yenyang - Mod Author
