@@ -75,7 +75,9 @@ Drawing invisible paths and markers is an unsupported feature of the game. You n
 
 With the Bulldoze tool you can select an icon to show and EXCLUSIVELY target these invisible paths and markers. With this selected and Anarchy enabled you can remove them, **BUT SAVE BEFORE HAND!**
 
-Removing them in the wrong order may result in a crash to desktop.
+One configuration I build/demolished resulted in a crash to desktop because I left a segment that was too short. Deleting them in a different order worked. 
+
+You cannot demolish invisible paths and markers within buildings.
 
 The mod will automatically toggle the DevUI setting to "Show Markers" when drawing invisible paths.
 
@@ -89,7 +91,7 @@ This mod does NOT allow you to do everything including:
 **Please save frequently, in multiple files, and learn to use responsibly.**
 
 ## Planned Features
-* A custom bulldoze tool to allow for removing props, trees, and invisible paths and markers from individual copies of assets while in-game. 
+* A custom bulldoze tool to allow for removing props, trees, invisible paths and markers, etc. from individual copies of assets while in-game. 
 
 ## Support
 I will respond on the code modding channels on **Cities: Skylines modding Discord**
@@ -97,7 +99,7 @@ I will respond on the code modding channels on **Cities: Skylines modding Discor
 ## Credits 
 * yenyang - Mod Author
 * Chameleon TBN - Testing, Feedback, Icons, & Logo
-* Sully - Testing and Promotional Material.
+* Sully - Testing, Feedback, and Promotional Material.
 * Algernon - Help with UI, Cooperative Development & Code Sharing
 * Bad Peanut - Image Credit for Flaming Chirper
 * T.D.W., Klyte45, krzychu124, & Quboid - Cooperative Development & Code Sharing
