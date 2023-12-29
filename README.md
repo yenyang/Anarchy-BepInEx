@@ -6,7 +6,7 @@ This mod allows you to place vegetation and props (with DevUI 'Add Object' menu)
 
 For consistency within the community, please do not use the term Anarchy to mean something else for CSL2.
 
-Sully has prepared an Amazing! demo video about detailing with Anarchy available on Youtube.
+Sully has prepared an Amazing! demo video about detailing with Anarchy available on [Youtube](https://www.youtube.com/watch?v=dJiCmFIxPK0).
 
 ## Dependencies
 [Unified Icon Library](https://thunderstore.io/c/cities-skylines-ii/p/algernon/Unified_Icon_Library/)
