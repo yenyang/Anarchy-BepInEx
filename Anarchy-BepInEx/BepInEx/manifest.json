@@ -1,10 +1,10 @@
 {
   "name": "Anarchy",
-  "description": "Disables Error Checks For Tools and does not show errors.",
-  "version_number": "1.0.1",
+  "description": "Disables Error Checks and does not show errors. Place vegetation and props overlapping or inside the boundaries of other objects and close together.",
+  "version_number": "1.1.0",
   "dependencies": [
     "BepInEx-BepInExPack-5.4.2100",
-    "algernon-Unified_Icon_Library-1.0.4"
+    "algernon-Unified_Icon_Library-1.0.6"
   ],
   "website_url": "https://github.com/yenyang/Anarchy-BepInEx"
 }

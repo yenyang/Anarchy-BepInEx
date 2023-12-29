@@ -4,9 +4,12 @@
 
 namespace Anarchy.Settings
 {
+    using Anarchy.Systems;
     using Colossal.IO.AssetDatabase;
     using Game.Modding;
     using Game.Settings;
+    using Game.UI;
+    using Unity.Entities;
 
     /// <summary>
     /// The mod settings for the Anarchy Mod.
@@ -39,11 +42,34 @@ namespace Anarchy.Settings
         /// </summary>
         public bool FlamingChirper { get; set; }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether to use the tool icon.
+        public bool ToolIcon { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether to have chirper be on fire.
+        /// Gets or sets a value indicating whether to prevent prop culling.
         /// </summary>
-        public bool ToolIcon { get; set; }
+        public bool PreventAccidentalPropCulling { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating the frequency to update props.
+        /// </summary>
+        [SettingsUISlider(min = 1, max = 600, step = 1, scalarMultiplier = 1, unit = Unit.kInteger)]
+        [SettingsUIHideByCondition(typeof(AnarchyModSettings), nameof(IsCullingNotBeingPrevented))]
+        public int PropRefreshFrequency { get; set; }
+
+        /// <summary>
+        /// Sets a value indicating whether: to update props now.
+        /// </summary>
+        [SettingsUIButton]
+        public bool RefreshProps
+        {
+            set
+            {
+                PreventCullingSystem preventCullingSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<PreventCullingSystem>();
+                preventCullingSystem.RunNow = true;
+            }
+        }
 
         /// <summary>
         /// Gets or sets a value indicating whether: Used to force saving of Modsettings if settings would result in empty Json.
@@ -66,6 +92,11 @@ namespace Anarchy.Settings
             }
         }
 
+        /// <summary>
+        /// Checks if prevent accidental prop culling is off or on.
+        /// </summary>
+        /// <returns>Opposite of PreventAccidentalPropCulling.</returns>
+        public bool IsCullingNotBeingPrevented() => !PreventAccidentalPropCulling;
 
         /// <inheritdoc/>
         public override void SetDefaults()
@@ -75,6 +106,8 @@ namespace Anarchy.Settings
             FlamingChirper = true;
             Contra = true;
             ToolIcon = true;
+            PreventAccidentalPropCulling = true;
+            PropRefreshFrequency = 30;
         }
     }
 }

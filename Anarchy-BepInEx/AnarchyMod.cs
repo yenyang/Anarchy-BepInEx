@@ -5,18 +5,17 @@
 #define DEBUG
 namespace Anarchy
 {
-    using System;
-    using System.IO;
-    using System.Linq;
     using Anarchy.Settings;
     using Anarchy.Systems;
     using Anarchy.Tooltip;
+    using Anarchy.Utils;
     using Colossal.IO.AssetDatabase;
-    using Colossal.Localization;
     using Colossal.Logging;
     using Game;
     using Game.Modding;
     using Game.SceneFlow;
+    using Game.UI;
+    using System.IO;
 
     /// <summary>
     /// Mod entry point.
@@ -74,11 +73,14 @@ namespace Anarchy
         /// <inheritdoc/>
         public void OnCreateWorld(UpdateSystem updateSystem)
         {
+            Logger.effectivenessLevel = Level.Info;
             Logger.Info("Initializing Settings.");
             Settings = new (this);
             Settings.RegisterInOptionsUI();
             AssetDatabase.global.LoadSettings(nameof(AnarchyMod), Settings, new AnarchyModSettings(this));
             Settings.Contra = false;
+            GameUIResourceHandler uiResourceHandler = GameManager.instance.userInterface.view.uiSystem.resourceHandler as GameUIResourceHandler;
+            uiResourceHandler?.HostLocationsMap.Add("yy-anarchy", new System.Collections.Generic.List<string> { UIFileUtils.AssemblyPath });
             Logger.Info("Handling create world");
             Logger.Info("ModInstallFolder = " + ModInstallFolder);
             LoadLocales();
@@ -87,6 +89,10 @@ namespace Anarchy
             updateSystem.UpdateBefore<DisableToolErrorsSystem>(SystemUpdatePhase.ModificationEnd);
             updateSystem.UpdateAfter<EnableToolErrorsSystem>(SystemUpdatePhase.ModificationEnd);
             updateSystem.UpdateAt<AnarchyUISystem>(SystemUpdatePhase.UIUpdate);
+            updateSystem.UpdateBefore<AnarchyPlopSystem>(SystemUpdatePhase.ModificationEnd);
+            updateSystem.UpdateBefore<PreventOverrideSystem>(SystemUpdatePhase.ModificationEnd);
+            updateSystem.UpdateBefore<RemoveOverridenSystem>(SystemUpdatePhase.ModificationEnd);
+            updateSystem.UpdateAt<PreventCullingSystem>(SystemUpdatePhase.ToolUpdate);
         }
 
         /// <inheritdoc/>
@@ -97,33 +103,9 @@ namespace Anarchy
 
         private void LoadLocales()
         {
-            var file = Path.Combine(ModInstallFolder, $"i18n.csv");
-            if (File.Exists(file))
+            foreach (var lang in GameManager.instance.localizationManager.GetSupportedLocales())
             {
-                var fileLines = File.ReadAllLines(file).Select(x => x.Split('\t'));
-                var enColumn = Array.IndexOf(fileLines.First(), "en-US");
-                var enMemoryFile = new MemorySource(fileLines.Skip(1).ToDictionary(x => x[0], x => x.ElementAtOrDefault(enColumn)));
-                foreach (var lang in GameManager.instance.localizationManager.GetSupportedLocales())
-                {
-                    GameManager.instance.localizationManager.AddSource(lang, enMemoryFile);
-                    if (lang != "en-US")
-                    {
-                        var valueColumn = Array.IndexOf(fileLines.First(), lang);
-                        if (valueColumn > 0)
-                        {
-                            var i18nFile = new MemorySource(fileLines.Skip(1).ToDictionary(x => x[0], x => x.ElementAtOrDefault(valueColumn)));
-                            GameManager.instance.localizationManager.AddSource(lang, i18nFile);
-                        }
-                    }
-                }
-            }
-            else
-            {
-                Logger.Info($"[{nameof(AnarchyMod)}] {nameof(LoadLocales)} Couldn't find localization files. Used Mod Generated defaults.");
-                foreach (var lang in GameManager.instance.localizationManager.GetSupportedLocales())
-                {
-                    GameManager.instance.localizationManager.AddSource(lang, new LocaleEN(Settings));
-                }
+                GameManager.instance.localizationManager.AddSource(lang, new LocaleEN(Settings));
             }
         }
     }
