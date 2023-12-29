@@ -6,6 +6,8 @@ This mod allows you to place vegetation and props (with DevUI 'Add Object' menu)
 
 For consistency within the community, please do not use the term Anarchy to mean something else for CSL2.
 
+Sully has prepared an Amazing! demo video about detailing with Anarchy available on Youtube.
+
 ## Dependencies
 [Unified Icon Library](https://thunderstore.io/c/cities-skylines-ii/p/algernon/Unified_Icon_Library/)
 
@@ -19,8 +21,8 @@ The mod also has:
 * Option to automatically enable with bulldozer
 * Optional mouse tooltip
 * Icons for game manipulation and bypass confirmation for bulldozer.
-* Icon to show invisible paths/markers. Use Bulldoze tool to remove invisible paths/markers. See below.
-* Icon to EXCLUSIVELY target surfaces with the bulldozer and remove with one click. With Anarchy, this also can remove surfaces in buildings and areas.
+* Icon to show and EXCLUSIVELY target invisible paths/markers with the bulldozer and remove invisible paths/markers. See below.
+* Icon to EXCLUSIVELY target surfaces with the bulldozer and remove with one click. With Anarchy, this also can remove surfaces in buildings.
 
 Currently it applies to these tools:
 * Object Tool
@@ -71,9 +73,11 @@ Pro tip: Use the brush mode to remove trees and standalone props. If you unselec
 ## Invisible Paths and Markers
 Drawing invisible paths and markers is an unsupported feature of the game. You need DevUI to access the 'Add Object' menu via the home button to draw invisible paths and markers.
 
-With the Bulldoze tool, the DevUI option to "Show Markers", and Anarchy enabled, you can remove invisible paths and markers, **BUT SAVE BEFORE HAND!**
+With the Bulldoze tool you can select an icon to show and EXCLUSIVELY target these invisible paths and markers. With this selected and Anarchy enabled you can remove them, **BUT SAVE BEFORE HAND!**
 
 Removing them in the wrong order may result in a crash to desktop.
+
+The mod will automatically toggle the DevUI setting to "Show Markers" when drawing invisible paths.
 
 ## Disclaimer
 This mod does NOT allow you to do everything including:
@@ -83,6 +87,9 @@ This mod does NOT allow you to do everything including:
 * Does not give additional control for prop placement.
 
 **Please save frequently, in multiple files, and learn to use responsibly.**
+
+## Planned Features
+* A custom bulldoze tool to allow for removing props, trees, and invisible paths and markers from individual copies of assets while in-game. 
 
 ## Support
 I will respond on the code modding channels on **Cities: Skylines modding Discord**
