@@ -4,14 +4,11 @@
 
 namespace Anarchy.Patches
 {
-    using Anarchy;
     using Anarchy.Systems;
     using Anarchy.Tooltip;
-    using Game;
     using Game.Areas;
     using Game.Common;
     using Game.Net;
-    using Game.Notifications;
     using Game.Rendering;
     using Game.Tools;
     using HarmonyLib;
