@@ -45,9 +45,6 @@ namespace Anarchy.Patches
                     toolRaycastSystem.raycastFlags |= RaycastFlags.SubElements;
                 }
             }
-
-            toolRaycastSystem.typeMask = TypeMask.All;
-            toolRaycastSystem.raycastFlags = RaycastFlags.Passenger | RaycastFlags.Cargo;
         }
     }
 }
