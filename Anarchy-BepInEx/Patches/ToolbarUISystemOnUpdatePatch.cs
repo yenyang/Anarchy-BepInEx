@@ -18,10 +18,12 @@ namespace Anarchy.Patches
         /// <summary>
         /// Patches Unique Asset Tracking System IsPlacedUniqueAsset to return false.
         /// </summary>
-        public static void Prefix()
+        /// <returns>True so that the original method runs.</returns>
+        public static bool Prefix()
         {
             ToolbarUISystem toolbarUISystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<ToolbarUISystem>();
             toolbarUISystem.SetMemberValue("m_UniqueAssetStatusChanged", false);
+            return true;
         }
     }
 }
