@@ -5,6 +5,7 @@
 namespace Anarchy.Patches
 {
     using Anarchy.Utils;
+    using Colossal.Entities;
     using Game.Prefabs;
     using Game.Tools;
     using Game.UI.InGame;
@@ -25,9 +26,10 @@ namespace Anarchy.Patches
         {
             ToolSystem toolSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<ToolSystem>();
             PrefabSystem prefabSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<PrefabSystem>();
-            if (prefabSystem.TryGetPrefab(assetEntity, out PrefabBase prefab))
+
+            if (assetEntity != Entity.Null && !prefabSystem.EntityManager.HasEnabledComponent<Locked>(assetEntity) && AnarchyMod.Settings.AllowPlacingMultipleUniqueBuildings)
             {
-                if (assetEntity != Entity.Null && !prefabSystem.HasEnabledComponent<Locked>(prefab) && AnarchyMod.Settings.AllowPlacingMultipleUniqueBuildings)
+                if (prefabSystem.TryGetPrefab(assetEntity, out PrefabBase prefab))
                 {
                     toolSystem.ActivatePrefabTool(prefab);
                 }
