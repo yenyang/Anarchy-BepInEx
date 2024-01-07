@@ -132,7 +132,11 @@
     <Compile Include="AnarchyMod.cs" />
     <Compile Include="BepInEx\AnarchyPlugin.cs" />
     <Compile Include="Components\PreventOverride.cs" />
+    <Compile Include="Patches\ToolbarUISystemActivatePrefabTool.cs" />
+    <Compile Include="Patches\ToolbarUISystemOnUpdatePatch.cs" />
+    <Compile Include="Patches\UniqueAssetTrackingSystemIsPlacedUniqueAssetPatch.cs" />
     <Compile Include="Patches\BulldozeToolSystemInitializeRaycastPatch.cs" />
+    <Compile Include="Patches\UniqueAssetTrackingSystemOnCreatePatch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings\AnarchyModSettings.cs" />
     <Compile Include="Settings\LocaleEN.cs" />
@@ -146,6 +150,7 @@
     <Compile Include="Systems\EnableToolErrorsSystem.cs" />
     <Compile Include="Tooltip\AnarchySystem.cs" />
     <Compile Include="Tooltip\AnarchyTooltipSystem.cs" />
+    <Compile Include="Utils\ReflectionExtensions.cs" />
     <Compile Include="Utils\UIFileUtils.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -156,12 +161,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="BepInEx\icon.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="UI\DiamondShapeSurface.svg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="UI\DottedLinesMarkers.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="UI\ui.js">

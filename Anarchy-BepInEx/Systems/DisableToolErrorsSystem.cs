@@ -25,6 +25,7 @@ namespace Anarchy.Systems
         private AnarchySystem m_AnarchySystem;
         private EnableToolErrorsSystem m_EnableToolErrorsSystem;
         private ILog m_Log;
+        private PrefabSystem m_PrefabSystem;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="DisableToolErrorsSystem"/> class.
@@ -40,6 +41,7 @@ namespace Anarchy.Systems
             m_AnarchySystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<AnarchySystem>();
             m_EnableToolErrorsSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<EnableToolErrorsSystem>();
             m_ToolSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<ToolSystem>();
+            m_PrefabSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<PrefabSystem>();
             m_Log.Info($"{nameof(DisableToolErrorsSystem)} Created.");
             m_ToolErrorPrefabQuery = GetEntityQuery(new EntityQueryDesc[]
             {
@@ -69,32 +71,48 @@ namespace Anarchy.Systems
                 m_ToolSystem.ignoreErrors = false;
             }
 
-            if (m_AnarchySystem.AnarchyEnabled)
+            if (AnarchyMod.Settings.AllowPlacingMultipleUniqueBuildings)
             {
-                if (m_AnarchySystem.IsToolAppropriate(m_ToolSystem.activeTool.toolID))
+                PrefabID prefabID = new ("NotificationIconPrefab", "Already Exists");
+                if (m_PrefabSystem.TryGetPrefab(prefabID, out PrefabBase prefabBase))
                 {
-                    NativeArray<Entity> toolErrorPrefabs = m_ToolErrorPrefabQuery.ToEntityArray(Allocator.Temp);
-                    foreach (Entity currentEntity in toolErrorPrefabs)
+                    if (m_PrefabSystem.TryGetEntity(prefabBase, out Entity entity))
                     {
-                        if (EntityManager.TryGetComponent<ToolErrorData>(currentEntity, out ToolErrorData toolErrorData))
-                       {
-                            if (m_AnarchySystem.IsErrorTypeAllowed(toolErrorData.m_Error))
-                            {
-#if VERBOSE
-                                m_Log.Verbose("DisableToolErrorsSystem.OnUpdate currentEntity.index = " + currentEntity.Index + " currentEntity.version = " + currentEntity.Version + " ErrorType = " + toolErrorData.m_Error.ToString());
-                                m_Log.Verbose("DisableToolErrorsSystem.OnUpdate toolErrorData.m_Flags = " + toolErrorData.m_Flags.ToString()); 
-#endif
-                                toolErrorData.m_Flags |= ToolErrorFlags.DisableInGame;
-                                toolErrorData.m_Flags |= ToolErrorFlags.DisableInEditor;
-                                EntityManager.SetComponentData(currentEntity, toolErrorData);
-                           }
-                       }
+                        if (EntityManager.TryGetComponent(entity, out ToolErrorData toolErrorData)) 
+                        {
+                            toolErrorData.m_Flags |= ToolErrorFlags.DisableInGame;
+                            toolErrorData.m_Flags |= ToolErrorFlags.DisableInEditor;
+                            EntityManager.SetComponentData(entity, toolErrorData);
+                        }
                     }
-
-                    toolErrorPrefabs.Dispose();
-                    m_EnableToolErrorsSystem.Enabled = true;
                 }
             }
+
+            if (!m_AnarchySystem.AnarchyEnabled || !m_AnarchySystem.IsToolAppropriate(m_ToolSystem.activeTool.toolID))
+            {
+                return;
+            }
+
+            NativeArray <Entity> toolErrorPrefabs = m_ToolErrorPrefabQuery.ToEntityArray(Allocator.Temp);
+            foreach (Entity currentEntity in toolErrorPrefabs)
+            {
+                if (EntityManager.TryGetComponent(currentEntity, out ToolErrorData toolErrorData))
+                {
+                    if (m_AnarchySystem.IsErrorTypeAllowed(toolErrorData.m_Error))
+                    {
+#if VERBOSE
+                        m_Log.Verbose("DisableToolErrorsSystem.OnUpdate currentEntity.index = " + currentEntity.Index + " currentEntity.version = " + currentEntity.Version + " ErrorType = " + toolErrorData.m_Error.ToString());
+                        m_Log.Verbose("DisableToolErrorsSystem.OnUpdate toolErrorData.m_Flags = " + toolErrorData.m_Flags.ToString()); 
+#endif
+                        toolErrorData.m_Flags |= ToolErrorFlags.DisableInGame;
+                        toolErrorData.m_Flags |= ToolErrorFlags.DisableInEditor;
+                        EntityManager.SetComponentData(currentEntity, toolErrorData);
+                    }
+                }
+            }
+
+            toolErrorPrefabs.Dispose();
+            m_EnableToolErrorsSystem.Enabled = true;
         }
     }
 }
