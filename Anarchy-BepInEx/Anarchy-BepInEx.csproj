@@ -132,6 +132,7 @@
     <Compile Include="AnarchyMod.cs" />
     <Compile Include="BepInEx\AnarchyPlugin.cs" />
     <Compile Include="Components\PreventOverride.cs" />
+    <Compile Include="Patches\ToolbarUISystemActivatePrefabTool.cs" />
     <Compile Include="Patches\ToolbarUISystemOnUpdatePatch.cs" />
     <Compile Include="Patches\UniqueAssetTrackingSystemIsPlacedUniqueAssetPatch.cs" />
     <Compile Include="Patches\BulldozeToolSystemInitializeRaycastPatch.cs" />
