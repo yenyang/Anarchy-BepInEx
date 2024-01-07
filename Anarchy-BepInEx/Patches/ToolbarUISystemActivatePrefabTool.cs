@@ -25,10 +25,12 @@ namespace Anarchy.Patches
         {
             ToolSystem toolSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<ToolSystem>();
             PrefabSystem prefabSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<PrefabSystem>();
-            if (assetEntity != Entity.Null && AnarchyMod.Settings.AllowPlacingMultipleUniqueBuildings)
+            if (prefabSystem.TryGetPrefab(assetEntity, out PrefabBase prefab))
             {
-                PrefabBase prefab = prefabSystem.GetPrefab<PrefabBase>(assetEntity);
-                toolSystem.ActivatePrefabTool(prefab);
+                if (assetEntity != Entity.Null && !prefabSystem.HasEnabledComponent<Locked>(prefab) && AnarchyMod.Settings.AllowPlacingMultipleUniqueBuildings)
+                {
+                    toolSystem.ActivatePrefabTool(prefab);
+                }
             }
         }
     }
