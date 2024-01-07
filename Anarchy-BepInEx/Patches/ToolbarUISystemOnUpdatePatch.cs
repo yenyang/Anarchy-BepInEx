@@ -21,8 +21,19 @@ namespace Anarchy.Patches
         /// <returns>True so that the original method runs.</returns>
         public static bool Prefix()
         {
-            ToolbarUISystem toolbarUISystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<ToolbarUISystem>();
-            toolbarUISystem.SetMemberValue("m_UniqueAssetStatusChanged", false);
+            if (AnarchyMod.Settings.AllowPlacingMultipleUniqueBuildings)
+            {
+                ToolbarUISystem toolbarUISystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<ToolbarUISystem>();
+                toolbarUISystem.SetMemberValue("m_UniqueAssetStatusChanged", false);
+                return true;
+            }
+
+            UniqueAssetTrackingSystem uniqueAssetTrackingSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<UniqueAssetTrackingSystem>();
+            if (uniqueAssetTrackingSystem.Enabled == false)
+            {
+                uniqueAssetTrackingSystem.Enabled = true;
+            }
+
             return true;
         }
     }

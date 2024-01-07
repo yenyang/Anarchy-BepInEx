@@ -135,6 +135,7 @@
     <Compile Include="Patches\ToolbarUISystemOnUpdatePatch.cs" />
     <Compile Include="Patches\UniqueAssetTrackingSystemIsPlacedUniqueAssetPatch.cs" />
     <Compile Include="Patches\BulldozeToolSystemInitializeRaycastPatch.cs" />
+    <Compile Include="Patches\UniqueAssetTrackingSystemOnCreatePatch.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings\AnarchyModSettings.cs" />
     <Compile Include="Settings\LocaleEN.cs" />
@@ -159,12 +160,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="BepInEx\icon.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="UI\DiamondShapeSurface.svg">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="UI\DottedLinesMarkers.svg">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="UI\ui.js">
