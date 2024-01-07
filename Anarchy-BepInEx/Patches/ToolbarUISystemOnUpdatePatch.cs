@@ -25,6 +25,12 @@ namespace Anarchy.Patches
             {
                 ToolbarUISystem toolbarUISystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<ToolbarUISystem>();
                 toolbarUISystem.SetMemberValue("m_UniqueAssetStatusChanged", false);
+                UniqueAssetTrackingSystem uniqueAssetTrackingSystem1 = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<UniqueAssetTrackingSystem>();
+                if (uniqueAssetTrackingSystem1.Enabled == true)
+                {
+                    uniqueAssetTrackingSystem1.Enabled = false;
+                }
+
                 return true;
             }
 
