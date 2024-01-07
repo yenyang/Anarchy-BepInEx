@@ -23,7 +23,7 @@ The mod also has:
 * Icons for game manipulation and bypass confirmation for bulldozer.
 * Icon to show and EXCLUSIVELY target invisible paths/markers with the bulldozer and remove invisible paths/markers. See below.
 * Icon to EXCLUSIVELY target surfaces with the bulldozer and remove with one click. With Anarchy, this also can remove surfaces in buildings.
-* Allows multiple copies of unique buildings using toolbar menu. Effects of multiple buildings stack!
+* Opt-In Option to allow multiple copies of unique buildings using toolbar menu. Effects of multiple buildings stack!
 
 Currently it applies to these tools:
 * Object Tool
