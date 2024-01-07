@@ -10,6 +10,7 @@ namespace Anarchy.Settings
     using Game.Settings;
     using Game.UI;
     using Unity.Entities;
+    using static Game.Prefabs.CompositionFlags;
 
     /// <summary>
     /// The mod settings for the Anarchy Mod.
@@ -72,6 +73,10 @@ namespace Anarchy.Settings
         }
 
         /// <summary>
+        /// Gets or sets a value indicating whether to use allow placing multiple unique buildings.
+        public bool AllowPlacingMultipleUniqueBuildings { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether: Used to force saving of Modsettings if settings would result in empty Json.
         /// </summary>
         [SettingsUIHidden]
@@ -108,6 +113,7 @@ namespace Anarchy.Settings
             ToolIcon = true;
             PreventAccidentalPropCulling = true;
             PropRefreshFrequency = 30;
+            AllowPlacingMultipleUniqueBuildings = false;
         }
     }
 }
