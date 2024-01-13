@@ -13,6 +13,9 @@ Sully has prepared an Amazing! demo video about detailing with Anarchy available
 
 [BepInExPack](https://thunderstore.io/c/cities-skylines-ii/p/BepInEx/BepInExPack/)
 
+## Change Log
+[Available on Github](https://github.com/yenyang/Anarchy-BepInEx/blob/master/CHANGELOG.md)
+
 ## Detailed Descrption
 The mod also has: 
 * Optional Tool icon
@@ -20,10 +23,12 @@ The mod also has:
 * Optional flaming chirper
 * Option to automatically enable with bulldozer
 * Optional mouse tooltip
+* Opt-In Option to allow multiple copies of unique buildings using toolbar menu. Effects of multiple buildings stack!
+
+These features will be moved to a new mod called Better Bulldozer soon:
 * Icons for game manipulation and bypass confirmation for bulldozer.
 * Icon to show and EXCLUSIVELY target invisible paths/markers with the bulldozer and remove invisible paths/markers. See below.
 * Icon to EXCLUSIVELY target surfaces with the bulldozer and remove with one click. With Anarchy, this also can remove surfaces in buildings.
-* Opt-In Option to allow multiple copies of unique buildings using toolbar menu. Effects of multiple buildings stack!
 
 Currently it applies to these tools:
 * Object Tool
@@ -88,11 +93,9 @@ This mod does NOT allow you to do everything including:
 * If the vanilla net tool would remove an existing network, it will still do that.
 * Even if the mod disables the error check, the UI may still prevent you from doing something.
 * Does not give additional control for prop placement.
+* Not much testing is done on the effects of this mod on maps created using the unfinished editor.
 
 **Please save frequently, in multiple files, and learn to use responsibly.**
-
-## Planned Features
-* A custom bulldoze tool to allow for removing props, trees, invisible paths and markers, etc. from individual copies of assets while in-game. 
 
 ## Support
 I will respond on the code modding channels on **Cities: Skylines Modding Discord**
@@ -104,3 +107,4 @@ I will respond on the code modding channels on **Cities: Skylines Modding Discor
 * Algernon - Help with UI, Cooperative Development & Code Sharing
 * Bad Peanut - Image Credit for Flaming Chirper
 * T.D.W., Klyte45, krzychu124, & Quboid - Cooperative Development & Code Sharing
+* Dante - Testing, Feedback
