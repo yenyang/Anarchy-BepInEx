@@ -9,6 +9,7 @@ namespace Anarchy.Systems
     using Colossal.Logging;
     using Game;
     using Game.Common;
+    using Game.Objects;
     using Game.Rendering;
     using Game.Tools;
     using Unity.Burst.Intrinsics;
@@ -54,6 +55,8 @@ namespace Anarchy.Systems
                },
                 None = new ComponentType[]
                 {
+                    ComponentType.ReadOnly<Plant>(),
+                    ComponentType.ReadOnly<Tree>(),
                     ComponentType.ReadOnly<Temp>(),
                     ComponentType.ReadOnly<Deleted>(),
                 },

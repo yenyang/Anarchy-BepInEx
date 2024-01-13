@@ -1,14 +1,14 @@
 // Function to set up Anarchy Button
 if (typeof yyAnarchy.setupAnarchyItem !== 'function')
 {
-    yyAnarchy.setupAnarchyItem = function ()
+    yyAnarchy.setupAnarchyItem = function (selected)
     {
         const button = document.getElementById("YYA-Anarchy-Button");
         if (button == null) {
             engine.trigger('YYA-log', "JS Error: could not setup button YYA-Anarchy-Button");
             return;
         }
-        if (yyAnarchy.enabled) {
+        if (selected) {
             button.classList.add("selected");
             const image = document.getElementById("YYA-Anarchy-Image");
             if (image != null) {
@@ -32,10 +32,13 @@ if (typeof yyAnarchy.setupAnarchyItem !== 'function')
             }
         }
         button.onclick = function () {
-            yyAnarchy.enabled = !yyAnarchy.enabled;
-            engine.trigger('YYA-AnarchyToggled', yyAnarchy.enabled);
+            let selected = true;
+            if (this.classList.contains("selected")) {
+                selected = false; // This is intended to toggle and be the opposite of what it is now.
+            }
+            engine.trigger('YYA-AnarchyToggled', selected);
             const thisButton = document.getElementById(this.id);
-            if (yyAnarchy.enabled) {
+            if (selected) {
                 thisButton.classList.add("selected");
                 const image = document.getElementById("YYA-Anarchy-Image");
                 if (image != null) {
@@ -91,13 +94,32 @@ if (typeof yyAnarchy.setupButton !== 'function') {
             if (this.classList.contains("selected")) {
                 selected = false; // This is intended to toggle and be the opposite of what it is now.
             }
-            engine.trigger(this.id, selected);
             const thisButton = document.getElementById(this.id);
             if (selected) {
                 thisButton.classList.add("selected");
             } else {
                 thisButton.classList.remove("selected");
             }
+            engine.trigger(this.id, selected);
+        }
+        yyAnarchy.setTooltip(buttonId, toolTipKey);
+    }
+}
+
+if (typeof yyAnarchy.setupToolButton !== 'function') {
+    yyAnarchy.setupToolButton = function (buttonId, selected, toolTipKey) {
+        const button = document.getElementById(buttonId);
+        if (button == null) {
+            engine.trigger('YYA-log', "JS Error: could not setup button " + buttonId);
+            return;
+        }
+        if (selected) {
+            button.classList.add("selected");
+        } else {
+            button.classList.remove("selected");
+        }
+        button.onclick = function () {
+            engine.trigger(this.id);
         }
         yyAnarchy.setTooltip(buttonId, toolTipKey);
     }
@@ -130,8 +152,9 @@ if (typeof yyAnarchy.setTooltip !== 'function') {
 if (typeof yyAnarchy.showTooltip !== 'function') {
     yyAnarchy.showTooltip = function (parent, tooltipKey) {
 
-        if (!yyAnarchy.tooltip) {
+        if (!document.getElementById("yyAnarchyToolip")) {
             yyAnarchy.tooltip = document.createElement("div");
+            yyAnarchy.tooltip.id = "yyAnarchyToolip";
             yyAnarchy.tooltip.style.visibility = "hidden";
             yyAnarchy.tooltip.classList.add("balloon_qJY", "balloon_H23", "up_ehW", "center_hug", "anchored-balloon_AYp", "up_el0");
             let boundsDiv = document.createElement("div");

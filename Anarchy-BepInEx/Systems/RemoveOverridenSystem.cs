@@ -6,7 +6,6 @@ namespace Anarchy.Systems
 {
     using System.Collections.Generic;
     using Anarchy;
-    using Anarchy.Components;
     using Anarchy.Tooltip;
     using Colossal.Logging;
     using Game;
@@ -20,10 +19,14 @@ namespace Anarchy.Systems
     /// </summary>
     public partial class RemoveOverridenSystem : GameSystemBase
     {
-        private readonly List<string> m_AppropriateTools = new List<string>()
+        private readonly List<string> m_AppropriateToolsWithAnarchy = new List<string>()
         {
             { "Object Tool" },
             { "Line Tool" },
+        };
+
+        private readonly List<string> m_AppropriateTools = new List<string>()
+        {
             { "Bulldoze Tool" },
             { "Default Tool" },
         };
@@ -34,7 +37,7 @@ namespace Anarchy.Systems
         private NetToolSystem m_NetToolSystem;
         private ObjectToolSystem m_ObjectToolSystem;
         private PrefabSystem m_PrefabSystem;
-        private EntityQuery m_OverridenQuery;
+        private EntityQuery m_OwnedAndOverridenQuery;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="RemoveOverridenSystem"/> class.
@@ -53,20 +56,22 @@ namespace Anarchy.Systems
             m_NetToolSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<NetToolSystem>();
             m_ObjectToolSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<ObjectToolSystem>();
             m_PrefabSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<PrefabSystem>();
-            m_OverridenQuery = GetEntityQuery(new EntityQueryDesc
+            m_OwnedAndOverridenQuery = GetEntityQuery(new EntityQueryDesc
             {
                 All = new ComponentType[]
-                {
+               {
                     ComponentType.ReadOnly<Updated>(),
                     ComponentType.ReadOnly<Overridden>(),
-                },
+                    ComponentType.ReadOnly<Owner>(),
+               },
                 None = new ComponentType[]
-                {
+               {
                     ComponentType.ReadOnly<Temp>(),
                     ComponentType.ReadOnly<BuildingData>(),
-                },
+                    ComponentType.ReadOnly<Game.Objects.Crane>(),
+               },
             });
-            RequireForUpdate(m_OverridenQuery);
+            RequireForUpdate(m_OwnedAndOverridenQuery);
             base.OnCreate();
         }
 
@@ -87,9 +92,14 @@ namespace Anarchy.Systems
                 }
             }
 
-            if (m_AnarchySystem.AnarchyEnabled && m_AppropriateTools.Contains(m_ToolSystem.activeTool.toolID) && !m_NetToolSystem.TrySetPrefab(m_ToolSystem.activePrefab))
+            if (m_NetToolSystem.TrySetPrefab(m_ToolSystem.activePrefab))
             {
-                EntityManager.RemoveComponent(m_OverridenQuery, ComponentType.ReadWrite<Overridden>());
+                return;
+            }
+
+            if (m_AppropriateTools.Contains(m_ToolSystem.activeTool.toolID) || (m_AppropriateToolsWithAnarchy.Contains(m_ToolSystem.activeTool.toolID) && m_AnarchySystem.AnarchyEnabled))
+            {
+                EntityManager.RemoveComponent(m_OwnedAndOverridenQuery, ComponentType.ReadWrite<Overridden>());
             }
         }
     }

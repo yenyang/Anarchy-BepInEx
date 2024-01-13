@@ -10,6 +10,7 @@ namespace Anarchy.Systems
     using Anarchy.Tooltip;
     using Colossal.Logging;
     using Game;
+    using Game.Buildings;
     using Game.Common;
     using Game.Prefabs;
     using Game.Tools;
@@ -33,7 +34,7 @@ namespace Anarchy.Systems
         private ObjectToolSystem m_ObjectToolSystem;
         private PrefabSystem m_PrefabSystem;
         private EntityQuery m_CreatedQuery;
-        private EntityQuery m_OverridenQuery;
+        private EntityQuery m_OwnedAndOverridenQuery;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AnarchyPlopSystem"/> class.
@@ -66,17 +67,19 @@ namespace Anarchy.Systems
                     ComponentType.ReadOnly<BuildingData>(),
                 },
             });
-            m_OverridenQuery = GetEntityQuery(new EntityQueryDesc
+            m_OwnedAndOverridenQuery = GetEntityQuery(new EntityQueryDesc
             {
                 All = new ComponentType[]
                 {
                     ComponentType.ReadOnly<Updated>(),
+                    ComponentType.ReadOnly<Owner>(),
                     ComponentType.ReadOnly<Overridden>(),
                 },
                 None = new ComponentType[]
                 {
                     ComponentType.ReadOnly<Temp>(),
                     ComponentType.ReadOnly<BuildingData>(),
+                    ComponentType.ReadOnly<Game.Objects.Crane>(),
                 },
             });
             RequireForUpdate(m_CreatedQuery);
@@ -103,9 +106,16 @@ namespace Anarchy.Systems
             if (m_AnarchySystem.AnarchyEnabled && m_AppropriateTools.Contains(m_ToolSystem.activeTool.toolID) && !m_NetToolSystem.TrySetPrefab(m_ToolSystem.activePrefab))
             {
                 EntityManager.RemoveComponent(m_CreatedQuery, ComponentType.ReadWrite<Overridden>());
-                EntityManager.AddComponent(m_CreatedQuery, ComponentType.ReadWrite<PreventOverride>());
+                EntityManager.RemoveComponent(m_OwnedAndOverridenQuery, ComponentType.ReadWrite<Overridden>());
+                if (m_ToolSystem.actionMode.IsEditor())
+                {
+                    return;
+                }
 
-                EntityManager.RemoveComponent(m_OverridenQuery, ComponentType.ReadWrite<Overridden>());
+                if (m_ToolSystem.activeTool != m_ObjectToolSystem || m_ObjectToolSystem.brushing == false)
+                {
+                    EntityManager.AddComponent(m_CreatedQuery, ComponentType.ReadWrite<PreventOverride>());
+                }
             }
         }
     }
