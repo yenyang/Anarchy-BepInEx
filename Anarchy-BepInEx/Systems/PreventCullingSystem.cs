@@ -27,6 +27,7 @@ namespace Anarchy.Systems
         private TypeHandle __TypeHandle;
         private ToolOutputBarrier m_ToolOutputBarrier;
         private int m_FrameCount = 0;
+        private ToolSystem m_ToolSystem;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PreventCullingSystem"/> class.
@@ -46,6 +47,7 @@ namespace Anarchy.Systems
             m_Log = AnarchyMod.Instance.Logger;
             m_Log.Info($"{nameof(PreventCullingSystem)} Created.");
             m_ToolOutputBarrier = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<ToolOutputBarrier>();
+            m_ToolSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<ToolSystem>();
             m_CullingInfoQuery = GetEntityQuery(new EntityQueryDesc
             {
                 All = new ComponentType[]
@@ -68,6 +70,11 @@ namespace Anarchy.Systems
         /// <inheritdoc/>
         protected override void OnUpdate()
         {
+            if (m_ToolSystem.actionMode.IsEditor())
+            {
+                return;
+            }  
+
             if (m_FrameCount < AnarchyMod.Settings.PropRefreshFrequency && !RunNow)
             {
                 m_FrameCount++;

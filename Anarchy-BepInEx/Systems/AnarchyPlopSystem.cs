@@ -89,7 +89,7 @@ namespace Anarchy.Systems
         /// <inheritdoc/>
         protected override void OnUpdate()
         {
-            if (m_ToolSystem.activeTool.toolID == null)
+            if (m_ToolSystem.activeTool.toolID == null || m_ToolSystem.actionMode.IsEditor())
             {
                 return;
             }
@@ -107,15 +107,8 @@ namespace Anarchy.Systems
             {
                 EntityManager.RemoveComponent(m_CreatedQuery, ComponentType.ReadWrite<Overridden>());
                 EntityManager.RemoveComponent(m_OwnedAndOverridenQuery, ComponentType.ReadWrite<Overridden>());
-                if (m_ToolSystem.actionMode.IsEditor())
-                {
-                    return;
-                }
 
-                if (m_ToolSystem.activeTool != m_ObjectToolSystem || m_ObjectToolSystem.brushing == false)
-                {
-                    EntityManager.AddComponent(m_CreatedQuery, ComponentType.ReadWrite<PreventOverride>());
-                }
+                EntityManager.AddComponent(m_CreatedQuery, ComponentType.ReadWrite<PreventOverride>());
             }
         }
     }

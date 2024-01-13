@@ -9,6 +9,7 @@ namespace Anarchy.Systems
     using Colossal.Logging;
     using Game;
     using Game.Common;
+    using Game.Tools;
     using Unity.Entities;
 
     /// <summary>
@@ -18,6 +19,7 @@ namespace Anarchy.Systems
     {
         private ILog m_Log;
         private EntityQuery m_NeedToPreventOverrideQuery;
+        private ToolSystem m_ToolSystem;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="PreventOverrideSystem"/> class.
@@ -31,6 +33,7 @@ namespace Anarchy.Systems
         {
             m_Log = AnarchyMod.Instance.Logger;
             m_Log.Info($"{nameof(PreventOverrideSystem)} Created.");
+            m_ToolSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<ToolSystem>();
             m_NeedToPreventOverrideQuery = GetEntityQuery(new EntityQueryDesc
             {
                 All = new ComponentType[]
@@ -50,6 +53,11 @@ namespace Anarchy.Systems
         /// <inheritdoc/>
         protected override void OnUpdate()
         {
+            if (m_ToolSystem.actionMode.IsEditor())
+            {
+                return;
+            }
+
             EntityManager.RemoveComponent(m_NeedToPreventOverrideQuery, ComponentType.ReadOnly<Overridden>());
             EntityManager.AddComponent(m_NeedToPreventOverrideQuery, ComponentType.ReadOnly<Updated>());
         }

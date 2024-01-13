@@ -78,7 +78,7 @@ namespace Anarchy.Systems
         /// <inheritdoc/>
         protected override void OnUpdate()
         {
-            if (m_ToolSystem.activeTool.toolID == null)
+            if (m_ToolSystem.activeTool.toolID == null || m_ToolSystem.actionMode.IsEditor())
             {
                 return;
             }

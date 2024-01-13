@@ -138,8 +138,8 @@ namespace Anarchy.Systems
             m_BoundEventHandles = new ();
 
             m_InjectedJS = UIFileUtils.ReadJS(Path.Combine(UIFileUtils.AssemblyPath, "ui.js"));
-            m_AnarchyItemScript = UIFileUtils.ReadHTML(Path.Combine(UIFileUtils.AssemblyPath, "YYA-anarchy-tool-row.html"), "if (document.getElementById(\"YYA-anarchy-item\") == null) { yyAnarchy.div.className = \"item_bZY\"; yyAnarchy.div.id = \"YYA-anarchy-item\"; yyAnarchy.entities = document.getElementsByClassName(\"tool-options-panel_Se6\"); if (yyAnarchy.entities[0] != null) { yyAnarchy.entities[0].insertAdjacentElement('afterbegin', yyAnarchy.div); if (typeof yyAnarchy.setupAnarchyItem == 'function') yyAnarchy.setupAnarchyItem(); } }");
-            m_AnarchyItemLineToolScript = UIFileUtils.ReadHTML(Path.Combine(UIFileUtils.AssemblyPath, "YYA-anarchy-tool-row.html"), "if (document.getElementById(\"YYA-anarchy-item\") == null) { yyAnarchy.div.className = \"item_bZY\"; yyAnarchy.div.id = \"YYA-anarchy-item\"; yyAnarchy.LineToolTitle = document.getElementById(\"line-tool-title\"); if (yyAnarchy.LineToolTitle != null) { yyAnarchy.LineToolTitle.parentElement.insertAdjacentElement('afterend', yyAnarchy.div); if (typeof yyAnarchy.setupAnarchyItem == 'function') yyAnarchy.setupAnarchyItem(); } }");
+            m_AnarchyItemScript = UIFileUtils.ReadHTML(Path.Combine(UIFileUtils.AssemblyPath, "YYA-anarchy-tool-row.html"), "if (document.getElementById(\"YYA-anarchy-item\") == null) { yyAnarchy.div.className = \"item_bZY\"; yyAnarchy.div.id = \"YYA-anarchy-item\"; yyAnarchy.entities = document.getElementsByClassName(\"tool-options-panel_Se6\"); if (yyAnarchy.entities[0] != null) { yyAnarchy.entities[0].insertAdjacentElement('afterbegin', yyAnarchy.div); } }");
+            m_AnarchyItemLineToolScript = UIFileUtils.ReadHTML(Path.Combine(UIFileUtils.AssemblyPath, "YYA-anarchy-tool-row.html"), "if (document.getElementById(\"YYA-anarchy-item\") == null) { yyAnarchy.div.className = \"item_bZY\"; yyAnarchy.div.id = \"YYA-anarchy-item\"; yyAnarchy.LineToolTitle = document.getElementById(\"line-tool-title\"); if (yyAnarchy.LineToolTitle != null) { yyAnarchy.LineToolTitle.parentElement.insertAdjacentElement('afterend', yyAnarchy.div); } }");
             m_BulldozeToolItemWithAnarchyScript = UIFileUtils.ReadHTML(Path.Combine(UIFileUtils.AssemblyPath, "YYA-bulldoze-tool-mode-row.html"), "if (document.getElementById(\"YYA-bulldoze-tool-mode-item\") == null) { yyAnarchy.div.className = \"item_bZY\"; yyAnarchy.div.id = \"YYA-bulldoze-tool-mode-item\"; yyAnarchy.anarchyItem = document.getElementById(\"YYA-anarchy-item\"); if (yyAnarchy.anarchyItem != null) { yyAnarchy.anarchyItem.insertAdjacentElement('afterend', yyAnarchy.div); } }");
             m_BulldozeToolItemWithoutAnarchyScript = UIFileUtils.ReadHTML(Path.Combine(UIFileUtils.AssemblyPath, "YYA-bulldoze-tool-mode-row.html"), "if (document.getElementById(\"YYA-bulldoze-tool-mode-item\") == null) { yyAnarchy.div.className = \"item_bZY\"; yyAnarchy.div.id = \"YYA-bulldoze-tool-mode-item\"; yyAnarchy.entities = document.getElementsByClassName(\"tool-options-panel_Se6\"); if (yyAnarchy.entities[0] != null) { yyAnarchy.entities[0].insertAdjacentElement('afterbegin', yyAnarchy.div); } }");
 
@@ -187,8 +187,8 @@ namespace Anarchy.Systems
                     {
                         m_Log.Warn($"{nameof(AnarchyUISystem)}.{nameof(OnUpdate)} m_InjectedJS is empty!!! Did you forget to include the ui.js file in the mod install folder?");
                         m_InjectedJS = UIFileUtils.ReadJS(Path.Combine(UIFileUtils.AssemblyPath, "ui.js"));
-                        m_AnarchyItemScript = UIFileUtils.ReadHTML(Path.Combine(UIFileUtils.AssemblyPath, "YYA-anarchy-tool-row.html"), "if (document.getElementById(\"YYA-anarchy-item\") == null) { yyAnarchy.div.className = \"item_bZY\"; yyAnarchy.div.id = \"YYA-anarchy-item\"; yyAnarchy.entities = document.getElementsByClassName(\"tool-options-panel_Se6\"); if (yyAnarchy.entities[0] != null) { yyAnarchy.entities[0].insertAdjacentElement('afterbegin', yyAnarchy.div); if (typeof yyAnarchy.setupAnarchyItem == 'function') yyAnarchy.setupAnarchyItem(); } }");
-                        m_AnarchyItemLineToolScript = UIFileUtils.ReadHTML(Path.Combine(UIFileUtils.AssemblyPath, "YYA-anarchy-tool-row.html"), "if (document.getElementById(\"YYA-anarchy-item\") == null) { yyAnarchy.div.className = \"item_bZY\"; yyAnarchy.div.id = \"YYA-anarchy-item\"; yyAnarchy.LineToolTitle = document.getElementById(\"line-tool-title\"); if (yyAnarchy.LineToolTitle != null) { yyAnarchy.LineToolTitle.parentElement.insertAdjacentElement('afterend', yyAnarchy.div); if (typeof yyAnarchy.setupAnarchyItem == 'function') yyAnarchy.setupAnarchyItem(); } }");
+                        m_AnarchyItemScript = UIFileUtils.ReadHTML(Path.Combine(UIFileUtils.AssemblyPath, "YYA-anarchy-tool-row.html"), "if (document.getElementById(\"YYA-anarchy-item\") == null) { yyAnarchy.div.className = \"item_bZY\"; yyAnarchy.div.id = \"YYA-anarchy-item\"; yyAnarchy.entities = document.getElementsByClassName(\"tool-options-panel_Se6\"); if (yyAnarchy.entities[0] != null) { yyAnarchy.entities[0].insertAdjacentElement('afterbegin', yyAnarchy.div); } }");
+                        m_AnarchyItemLineToolScript = UIFileUtils.ReadHTML(Path.Combine(UIFileUtils.AssemblyPath, "YYA-anarchy-tool-row.html"), "if (document.getElementById(\"YYA-anarchy-item\") == null) { yyAnarchy.div.className = \"item_bZY\"; yyAnarchy.div.id = \"YYA-anarchy-item\"; yyAnarchy.LineToolTitle = document.getElementById(\"line-tool-title\"); if (yyAnarchy.LineToolTitle != null) { yyAnarchy.LineToolTitle.parentElement.insertAdjacentElement('afterend', yyAnarchy.div); } }");
                         m_BulldozeToolItemWithAnarchyScript = UIFileUtils.ReadHTML(Path.Combine(UIFileUtils.AssemblyPath, "YYA-bulldoze-tool-mode-row.html"), "if (document.getElementById(\"YYA-bulldoze-tool-mode-item\") == null) { yyAnarchy.div.className = \"item_bZY\"; yyAnarchy.div.id = \"YYA-bulldoze-tool-mode-item\"; yyAnarchy.anarchyItem = document.getElementById(\"YYA-anarchy-item\"); if (yyAnarchy.anarchyItem != null) { yyAnarchy.anarchyItem.insertAdjacentElement('afterend', yyAnarchy.div); } }");
                         m_BulldozeToolItemWithoutAnarchyScript = UIFileUtils.ReadHTML(Path.Combine(UIFileUtils.AssemblyPath, "YYA-bulldoze-tool-mode-row.html"), "if (document.getElementById(\"YYA-bulldoze-tool-mode-item\") == null) { yyAnarchy.div.className = \"item_bZY\"; yyAnarchy.div.id = \"YYA-bulldoze-tool-mode-item\"; yyAnarchy.entities = document.getElementsByClassName(\"tool-options-panel_Se6\"); if (yyAnarchy.entities[0] != null) { yyAnarchy.entities[0].insertAdjacentElement('afterbegin', yyAnarchy.div); } }");
                     }
@@ -210,15 +210,15 @@ namespace Anarchy.Systems
                     if (m_ToolSystem.activeTool.toolID != "Line Tool")
                     {
                         // This script creates the anarchy item and sets up the buttons.
-                        UIFileUtils.ExecuteScript(m_UiView, m_AnarchyItemScript);
+                        UIFileUtils.ExecuteScript(m_UiView, $"{m_AnarchyItemScript}  yyAnarchy.setupAnarchyItem({BoolToString(m_AnarchySystem.AnarchyEnabled)}); ");
                     }
                     else
                     {
                         // This script creates the anarchy item and sets up the buttons specifically for line tool.
-                        UIFileUtils.ExecuteScript(m_UiView, m_AnarchyItemLineToolScript);
+                        UIFileUtils.ExecuteScript(m_UiView, $"{m_AnarchyItemLineToolScript} yyAnarchy.setupAnarchyItem({BoolToString(m_AnarchySystem.AnarchyEnabled)}); ");
                     }
 
-                    UIFileUtils.ExecuteScript(m_UiView, $"if (typeof yyAnarchy.applyLocalization == 'function') {{ yyAnarchy.AnarchyItem = document.getElementById(\"YYA-anarchy-item\"); if (yyAnarchy.AnarchyItem)  yyAnarchy.applyLocalization(); }}");
+                    UIFileUtils.ExecuteScript(m_UiView, $"if (typeof yyAnarchy.applyLocalization == 'function') {{ yyAnarchy.AnarchyItem = document.getElementById(\"YYA-anarchy-item\"); if (yyAnarchy.AnarchyItem)  yyAnarchy.applyLocalization(yyAnarchy.AnarchyItem); }}");
 
                     m_BoundEventHandles.Add(m_UiView.RegisterForEvent("YYA-AnarchyToggled", (Action<bool>)AnarchyToggled));
                     m_BoundEventHandles.Add(m_UiView.RegisterForEvent("CheckForElement-YYA-anarchy-item", (Action<bool>)ElementCheck));
@@ -519,7 +519,7 @@ namespace Anarchy.Systems
                 m_AnarchyOptionShown = false;
             }
 
-            if (tool.toolID != "Bulldoze Tool" && m_LastTool == "Bulldoze Tool")
+            if (tool != m_BulldozeToolSystem && m_LastTool == m_BulldozeToolSystem.toolID)
             {
                 // This script destroys the bulldoze tool mode row if it exists.
                 UIFileUtils.ExecuteScript(m_UiView, DestroyElementByID("YYA-bulldoze-tool-mode-item"));
@@ -530,7 +530,7 @@ namespace Anarchy.Systems
                 }
             }
 
-            if (tool.toolID != "Bulldoze Tool" && m_DisableAnarchyWhenCompleted)
+            if (tool != m_BulldozeToolSystem && m_DisableAnarchyWhenCompleted)
             {
                 m_AnarchySystem.AnarchyEnabled = false;
                 m_DisableAnarchyWhenCompleted = false;
@@ -538,7 +538,7 @@ namespace Anarchy.Systems
             }
 
             // Implements Anarchic Bulldozer when bulldoze tool is activated from inappropriate tool.
-            if (AnarchyMod.Settings.AnarchicBulldozer && m_AnarchySystem.AnarchyEnabled == false && tool.toolID == "Bulldoze Tool")
+            if (AnarchyMod.Settings.AnarchicBulldozer && m_AnarchySystem.AnarchyEnabled == false && tool == m_BulldozeToolSystem)
             {
                 m_AnarchySystem.AnarchyEnabled = true;
                 m_DisableAnarchyWhenCompleted = true;
