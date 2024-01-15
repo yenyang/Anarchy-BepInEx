@@ -57,8 +57,6 @@ namespace Anarchy.Systems
                },
                 None = new ComponentType[]
                 {
-                    ComponentType.ReadOnly<Plant>(),
-                    ComponentType.ReadOnly<Tree>(),
                     ComponentType.ReadOnly<Temp>(),
                     ComponentType.ReadOnly<Deleted>(),
                 },
@@ -73,7 +71,7 @@ namespace Anarchy.Systems
             if (m_ToolSystem.actionMode.IsEditor())
             {
                 return;
-            }  
+            }
 
             if (m_FrameCount < AnarchyMod.Settings.PropRefreshFrequency && !RunNow)
             {
