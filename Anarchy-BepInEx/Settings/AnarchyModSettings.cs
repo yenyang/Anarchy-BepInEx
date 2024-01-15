@@ -10,7 +10,6 @@ namespace Anarchy.Settings
     using Game.Settings;
     using Game.UI;
     using Unity.Entities;
-    using static Game.Prefabs.CompositionFlags;
 
     /// <summary>
     /// The mod settings for the Anarchy Mod.

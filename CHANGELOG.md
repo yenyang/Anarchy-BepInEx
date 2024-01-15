@@ -1,4 +1,7 @@
 # Anarchy-BepInEx Change Log
+## Patch V1.2.2
+* Added trees and plants back into query for PreventCullingSystem.
+
 ## Patch V1.2.1 
 * Fixed vanilla Trees not being overriden by spawning growables. (Note if you add a prop with anarchy conflicting with a standalone prop that wasn't placed with Anarchy, the standalone will be overriden).
 * Added some additional checks for JS functions.
