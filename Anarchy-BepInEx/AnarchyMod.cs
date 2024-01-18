@@ -73,7 +73,7 @@ namespace Anarchy
         /// <inheritdoc/>
         public void OnCreateWorld(UpdateSystem updateSystem)
         {
-            Logger.effectivenessLevel = Level.Info;
+            Logger.effectivenessLevel = Level.Debug;
             Logger.Info("Initializing Settings.");
             Settings = new (this);
             Settings.RegisterInOptionsUI();
@@ -91,6 +91,7 @@ namespace Anarchy
             updateSystem.UpdateBefore<PreventOverrideSystem>(SystemUpdatePhase.ModificationEnd);
             updateSystem.UpdateBefore<RemoveOverridenSystem>(SystemUpdatePhase.ModificationEnd);
             updateSystem.UpdateAt<PreventCullingSystem>(SystemUpdatePhase.ToolUpdate);
+            updateSystem.UpdateBefore<NetCompositionDataSystem>(SystemUpdatePhase.Modification4);
         }
 
         /// <inheritdoc/>
