@@ -73,6 +73,7 @@ namespace Anarchy.Systems
                     netCompositionData.m_HeightRange.min = 0f;
                     netCompositionData.m_HeightRange.max = 0f;
                     m_Log.Debug($"{nameof(NetCompositionDataSystem)}.{nameof(OnUpdate)} Setting m_HeightRange to 0 for entity: {currentEntity.Index}.{currentEntity.Version}.");
+                    EntityManager.SetComponentData(currentEntity, netCompositionData);
                 }
             }
 
