@@ -77,54 +77,6 @@ if (typeof yyAnarchy.CheckForElementByID !== 'function') {
     }
 }
 
-if (typeof yyAnarchy.setupButton !== 'function') {
-    yyAnarchy.setupButton = function(buttonId, selected, toolTipKey) {
-        const button = document.getElementById(buttonId);
-        if (button == null) {
-            engine.trigger('YYA-log', "JS Error: could not setup button " + buttonId);
-            return;
-        }
-        if (selected) {
-            button.classList.add("selected");
-        } else {
-            button.classList.remove("selected");
-        }
-        button.onclick = function () {
-            let selected = true;
-            if (this.classList.contains("selected")) {
-                selected = false; // This is intended to toggle and be the opposite of what it is now.
-            }
-            const thisButton = document.getElementById(this.id);
-            if (selected) {
-                thisButton.classList.add("selected");
-            } else {
-                thisButton.classList.remove("selected");
-            }
-            engine.trigger(this.id, selected);
-        }
-        yyAnarchy.setTooltip(buttonId, toolTipKey);
-    }
-}
-
-if (typeof yyAnarchy.setupToolButton !== 'function') {
-    yyAnarchy.setupToolButton = function (buttonId, selected, toolTipKey) {
-        const button = document.getElementById(buttonId);
-        if (button == null) {
-            engine.trigger('YYA-log', "JS Error: could not setup button " + buttonId);
-            return;
-        }
-        if (selected) {
-            button.classList.add("selected");
-        } else {
-            button.classList.remove("selected");
-        }
-        button.onclick = function () {
-            engine.trigger(this.id);
-        }
-        yyAnarchy.setTooltip(buttonId, toolTipKey);
-    }
-}
-
 // Function to apply translation strings.
 if (typeof yyAnarchy.applyLocalization !== 'function') {
     yyAnarchy.applyLocalization = function (target) {

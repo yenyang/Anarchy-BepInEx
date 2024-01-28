@@ -91,7 +91,8 @@ namespace Anarchy
             updateSystem.UpdateBefore<PreventOverrideSystem>(SystemUpdatePhase.ModificationEnd);
             updateSystem.UpdateBefore<RemoveOverridenSystem>(SystemUpdatePhase.ModificationEnd);
             updateSystem.UpdateAt<PreventCullingSystem>(SystemUpdatePhase.ToolUpdate);
-            updateSystem.UpdateBefore<NetCompositionDataSystem>(SystemUpdatePhase.Modification4);
+
+            // updateSystem.UpdateBefore<NetCompositionDataSystem>(SystemUpdatePhase.Modification4);
         }
 
         /// <inheritdoc/>
