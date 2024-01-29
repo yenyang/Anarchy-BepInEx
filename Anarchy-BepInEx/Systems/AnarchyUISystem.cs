@@ -18,6 +18,7 @@ namespace Anarchy.Systems
     using Game.Tools;
     using Game.UI;
     using Unity.Entities;
+    using static Colossal.AssetPipeline.Diagnostic.Report;
 
     /// <summary>
     /// UI system for Object Tool while using tree prefabs.
@@ -40,6 +41,7 @@ namespace Anarchy.Systems
         private BulldozeToolSystem m_BulldozeToolSystem;
         private bool m_PrefabIsMarker = false;
         private bool m_FirstTimeLoadingJS = true;
+        private NetToolSystem m_NetToolSystem;
         private bool m_LastShowMarkers = false;
 
         /// <summary>
@@ -92,6 +94,7 @@ namespace Anarchy.Systems
         protected override void OnCreate()
         {
             m_Log = AnarchyMod.Instance.Logger;
+            m_Log.effectivenessLevel = Level.Debug;
             m_ToolSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<ToolSystem>();
             m_UiView = GameManager.instance.userInterface.view.View;
             m_AnarchySystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<AnarchySystem>();
@@ -100,10 +103,8 @@ namespace Anarchy.Systems
             m_PrefabSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<PrefabSystem>();
             ToolSystem toolSystem = m_ToolSystem; // I don't know why vanilla game did this.
             m_ToolSystem.EventToolChanged = (Action<ToolBaseSystem>)Delegate.Combine(toolSystem.EventToolChanged, new Action<ToolBaseSystem>(OnToolChanged));
-            ToolSystem toolSystem2 = m_ToolSystem;
-            toolSystem2.EventPrefabChanged = (Action<PrefabBase>)Delegate.Combine(toolSystem2.EventPrefabChanged, new Action<PrefabBase>(OnPrefabChanged));
             m_BoundEventHandles = new ();
-
+            m_NetToolSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<NetToolSystem>();
             m_InjectedJS = UIFileUtils.ReadJS(Path.Combine(UIFileUtils.AssemblyPath, "ui.js"));
             m_AnarchyItemScript = UIFileUtils.ReadHTML(Path.Combine(UIFileUtils.AssemblyPath, "YYA-anarchy-tool-row.html"), "if (document.getElementById(\"YYA-anarchy-item\") == null) { yyAnarchy.div.className = \"item_bZY\"; yyAnarchy.div.id = \"YYA-anarchy-item\"; yyAnarchy.entities = document.getElementsByClassName(\"tool-options-panel_Se6\"); if (yyAnarchy.entities[0] != null) { yyAnarchy.entities[0].insertAdjacentElement('afterbegin', yyAnarchy.div); } }");
             m_AnarchyItemLineToolScript = UIFileUtils.ReadHTML(Path.Combine(UIFileUtils.AssemblyPath, "YYA-anarchy-tool-row.html"), "if (document.getElementById(\"YYA-anarchy-item\") == null) { yyAnarchy.div.className = \"item_bZY\"; yyAnarchy.div.id = \"YYA-anarchy-item\"; yyAnarchy.LineToolTitle = document.getElementById(\"line-tool-title\"); if (yyAnarchy.LineToolTitle != null) { yyAnarchy.LineToolTitle.parentElement.insertAdjacentElement('afterend', yyAnarchy.div); } }");
@@ -132,6 +133,38 @@ namespace Anarchy.Systems
                 }
 
                 return;
+            }
+
+            if (m_ToolSystem.activeTool == m_NetToolSystem && m_NetToolSystem.GetPrefab() != null)
+            {
+                if (m_PrefabSystem.TryGetEntity(m_NetToolSystem.GetPrefab(), out Entity prefabEntity))
+                {
+                    if (EntityManager.HasComponent<MarkerNetData>(prefabEntity))
+                    {
+                        if (!m_PrefabIsMarker)
+                        {
+                            m_LastShowMarkers = m_RenderingSystem.markersVisible;
+                        }
+
+                        m_RenderingSystem.markersVisible = true;
+                        m_PrefabIsMarker = true;
+                    }
+                    else if (m_PrefabIsMarker)
+                    {
+                        m_PrefabIsMarker = false;
+                        m_RenderingSystem.markersVisible = m_LastShowMarkers;
+                    }
+                }
+                else if (m_PrefabIsMarker)
+                {
+                    m_PrefabIsMarker = false;
+                    m_RenderingSystem.markersVisible = m_LastShowMarkers;
+                }
+            }
+            else if (m_PrefabIsMarker)
+            {
+                m_PrefabIsMarker = false;
+                m_RenderingSystem.markersVisible = m_LastShowMarkers;
             }
 
             if (!m_AnarchySystem.IsToolAppropriate(m_ToolSystem.activeTool.toolID) || !AnarchyMod.Settings.ToolIcon)
@@ -351,31 +384,8 @@ namespace Anarchy.Systems
                 ToggleAnarchyButton();
             }
 
-
             m_LastTool = tool.toolID;
         }
 
-        // Shows markers if appropriate prefab is selected.
-        private void OnPrefabChanged(PrefabBase prefab)
-        {
-            m_Log.Debug($"{nameof(AnarchyUISystem)}.{nameof(OnPrefabChanged)} {prefab.name}");
-
-            Entity prefabEntity = m_PrefabSystem.GetEntity(prefab);
-            if (EntityManager.HasComponent<MarkerNetData>(prefabEntity))
-            {
-                if (!m_PrefabIsMarker)
-                {
-                    m_LastShowMarkers = m_RenderingSystem.markersVisible;
-                }
-
-                m_RenderingSystem.markersVisible = true;
-                m_PrefabIsMarker = true;
-            }
-            else if (m_PrefabIsMarker)
-            {
-                m_PrefabIsMarker = false;
-                m_RenderingSystem.markersVisible = m_LastShowMarkers;
-            }
-        }
     }
 }

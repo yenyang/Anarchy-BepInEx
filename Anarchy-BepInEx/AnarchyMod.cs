@@ -67,6 +67,7 @@ namespace Anarchy
         {
             Instance = this;
             Logger = LogManager.GetLogger("Mods_Yenyang_Anarchy", false);
+            Logger.effectivenessLevel = Level.Debug;
             Logger.Info("Loading. . .");
         }
 
