@@ -62,6 +62,7 @@ namespace Anarchy.Tooltip
 
         private ILog m_Log;
         private AnarchyUISystem m_AnarchyUISystem;
+        private ResetNetCompositionDataSystem m_ResetNetCompositionDataSystem;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AnarchySystem"/> class.
@@ -112,6 +113,7 @@ namespace Anarchy.Tooltip
         {
             m_Log = AnarchyMod.Instance.Logger;
             m_AnarchyUISystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<AnarchyUISystem>();
+            m_ResetNetCompositionDataSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<ResetNetCompositionDataSystem>();
             m_Log.Info($"{nameof(AnarchySystem)} System Created.");
             AnarchyEnabled = false;
             InputAction hotKey = new ("Anarchy");
@@ -155,6 +157,7 @@ namespace Anarchy.Tooltip
                     else
                     {
                         m_Log.Debug("Anarchy Disabled.");
+                        m_ResetNetCompositionDataSystem.Enabled = true;
                     }
                 }
             }

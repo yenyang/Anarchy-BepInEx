@@ -18,7 +18,6 @@ namespace Anarchy.Systems
     using Game.Tools;
     using Game.UI;
     using Unity.Entities;
-    using static Colossal.AssetPipeline.Diagnostic.Report;
 
     /// <summary>
     /// UI system for Object Tool while using tree prefabs.
@@ -43,6 +42,7 @@ namespace Anarchy.Systems
         private bool m_FirstTimeLoadingJS = true;
         private NetToolSystem m_NetToolSystem;
         private bool m_LastShowMarkers = false;
+        private ResetNetCompositionDataSystem m_ResetNetCompositionDataSystem;
         private bool m_RaycastingMarkers = false;
 
         /// <summary>
@@ -101,6 +101,7 @@ namespace Anarchy.Systems
             m_AnarchySystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<AnarchySystem>();
             m_BulldozeToolSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<BulldozeToolSystem>();
             m_RenderingSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<RenderingSystem>();
+            m_ResetNetCompositionDataSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<ResetNetCompositionDataSystem>();
             m_PrefabSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<PrefabSystem>();
             ToolSystem toolSystem = m_ToolSystem; // I don't know why vanilla game did this.
             m_ToolSystem.EventToolChanged = (Action<ToolBaseSystem>)Delegate.Combine(toolSystem.EventToolChanged, new Action<ToolBaseSystem>(OnToolChanged));
@@ -304,6 +305,7 @@ namespace Anarchy.Systems
             {
                 m_AnarchySystem.AnarchyEnabled = false;
                 m_DisableAnarchyWhenCompleted = false;
+                m_ResetNetCompositionDataSystem.Enabled = true;
             }
         }
 
@@ -409,6 +411,11 @@ namespace Anarchy.Systems
             {
                 m_PrefabIsMarker = false;
                 m_RenderingSystem.markersVisible = m_LastShowMarkers;
+            }
+
+            if (tool != m_NetToolSystem && m_LastTool == m_NetToolSystem.toolID)
+            {
+                m_ResetNetCompositionDataSystem.Enabled = true;
             }
 
             m_LastTool = tool.toolID;
