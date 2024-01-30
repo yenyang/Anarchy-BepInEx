@@ -405,6 +405,12 @@ namespace Anarchy.Systems
                 ToggleAnarchyButton();
             }
 
+            if (m_LastTool == m_NetToolSystem.toolID && m_NetToolSystem.GetPrefab() != null && tool != m_NetToolSystem && m_PrefabIsMarker)
+            {
+                m_PrefabIsMarker = false;
+                m_RenderingSystem.markersVisible = m_LastShowMarkers;
+            }
+
             m_LastTool = tool.toolID;
         }
 
