@@ -92,7 +92,7 @@ namespace Anarchy
             updateSystem.UpdateAt<PreventCullingSystem>(SystemUpdatePhase.ToolUpdate);
 
             updateSystem.UpdateBefore<ModifyNetCompositionDataSystem>(SystemUpdatePhase.Modification4);
-            updateSystem.UpdateAfter<ResetNetCompositionDataSystem>(SystemUpdatePhase.Modification4);
+            updateSystem.UpdateAfter<ResetNetCompositionDataSystem>(SystemUpdatePhase.ModificationEnd);
         }
 
         /// <inheritdoc/>
