@@ -8,13 +8,11 @@ namespace Anarchy
     using Anarchy.Settings;
     using Anarchy.Systems;
     using Anarchy.Tooltip;
-    using Anarchy.Utils;
     using Colossal.IO.AssetDatabase;
     using Colossal.Logging;
     using Game;
     using Game.Modding;
     using Game.SceneFlow;
-    using Game.UI;
     using System.IO;
 
     /// <summary>
@@ -93,7 +91,8 @@ namespace Anarchy
             updateSystem.UpdateBefore<RemoveOverridenSystem>(SystemUpdatePhase.ModificationEnd);
             updateSystem.UpdateAt<PreventCullingSystem>(SystemUpdatePhase.ToolUpdate);
 
-            // updateSystem.UpdateBefore<NetCompositionDataSystem>(SystemUpdatePhase.Modification4);
+            updateSystem.UpdateBefore<ModifyNetCompositionDataSystem>(SystemUpdatePhase.Modification4);
+            updateSystem.UpdateAfter<ModifyNetCompositionDataSystem>(SystemUpdatePhase.Modification4);
         }
 
         /// <inheritdoc/>
