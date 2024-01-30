@@ -43,6 +43,7 @@ namespace Anarchy.Systems
         private bool m_FirstTimeLoadingJS = true;
         private NetToolSystem m_NetToolSystem;
         private bool m_LastShowMarkers = false;
+        private bool m_RaycastingMarkers = false;
 
         /// <summary>
         /// Gets a value indicating whether whether Anarchy is only on because of Anarchic Bulldozer setting.
@@ -135,13 +136,19 @@ namespace Anarchy.Systems
                 return;
             }
 
+            // This script creates the Anarchy object if it doesn't exist.
+            UIFileUtils.ExecuteScript(m_UiView, "if (yyAnarchy == null) var yyAnarchy = {};");
+
+
+
+
             if (m_ToolSystem.activeTool == m_NetToolSystem && m_NetToolSystem.GetPrefab() != null)
             {
                 if (m_PrefabSystem.TryGetEntity(m_NetToolSystem.GetPrefab(), out Entity prefabEntity))
                 {
                     if (EntityManager.HasComponent<MarkerNetData>(prefabEntity))
                     {
-                        if (!m_PrefabIsMarker)
+                        if (!m_PrefabIsMarker && (m_LastTool != m_BulldozeToolSystem.toolID || !m_RaycastingMarkers))
                         {
                             m_LastShowMarkers = m_RenderingSystem.markersVisible;
                         }
@@ -171,9 +178,6 @@ namespace Anarchy.Systems
             {
                 return;
             }
-
-            // This script creates the Anarchy object if it doesn't exist.
-            UIFileUtils.ExecuteScript(m_UiView, "if (yyAnarchy == null) var yyAnarchy = {};");
 
             if (m_AnarchyOptionShown == false)
             {
@@ -221,6 +225,11 @@ namespace Anarchy.Systems
                     ToggleAnarchyButton();
                 }
 
+                if (m_ToolSystem.activeTool == m_BulldozeToolSystem)
+                {
+                    m_BoundEventHandles.Add(m_UiView.RegisterForEvent("YYA-raycastingMarkers", (Action<bool>)RecordRaycastMarkers));
+                }
+
                 m_AnarchyOptionShown = true;
             }
             else
@@ -233,6 +242,12 @@ namespace Anarchy.Systems
 
                 // This script checks if anarchy item exists. If it doesn't it triggers anarchy item being recreated.
                 UIFileUtils.ExecuteScript(m_UiView, $"if (document.getElementById(\"YYA-anarchy-item\") == null) engine.trigger('CheckForElement-YYA-anarchy-item', false);");
+
+                if (m_ToolSystem.activeTool == m_BulldozeToolSystem)
+                {
+                    // This script checks if raycast markers from Better Bulldozer is selected if the active tool is bulldoze tool.
+                    UIFileUtils.ExecuteScript(m_UiView, $"yyAnarchy.raycastMarkers = document.getElementById(\"YYBB-Raycast-Markers-Button\"); if (yyAnarchy.raycastMarkers) {{ engine.trigger(\'YYA-raycastingMarkers\',yyAnarchy.raycastMarkers.classList.contains(\"selected\")); }} ");
+                }
 
                 if (m_ToolSystem.activeTool.toolID != "Line Tool")
                 {
@@ -297,6 +312,12 @@ namespace Anarchy.Systems
         /// </summary>
         /// <param name="flag">A bool for whether to element was found.</param>
         private void ElementCheck(bool flag) => m_AnarchyOptionShown = flag;
+
+        /// <summary>
+        /// C# event handler for event callback from UI JavaScript. If element YYA-anarchy-item is found then set value to true.
+        /// </summary>
+        /// <param name="flag">A bool for whether to element was found.</param>
+        private void RecordRaycastMarkers(bool flag) => m_RaycastingMarkers = flag;
 
         /// <summary>
         /// C# event handler for event callback from UI JavaScript. If element YYTC-tree-age-item is found then set value to true.
