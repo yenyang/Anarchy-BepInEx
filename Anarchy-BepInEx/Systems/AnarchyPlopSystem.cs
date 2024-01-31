@@ -197,6 +197,7 @@ namespace Anarchy.Systems
                             {
                                 if ((objectGeometryData.m_Flags & GeometryFlags.Overridable) == GeometryFlags.Overridable)
                                 {
+                                    m_Log.Debug($"{nameof(AnarchyPlopSystem)}.{nameof(OnUpdate)} Added PreventOverride to {prefabBase.name}");
                                     EntityManager.AddComponent<PreventOverride>(entity);
                                     continue;
                                 }
