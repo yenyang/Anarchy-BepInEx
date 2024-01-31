@@ -25,10 +25,10 @@ The mod also has:
 * Optional mouse tooltip
 * Opt-In Option to allow multiple copies of unique buildings using toolbar menu. Effects of multiple buildings stack!
 
-These features will be moved to a new mod called Better Bulldozer soon:
+These features are no longer part of Anarchy and have moved to a new mod called Better Bulldozer:
 * Icons for game manipulation and bypass confirmation for bulldozer.
-* Icon to show and EXCLUSIVELY target invisible paths/markers with the bulldozer and remove invisible paths/markers. See below.
-* Icon to EXCLUSIVELY target surfaces with the bulldozer and remove with one click. With Anarchy, this also can remove surfaces in buildings.
+* Icon to show and EXCLUSIVELY target invisible paths/markers with the bulldozer and remove invisible paths/markers.
+* Icon to EXCLUSIVELY target surfaces with the bulldozer and remove with one click.
 
 Currently it applies to these tools:
 * Object Tool
@@ -77,19 +77,10 @@ You can also manually trigger a prop refresh using a button in the options menu.
 Pro tip: Use the brush mode to remove trees and standalone props. If you unselect the brush snapping option for "Remove only matching type", and right click you can remove them within a radius and it only targets standalone props and trees.
 
 ## Invisible Paths and Markers
-Drawing invisible paths and markers is an unsupported feature of the game. You need DevUI to access the 'Add Object' menu via the home button to draw invisible paths and markers.
-
-With the Bulldoze tool you can select an icon to show and EXCLUSIVELY target these invisible paths and markers. With this selected and Anarchy enabled you can remove them, **BUT SAVE BEFORE HAND!**
-
-One configuration I built/demolished resulted in a crash to desktop because I left a segment that was too short. Deleting them in a different order worked. 
-
-You cannot demolish invisible paths and markers within buildings.
-
 The mod will automatically toggle the DevUI setting to "Show Markers" when drawing invisible paths.
 
 ## Disclaimer
 This mod does NOT allow you to do everything including:
-* Use the net tool to draw a bridge through a sea-lane clearance
 * If the vanilla net tool would remove an existing network, it will still do that.
 * Even if the mod disables the error check, the UI may still prevent you from doing something.
 * Does not give additional control for prop placement.
