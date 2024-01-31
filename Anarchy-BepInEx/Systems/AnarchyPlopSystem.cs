@@ -127,9 +127,9 @@ namespace Anarchy.Systems
             foreach (Entity entity in entitiesWithComponent)
             {
                 PrefabBase prefabBase = null;
-                if (EntityManager.TryGetComponent(entity, out PrefabRef prefabRef) && EntityManager.HasComponent<Static>(entity))
+                if (EntityManager.TryGetComponent(entity, out PrefabRef prefabRef))
                 {
-                    if (m_PrefabSystem.TryGetPrefab(prefabRef.m_Prefab, out prefabBase))
+                    if (m_PrefabSystem.TryGetPrefab(prefabRef.m_Prefab, out prefabBase) && EntityManager.HasComponent<Static>(entity))
                     {
                         if (prefabBase is StaticObjectPrefab && EntityManager.TryGetComponent(prefabRef.m_Prefab, out ObjectGeometryData objectGeometryData))
                         {
