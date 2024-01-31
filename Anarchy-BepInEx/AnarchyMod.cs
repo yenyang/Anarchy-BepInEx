@@ -2,7 +2,7 @@
 // Copyright (c) Yenyang's Mods. MIT License. All rights reserved.
 // </copyright>
 
-#define RELEASE
+#define DEBUG
 namespace Anarchy
 {
     using Anarchy.Settings;
@@ -65,14 +65,14 @@ namespace Anarchy
         {
             Instance = this;
             Logger = LogManager.GetLogger("Mods_Yenyang_Anarchy", false);
-            Logger.effectivenessLevel = Level.Info;
+            Logger.effectivenessLevel = Level.Debug;
             Logger.Info("Loading. . .");
         }
 
         /// <inheritdoc/>
         public void OnCreateWorld(UpdateSystem updateSystem)
         {
-            Logger.effectivenessLevel = Level.Info;
+            Logger.effectivenessLevel = Level.Debug;
             Logger.Info("Initializing Settings.");
             Settings = new (this);
             Settings.RegisterInOptionsUI();
