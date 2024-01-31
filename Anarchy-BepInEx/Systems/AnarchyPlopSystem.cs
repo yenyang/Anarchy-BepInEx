@@ -68,6 +68,7 @@ namespace Anarchy.Systems
                     ComponentType.ReadOnly<Created>(),
                     ComponentType.ReadOnly<Updated>(),
                     ComponentType.ReadOnly<Static>(),
+                    ComponentType.ReadOnly<Object>(),
                 },
                 None = new ComponentType[]
                 {

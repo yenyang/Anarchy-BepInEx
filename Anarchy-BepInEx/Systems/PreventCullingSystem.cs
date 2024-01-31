@@ -8,10 +8,14 @@ namespace Anarchy.Systems
     using Anarchy.Components;
     using Colossal.Logging;
     using Game;
+    using Game.Buildings;
+    using Game.Citizens;
     using Game.Common;
+    using Game.Creatures;
     using Game.Objects;
     using Game.Rendering;
     using Game.Tools;
+    using Game.Vehicles;
     using Unity.Burst.Intrinsics;
     using Unity.Collections;
     using Unity.Entities;
@@ -58,7 +62,15 @@ namespace Anarchy.Systems
                 None = new ComponentType[]
                 {
                     ComponentType.ReadOnly<Temp>(),
-                    ComponentType.ReadOnly<Deleted>(),
+                    ComponentType.ReadOnly<Building>(),
+                    ComponentType.ReadOnly<Crane>(),
+                    ComponentType.ReadOnly<Animal>(),
+                    ComponentType.ReadOnly<Game.Creatures.Pet>(),
+                    ComponentType.ReadOnly<Creature>(),
+                    ComponentType.ReadOnly<Moving>(),
+                    ComponentType.ReadOnly<Household>(),
+                    ComponentType.ReadOnly<Vehicle>(),
+                    ComponentType.ReadOnly<Event>(),
                 },
             });
             RequireForUpdate(m_CullingInfoQuery);
