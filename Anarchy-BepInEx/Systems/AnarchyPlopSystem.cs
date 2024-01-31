@@ -73,7 +73,7 @@ namespace Anarchy.Systems
                 {
                     ComponentType.ReadOnly<Temp>(),
                     ComponentType.ReadOnly<Owner>(),
-                    ComponentType.ReadOnly<BuildingData>(),
+                    ComponentType.ReadOnly<Building>(),
                     ComponentType.ReadOnly<Animal>(),
                     ComponentType.ReadOnly<Game.Creatures.Pet>(),
                     ComponentType.ReadOnly<Creature>(),
@@ -95,7 +95,7 @@ namespace Anarchy.Systems
                 None = new ComponentType[]
                 {
                     ComponentType.ReadOnly<Temp>(),
-                    ComponentType.ReadOnly<BuildingData>(),
+                    ComponentType.ReadOnly<Building>(),
                     ComponentType.ReadOnly<Crane>(),
                     ComponentType.ReadOnly<Animal>(),
                     ComponentType.ReadOnly<Game.Creatures.Pet>(),
@@ -129,7 +129,7 @@ namespace Anarchy.Systems
                 PrefabBase prefabBase = null;
                 if (EntityManager.TryGetComponent(entity, out PrefabRef prefabRef))
                 {
-                    if (m_PrefabSystem.TryGetPrefab(prefabRef.m_Prefab, out prefabBase) && EntityManager.HasComponent<Static>(entity))
+                    if (m_PrefabSystem.TryGetPrefab(prefabRef.m_Prefab, out prefabBase) && EntityManager.HasComponent<Static>(entity) && !EntityManager.HasComponent<Building>(entity) && !EntityManager.HasComponent<Owner>(entity) && !EntityManager.HasComponent<Crane>(entity))
                     {
                         if (prefabBase is StaticObjectPrefab && EntityManager.TryGetComponent(prefabRef.m_Prefab, out ObjectGeometryData objectGeometryData))
                         {
