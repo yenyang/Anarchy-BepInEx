@@ -24,6 +24,7 @@ The mod also has:
 * Option to automatically enable with bulldozer
 * Optional mouse tooltip
 * Opt-In Option to allow multiple copies of unique buildings using toolbar menu. Effects of multiple buildings stack!
+* Option to set minimum clearance below elevated networks even while Anarchy is active in case you don't remove the zoning under a low bridge. It would be better just to remove the zoning.
 
 These features are no longer part of Anarchy and have moved to a new mod called Better Bulldozer:
 * Icons for game manipulation and bypass confirmation for bulldozer.
@@ -32,7 +33,7 @@ These features are no longer part of Anarchy and have moved to a new mod called 
 
 Currently it applies to these tools:
 * Object Tool
-* Net Tool (While using the net tool Anarchy will now let you violate the clearance of other networks. You should however avoid zoning under low bridges right now.)
+* Net Tool (While using the net tool Anarchy will now let you violate the clearance of other networks. I don't recommend having zoning under low bridges.)
 * Area Tool (Can exceed limits for specialized industry areas)
 * Bulldoze Tool (Option to default Anarchy to ON when activated)
 * Terrain Tool (Cross the line within playable area.)

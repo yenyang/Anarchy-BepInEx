@@ -1,7 +1,7 @@
 # Anarchy-BepInEx Change Log
 ## Patch V1.3.0
 * All bulldozing aspects of the mod have been forked over to a new mod called Better Bulldozer.
-* While using the net tool Anarchy will now let you violate the clearance of other networks. You should however avoid zoning under low bridges right now. 
+* While using the net tool Anarchy will now let you violate the clearance of other networks. You should however avoid zoning under low bridges, but there is a new setting to help if you insist.
 * Fixed accidentally adding the PreventOverride component to vehicles, cims, households, events, and buildings. This caused various serious issues. This version should remove all of the improperly added components and not add new ones to those types of entities.
 * Fixed plugin data
 * Updated Logo
