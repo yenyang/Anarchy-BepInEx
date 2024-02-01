@@ -98,7 +98,6 @@ namespace Anarchy.Systems
                 }
             }
 
-            m_ResetNetCompositionDataSystem.Enabled = true;
             entities.Dispose();
         }
     }
