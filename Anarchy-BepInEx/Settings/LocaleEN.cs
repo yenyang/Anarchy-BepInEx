@@ -48,6 +48,8 @@ namespace Anarchy.Settings
                 { m_Setting.GetOptionDescLocaleID(nameof(AnarchyModSettings.RefreshProps)), "If props placed with Anarchy have been accidently culled, you can press this button to bring them back now. This doesn't negatively effect performance." },
                 { m_Setting.GetOptionLabelLocaleID(nameof(AnarchyModSettings.AllowPlacingMultipleUniqueBuildings)), "Allow Placing Multiple Unique Buildings" },
                 { m_Setting.GetOptionDescLocaleID(nameof(AnarchyModSettings.AllowPlacingMultipleUniqueBuildings)), "This allows you to place multiple copies of unique buildings using the normal UI menu with or without Anarchy enabled. The effects of these buildings stack!" },
+                { m_Setting.GetOptionLabelLocaleID(nameof(AnarchyModSettings.MinimumClearanceBelowElevatedNetworks)), "Minimum Clearance Below Elevated Networks" },
+                { m_Setting.GetOptionDescLocaleID(nameof(AnarchyModSettings.MinimumClearanceBelowElevatedNetworks)), "With the net tool and Anarchy enabled you can violate the clearance of other networks. Zoning under low bridges can spawn buildings while doing this. This setting gives you some control over the minimum space below a low bridge. It would be better to just remove the zoning." },
                 { "YY_ANARCHY.Anarchy", "Anarchy" },
                 { "YY_ANARCHY.AnarchyButton", "Anarchy" },
                 { "YY_ANARCHY_DESCRIPTION.AnarchyButton", "Disables error checks for tools and does not display errors. When applicable, you can place vegetation and props (with DevUI 'Add Object' menu) overlapping or inside the boundaries of other objects and close together." },

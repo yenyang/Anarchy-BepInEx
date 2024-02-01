@@ -8,13 +8,11 @@ namespace Anarchy
     using Anarchy.Settings;
     using Anarchy.Systems;
     using Anarchy.Tooltip;
-    using Anarchy.Utils;
     using Colossal.IO.AssetDatabase;
     using Colossal.Logging;
     using Game;
     using Game.Modding;
     using Game.SceneFlow;
-    using Game.UI;
     using System.IO;
 
     /// <summary>
@@ -67,6 +65,7 @@ namespace Anarchy
         {
             Instance = this;
             Logger = LogManager.GetLogger("Mods_Yenyang_Anarchy", false);
+            Logger.effectivenessLevel = Level.Info;
             Logger.Info("Loading. . .");
         }
 
@@ -91,6 +90,9 @@ namespace Anarchy
             updateSystem.UpdateBefore<PreventOverrideSystem>(SystemUpdatePhase.ModificationEnd);
             updateSystem.UpdateBefore<RemoveOverridenSystem>(SystemUpdatePhase.ModificationEnd);
             updateSystem.UpdateAt<PreventCullingSystem>(SystemUpdatePhase.ToolUpdate);
+
+            updateSystem.UpdateBefore<ModifyNetCompositionDataSystem>(SystemUpdatePhase.Modification4);
+            updateSystem.UpdateAfter<ResetNetCompositionDataSystem>(SystemUpdatePhase.ModificationEnd);
         }
 
         /// <inheritdoc/>

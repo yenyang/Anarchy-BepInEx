@@ -9,6 +9,7 @@ namespace Anarchy.Systems
     using Anarchy.Tooltip;
     using Colossal.Logging;
     using Game;
+    using Game.Buildings;
     using Game.Common;
     using Game.Prefabs;
     using Game.Tools;
@@ -67,7 +68,7 @@ namespace Anarchy.Systems
                 None = new ComponentType[]
                {
                     ComponentType.ReadOnly<Temp>(),
-                    ComponentType.ReadOnly<BuildingData>(),
+                    ComponentType.ReadOnly<Building>(),
                     ComponentType.ReadOnly<Game.Objects.Crane>(),
                },
             });
