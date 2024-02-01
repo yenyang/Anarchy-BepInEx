@@ -76,6 +76,12 @@ namespace Anarchy.Settings
         public bool AllowPlacingMultipleUniqueBuildings { get; set; }
 
         /// <summary>
+        /// Gets or sets a value indicating the minimum clearance below elevated network.
+        /// </summary>
+        [SettingsUISlider(min = 0f, max = 1.75f, step = 0.25f, scalarMultiplier = 1, unit = Unit.kFloatTwoFractions)]
+        public float MinimumClearanceBelowElevatedNetworks { get; set; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether: Used to force saving of Modsettings if settings would result in empty Json.
         /// </summary>
         [SettingsUIHidden]
@@ -113,6 +119,7 @@ namespace Anarchy.Settings
             PreventAccidentalPropCulling = true;
             PropRefreshFrequency = 30;
             AllowPlacingMultipleUniqueBuildings = false;
+            MinimumClearanceBelowElevatedNetworks = 0f;
         }
     }
 }
