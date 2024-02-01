@@ -82,12 +82,14 @@ namespace Anarchy.Systems
                         };
                         EntityManager.AddComponent<HeightRangeRecord>(currentEntity);
                         EntityManager.SetComponentData(currentEntity, heightRangeRecord);
-                        m_Log.Debug($"{nameof(ModifyNetCompositionDataSystem)}.{nameof(OnUpdate)} Recorded m_HeightRange {netCompositionData.m_HeightRange.min}+{netCompositionData.m_HeightRange.max} for entity: {currentEntity.Index}.{currentEntity.Version}.");
+
+                        // m_Log.Debug($"{nameof(ModifyNetCompositionDataSystem)}.{nameof(OnUpdate)} Recorded m_HeightRange {netCompositionData.m_HeightRange.min}+{netCompositionData.m_HeightRange.max} for entity: {currentEntity.Index}.{currentEntity.Version}.");
                     }
 
                     netCompositionData.m_HeightRange.min = 0f;
                     netCompositionData.m_HeightRange.max = 0f;
-                    m_Log.Debug($"{nameof(ModifyNetCompositionDataSystem)}.{nameof(OnUpdate)} Setting m_HeightRange to 0 for entity: {currentEntity.Index}.{currentEntity.Version}.");
+
+                    // m_Log.Debug($"{nameof(ModifyNetCompositionDataSystem)}.{nameof(OnUpdate)} Setting m_HeightRange to 0 for entity: {currentEntity.Index}.{currentEntity.Version}.");
                     EntityManager.SetComponentData(currentEntity, netCompositionData);
                 }
                 else

@@ -32,7 +32,7 @@ These features are no longer part of Anarchy and have moved to a new mod called 
 
 Currently it applies to these tools:
 * Object Tool
-* Net Tool
+* Net Tool (While using the net tool Anarchy will now let you violate the clearance of other networks. You should however avoid zoning under low bridges right now.)
 * Area Tool (Can exceed limits for specialized industry areas)
 * Bulldoze Tool (Option to default Anarchy to ON when activated)
 * Terrain Tool (Cross the line within playable area.)

@@ -70,7 +70,8 @@ namespace Anarchy.Systems
                     {
                         netCompositionData.m_HeightRange.min = heightRangeRecord.min;
                         netCompositionData.m_HeightRange.max = heightRangeRecord.max;
-                        m_Log.Debug($"{nameof(ResetNetCompositionDataSystem)}.{nameof(OnUpdate)} Reset m_HeightRange to {netCompositionData.m_HeightRange.min}+{netCompositionData.m_HeightRange.max} for entity: {currentEntity.Index}.{currentEntity.Version}.");
+
+                        // m_Log.Debug($"{nameof(ResetNetCompositionDataSystem)}.{nameof(OnUpdate)} Reset m_HeightRange to {netCompositionData.m_HeightRange.min}+{netCompositionData.m_HeightRange.max} for entity: {currentEntity.Index}.{currentEntity.Version}.");
                         EntityManager.SetComponentData(currentEntity, netCompositionData);
                     }
                     else
