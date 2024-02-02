@@ -85,6 +85,38 @@ namespace Anarchy.Systems
                 return;
             }
 
+            if (m_NetToolSystem.GetPrefab() != null)
+            {
+                PrefabBase prefab = m_NetToolSystem.GetPrefab();
+                if (m_PrefabSystem.TryGetEntity(prefab, out Entity prefabEntity))
+                {
+                    if (EntityManager.TryGetComponent(prefabEntity, out NetGeometryData netGeometryData))
+                    {
+                        if (!EntityManager.HasComponent<HeightRangeRecord>(prefabEntity))
+                        {
+                            HeightRangeRecord heightRangeRecord = new ()
+                            {
+                                min = netGeometryData.m_DefaultHeightRange.min,
+                                max = netGeometryData.m_DefaultHeightRange.max,
+                            };
+                            EntityManager.AddComponent<HeightRangeRecord>(prefabEntity);
+                            EntityManager.SetComponentData(prefabEntity, heightRangeRecord);
+                        }
+
+                        if (EntityManager.TryGetComponent(prefabEntity, out PrefabRef prefabRef) && EntityManager.HasComponent<PowerLineData>(prefabRef.m_Prefab))
+                        {
+                            netGeometryData.m_DefaultHeightRange.min = (netGeometryData.m_DefaultHeightRange.min + netGeometryData.m_DefaultHeightRange.max) / 2f;
+                            netGeometryData.m_DefaultHeightRange.max = netGeometryData.m_DefaultHeightRange.min;
+                        }
+                        else
+                        {
+                            netGeometryData.m_DefaultHeightRange.min = Mathf.Clamp(-1f * AnarchyMod.Settings.MinimumClearanceBelowElevatedNetworks, netGeometryData.m_DefaultHeightRange.min, netGeometryData.m_DefaultHeightRange.max);
+                            netGeometryData.m_DefaultHeightRange.max = Mathf.Clamp(0, netGeometryData.m_DefaultHeightRange.min, netGeometryData.m_DefaultHeightRange.max);
+                        }
+                    }
+                }
+            }
+
             NativeArray<Entity> entities = m_NetCompositionDataQuery.ToEntityArray(Allocator.Temp);
             foreach (Entity currentEntity in entities)
             {

@@ -48,11 +48,15 @@ namespace Anarchy.Systems
                 {
                     All = new ComponentType[]
                     {
-                        ComponentType.ReadWrite<NetCompositionData>(),
                         ComponentType.ReadWrite<HeightRangeRecord>(),
                     },
+                    Any = new ComponentType[]
+                    {
+                        ComponentType.ReadWrite<NetCompositionData>(),
+                        ComponentType.ReadWrite<NetGeometryData>(),
+                    },
                 },
-            });
+            }); ;
             RequireForUpdate(m_NetCompositionDataQuery);
             Enabled = false;
             base.OnCreate();
@@ -79,9 +83,24 @@ namespace Anarchy.Systems
                         m_Log.Warn($"{nameof(ResetNetCompositionDataSystem)}.{nameof(OnUpdate)} could not retrieve height range record for Entity {currentEntity.Index}.{currentEntity.Version}.");
                     }
                 }
+                else if (EntityManager.TryGetComponent(currentEntity, out NetGeometryData netGeometryData))
+                {
+                    if (EntityManager.TryGetComponent(currentEntity, out HeightRangeRecord heightRangeRecord))
+                    {
+                        netGeometryData.m_DefaultHeightRange.min = heightRangeRecord.min;
+                        netGeometryData.m_DefaultHeightRange.max = heightRangeRecord.max;
+
+                        m_Log.Debug($"{nameof(ResetNetCompositionDataSystem)}.{nameof(OnUpdate)} Reset m_HeightRange to {netGeometryData.m_DefaultHeightRange.min}+{netGeometryData.m_DefaultHeightRange.max} for entity: {currentEntity.Index}.{currentEntity.Version}.");
+                        EntityManager.SetComponentData(currentEntity, netGeometryData);
+                    }
+                    else
+                    {
+                        m_Log.Warn($"{nameof(ResetNetCompositionDataSystem)}.{nameof(OnUpdate)} could not retrieve height range record for Entity {currentEntity.Index}.{currentEntity.Version}.");
+                    }
+                }
                 else
                 {
-                    m_Log.Warn($"{nameof(ResetNetCompositionDataSystem)}.{nameof(OnUpdate)} could not retrieve net composition data for Entity {currentEntity.Index}.{currentEntity.Version}.");
+                    m_Log.Warn($"{nameof(ResetNetCompositionDataSystem)}.{nameof(OnUpdate)} could not retrieve net composition or net geometry data for Entity {currentEntity.Index}.{currentEntity.Version}.");
                 }
             }
 
