@@ -113,8 +113,8 @@ namespace Anarchy.Systems
 
                     if (EntityManager.TryGetComponent(currentEntity, out PrefabRef prefabRef) && EntityManager.HasComponent<PowerLineData>(prefabRef.m_Prefab))
                     {
-                        netCompositionData.m_HeightRange.min = float.MaxValue;
-                        netCompositionData.m_HeightRange.max = float.MaxValue;
+                        netCompositionData.m_HeightRange.min = (netCompositionData.m_HeightRange.min + netCompositionData.m_HeightRange.max) / 2f;
+                        netCompositionData.m_HeightRange.max = netCompositionData.m_HeightRange.min;
                     }
                     else
                     {
