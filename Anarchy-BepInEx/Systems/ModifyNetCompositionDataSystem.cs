@@ -85,40 +85,6 @@ namespace Anarchy.Systems
                 return;
             }
 
-            if (m_NetToolSystem.GetPrefab() != null)
-            {
-                PrefabBase prefab = m_NetToolSystem.GetPrefab();
-                if (m_PrefabSystem.TryGetEntity(prefab, out Entity prefabEntity))
-                {
-                    if (EntityManager.TryGetComponent(prefabEntity, out NetGeometryData netGeometryData))
-                    {
-                        if (!EntityManager.HasComponent<HeightRangeRecord>(prefabEntity))
-                        {
-                            HeightRangeRecord heightRangeRecord = new ()
-                            {
-                                min = netGeometryData.m_DefaultHeightRange.min,
-                                max = netGeometryData.m_DefaultHeightRange.max,
-                            };
-                            EntityManager.AddComponent<HeightRangeRecord>(prefabEntity);
-                            EntityManager.SetComponentData(prefabEntity, heightRangeRecord);
-                        }
-
-                        if (EntityManager.HasComponent<PowerLineData>(prefabEntity))
-                        {
-                            netGeometryData.m_DefaultHeightRange.min = (netGeometryData.m_DefaultHeightRange.min + netGeometryData.m_DefaultHeightRange.max) / 2f;
-                            netGeometryData.m_DefaultHeightRange.max = netGeometryData.m_DefaultHeightRange.min;
-                        }
-                        else
-                        {
-                            netGeometryData.m_DefaultHeightRange.min = Mathf.Clamp(-1f * AnarchyMod.Settings.MinimumClearanceBelowElevatedNetworks, netGeometryData.m_DefaultHeightRange.min, netGeometryData.m_DefaultHeightRange.max);
-                            netGeometryData.m_DefaultHeightRange.max = Mathf.Clamp(0, netGeometryData.m_DefaultHeightRange.min, netGeometryData.m_DefaultHeightRange.max);
-                        }
-
-                        EntityManager.SetComponentData(prefabEntity, netGeometryData);
-                    }
-                }
-            }
-
             NativeArray<Entity> entities = m_NetCompositionDataQuery.ToEntityArray(Allocator.Temp);
             foreach (Entity currentEntity in entities)
             {
@@ -144,7 +110,7 @@ namespace Anarchy.Systems
                         m_Log.Debug($"{nameof(ModifyNetCompositionDataSystem)}.{nameof(OnUpdate)} Recorded m_HeightRange {netCompositionData.m_HeightRange.min}+{netCompositionData.m_HeightRange.max} for entity: {currentEntity.Index}.{currentEntity.Version}.");
                     }
 
-
+                    /*
                     if (EntityManager.TryGetComponent(currentEntity, out PrefabRef prefabRef) && EntityManager.HasComponent<PowerLineData>(prefabRef.m_Prefab))
                     {
                         netCompositionData.m_HeightRange.min = (netCompositionData.m_HeightRange.min + netCompositionData.m_HeightRange.max) / 2f;
@@ -154,7 +120,10 @@ namespace Anarchy.Systems
                     {
                         netCompositionData.m_HeightRange.min = Mathf.Clamp(-1f * AnarchyMod.Settings.MinimumClearanceBelowElevatedNetworks, netCompositionData.m_HeightRange.min, netCompositionData.m_HeightRange.max);
                         netCompositionData.m_HeightRange.max = Mathf.Clamp(0, netCompositionData.m_HeightRange.min, netCompositionData.m_HeightRange.max);
-                    }
+                    }*/
+
+                    netCompositionData.m_HeightRange.min = float.MaxValue;
+                    netCompositionData.m_HeightRange.max = float.MaxValue;
 
                     if (m_FirstTime)
                     {
