@@ -110,8 +110,17 @@ namespace Anarchy.Systems
                         m_Log.Debug($"{nameof(ModifyNetCompositionDataSystem)}.{nameof(OnUpdate)} Recorded m_HeightRange {netCompositionData.m_HeightRange.min}+{netCompositionData.m_HeightRange.max} for entity: {currentEntity.Index}.{currentEntity.Version}.");
                     }
 
-                    netCompositionData.m_HeightRange.min = Mathf.Clamp(-1f * AnarchyMod.Settings.MinimumClearanceBelowElevatedNetworks, netCompositionData.m_HeightRange.min, netCompositionData.m_HeightRange.max);
-                    netCompositionData.m_HeightRange.max = Mathf.Clamp(0, netCompositionData.m_HeightRange.min, netCompositionData.m_HeightRange.max);
+
+                    if (EntityManager.TryGetComponent(currentEntity, out PrefabRef prefabRef) && EntityManager.HasComponent<PowerLineData>(prefabRef.m_Prefab))
+                    {
+                        netCompositionData.m_HeightRange.min = float.MaxValue;
+                        netCompositionData.m_HeightRange.max = float.MaxValue;
+                    }
+                    else
+                    {
+                        netCompositionData.m_HeightRange.min = Mathf.Clamp(-1f * AnarchyMod.Settings.MinimumClearanceBelowElevatedNetworks, netCompositionData.m_HeightRange.min, netCompositionData.m_HeightRange.max);
+                        netCompositionData.m_HeightRange.max = Mathf.Clamp(0, netCompositionData.m_HeightRange.min, netCompositionData.m_HeightRange.max);
+                    }
 
                     if (m_FirstTime)
                     {
