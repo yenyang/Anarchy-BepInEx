@@ -15,6 +15,7 @@ namespace Anarchy.Systems
     using Game.Tools;
     using Unity.Collections;
     using Unity.Entities;
+    using UnityEngine;
 
     /// <summary>
     /// A system zeros out net composition data height ranges if anarchy is enabled and using net tool.
@@ -28,6 +29,8 @@ namespace Anarchy.Systems
         private NetToolSystem m_NetToolSystem;
         private ResetNetCompositionDataSystem m_ResetNetCompositionDataSystem;
         private PrefabSystem m_PrefabSystem;
+        private bool m_FirstTime = true;
+        private bool m_EnsureReset = false;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="ModifyNetCompositionDataSystem"/> class.
@@ -65,6 +68,11 @@ namespace Anarchy.Systems
         {
             if (m_ToolSystem.activeTool != m_NetToolSystem || !m_AnarchySystem.AnarchyEnabled)
             {
+                if (m_EnsureReset)
+                {
+                    m_ResetNetCompositionDataSystem.Enabled = true;
+                }
+
                 return;
             }
 
@@ -83,13 +91,17 @@ namespace Anarchy.Systems
                         EntityManager.AddComponent<HeightRangeRecord>(currentEntity);
                         EntityManager.SetComponentData(currentEntity, heightRangeRecord);
 
-                        // m_Log.Debug($"{nameof(ModifyNetCompositionDataSystem)}.{nameof(OnUpdate)} Recorded m_HeightRange {netCompositionData.m_HeightRange.min}+{netCompositionData.m_HeightRange.max} for entity: {currentEntity.Index}.{currentEntity.Version}.");
+                        m_Log.Debug($"{nameof(ModifyNetCompositionDataSystem)}.{nameof(OnUpdate)} Recorded m_HeightRange {netCompositionData.m_HeightRange.min}+{netCompositionData.m_HeightRange.max} for entity: {currentEntity.Index}.{currentEntity.Version}.");
                     }
 
-                    netCompositionData.m_HeightRange.min = -1f * AnarchyMod.Settings.MinimumClearanceBelowElevatedNetworks;
-                    netCompositionData.m_HeightRange.max = 0f;
+                    netCompositionData.m_HeightRange.min = Mathf.Clamp(-1f * AnarchyMod.Settings.MinimumClearanceBelowElevatedNetworks, netCompositionData.m_HeightRange.min, netCompositionData.m_HeightRange.max);
+                    netCompositionData.m_HeightRange.max = Mathf.Clamp(0, netCompositionData.m_HeightRange.min, netCompositionData.m_HeightRange.max);
 
-                    // m_Log.Debug($"{nameof(ModifyNetCompositionDataSystem)}.{nameof(OnUpdate)} Setting m_HeightRange to 0 for entity: {currentEntity.Index}.{currentEntity.Version}.");
+                    if (m_FirstTime)
+                    {
+                        m_Log.Debug($"{nameof(ModifyNetCompositionDataSystem)}.{nameof(OnUpdate)} Setting m_HeightRange to {netCompositionData.m_HeightRange.min}:{netCompositionData.m_HeightRange.max} for entity: {currentEntity.Index}.{currentEntity.Version}.");
+                    }
+
                     EntityManager.SetComponentData(currentEntity, netCompositionData);
                 }
                 else
@@ -98,6 +110,8 @@ namespace Anarchy.Systems
                 }
             }
 
+            m_EnsureReset = true;
+            m_FirstTime = false;
             entities.Dispose();
         }
     }
