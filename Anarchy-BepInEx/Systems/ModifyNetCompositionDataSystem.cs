@@ -11,6 +11,7 @@ namespace Anarchy.Systems
     using Colossal.Entities;
     using Colossal.Logging;
     using Game;
+    using Game.Common;
     using Game.Prefabs;
     using Game.Tools;
     using Unity.Collections;
@@ -57,6 +58,11 @@ namespace Anarchy.Systems
                     {
                         ComponentType.ReadWrite<NetCompositionData>(),
                     },
+                    None = new ComponentType[]
+                    {
+                        ComponentType.ReadOnly<Temp>(),
+                        ComponentType.ReadOnly<Deleted>(),
+                    },
                 },
             });
             RequireForUpdate(m_NetCompositionDataQuery);
@@ -71,6 +77,7 @@ namespace Anarchy.Systems
                 if (m_EnsureReset)
                 {
                     m_ResetNetCompositionDataSystem.Enabled = true;
+                    m_EnsureReset = false;
                 }
 
                 return;
