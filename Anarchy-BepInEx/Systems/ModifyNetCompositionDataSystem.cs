@@ -103,7 +103,7 @@ namespace Anarchy.Systems
                             EntityManager.SetComponentData(prefabEntity, heightRangeRecord);
                         }
 
-                        if (EntityManager.TryGetComponent(prefabEntity, out PrefabRef prefabRef) && EntityManager.HasComponent<PowerLineData>(prefabRef.m_Prefab))
+                        if (EntityManager.HasComponent<PowerLineData>(prefabEntity))
                         {
                             netGeometryData.m_DefaultHeightRange.min = (netGeometryData.m_DefaultHeightRange.min + netGeometryData.m_DefaultHeightRange.max) / 2f;
                             netGeometryData.m_DefaultHeightRange.max = netGeometryData.m_DefaultHeightRange.min;

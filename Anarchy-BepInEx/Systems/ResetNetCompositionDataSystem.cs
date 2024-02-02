@@ -56,7 +56,7 @@ namespace Anarchy.Systems
                         ComponentType.ReadWrite<NetGeometryData>(),
                     },
                 },
-            }); ;
+            });
             RequireForUpdate(m_NetCompositionDataQuery);
             Enabled = false;
             base.OnCreate();
