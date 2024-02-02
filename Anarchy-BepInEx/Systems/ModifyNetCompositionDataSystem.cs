@@ -145,7 +145,7 @@ namespace Anarchy.Systems
                             heightRange.min = netPieceData.m_HeightRange.min;
                         }
 
-                        if (netPieceData.m_HeightRange.max < heightRange.max)
+                        if (netPieceData.m_HeightRange.max > heightRange.max)
                         {
                             heightRange.max = netPieceData.m_HeightRange.max;
                         }
