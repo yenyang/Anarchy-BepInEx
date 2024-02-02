@@ -10,9 +10,11 @@ namespace Anarchy.Systems
     using Anarchy.Tooltip;
     using Colossal.Entities;
     using Colossal.Logging;
+    using Colossal.Mathematics;
     using Game;
     using Game.Common;
     using Game.Prefabs;
+    using Game.Simulation.Flow;
     using Game.Tools;
     using Unity.Collections;
     using Unity.Entities;
@@ -90,6 +92,13 @@ namespace Anarchy.Systems
                 {
                     if (!EntityManager.HasComponent<HeightRangeRecord>(currentEntity))
                     {
+                        if (netCompositionData.m_HeightRange.min == 0 && netCompositionData.m_HeightRange.max == 0)
+                        {
+                            m_Log.Debug($"{nameof(ModifyNetCompositionDataSystem)}.{nameof(OnUpdate)} Recalculating m_HeightRange {netCompositionData.m_HeightRange.min}+{netCompositionData.m_HeightRange.max} for entity: {currentEntity.Index}.{currentEntity.Version}.");
+                            netCompositionData.m_HeightRange = RecalculateHeightRange(currentEntity);
+                            m_Log.Debug($"{nameof(ModifyNetCompositionDataSystem)}.{nameof(OnUpdate)} Recalculated m_HeightRange {netCompositionData.m_HeightRange.min}+{netCompositionData.m_HeightRange.max} for entity: {currentEntity.Index}.{currentEntity.Version}.");
+                        }
+
                         HeightRangeRecord heightRangeRecord = new ()
                         {
                             min = netCompositionData.m_HeightRange.min,
@@ -120,6 +129,39 @@ namespace Anarchy.Systems
             m_EnsureReset = true;
             m_FirstTime = false;
             entities.Dispose();
+        }
+
+        private Bounds1 RecalculateHeightRange(Entity e)
+        {
+            Bounds1 heightRange = new (float.MaxValue, -float.MaxValue);
+            if (EntityManager.TryGetBuffer(e, true, out DynamicBuffer<NetCompositionPiece> netCompositionPieceBuffer))
+            {
+                foreach (NetCompositionPiece netCompositionPiece in netCompositionPieceBuffer)
+                {
+                    if (EntityManager.TryGetComponent(netCompositionPiece.m_Piece, out NetPieceData netPieceData))
+                    {
+                        if (netPieceData.m_HeightRange.min < heightRange.min)
+                        {
+                            heightRange.min = netPieceData.m_HeightRange.min;
+                        }
+
+                        if (netPieceData.m_HeightRange.max < heightRange.max)
+                        {
+                            heightRange.max = netPieceData.m_HeightRange.max;
+                        }
+                    }
+                    else
+                    {
+                        m_Log.Warn($"{nameof(ModifyNetCompositionDataSystem)}.{nameof(RecalculateHeightRange)} could not retrieve NetPieceData for Entity {netCompositionPiece.m_Piece.Index}.{netCompositionPiece.m_Piece.Version}");
+                    }
+                }
+            }
+            else
+            {
+                m_Log.Warn($"{nameof(ModifyNetCompositionDataSystem)}.{nameof(RecalculateHeightRange)} could not retrieve NetCompositionPiece buffer for Entity {e.Index}.{e.Version}");
+            }
+
+            return heightRange;
         }
     }
 }
