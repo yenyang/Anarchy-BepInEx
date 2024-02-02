@@ -14,7 +14,6 @@ namespace Anarchy.Systems
     using Game;
     using Game.Common;
     using Game.Prefabs;
-    using Game.Simulation.Flow;
     using Game.Tools;
     using Unity.Collections;
     using Unity.Entities;
