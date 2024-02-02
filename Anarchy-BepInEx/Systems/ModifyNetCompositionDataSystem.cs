@@ -140,14 +140,14 @@ namespace Anarchy.Systems
                 {
                     if (EntityManager.TryGetComponent(netCompositionPiece.m_Piece, out NetPieceData netPieceData))
                     {
-                        if (netPieceData.m_HeightRange.min < heightRange.min)
+                        if (netPieceData.m_HeightRange.min + netCompositionPiece.m_Offset.y < heightRange.min)
                         {
-                            heightRange.min = netPieceData.m_HeightRange.min;
+                            heightRange.min = netPieceData.m_HeightRange.min + netCompositionPiece.m_Offset.y;
                         }
 
-                        if (netPieceData.m_HeightRange.max > heightRange.max)
+                        if (netPieceData.m_HeightRange.max + netCompositionPiece.m_Offset.y > heightRange.max)
                         {
-                            heightRange.max = netPieceData.m_HeightRange.max;
+                            heightRange.max = netPieceData.m_HeightRange.max + netCompositionPiece.m_Offset.y;
                         }
                     }
                     else
