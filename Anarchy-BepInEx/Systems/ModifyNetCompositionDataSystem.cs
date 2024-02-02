@@ -113,6 +113,8 @@ namespace Anarchy.Systems
                             netGeometryData.m_DefaultHeightRange.min = Mathf.Clamp(-1f * AnarchyMod.Settings.MinimumClearanceBelowElevatedNetworks, netGeometryData.m_DefaultHeightRange.min, netGeometryData.m_DefaultHeightRange.max);
                             netGeometryData.m_DefaultHeightRange.max = Mathf.Clamp(0, netGeometryData.m_DefaultHeightRange.min, netGeometryData.m_DefaultHeightRange.max);
                         }
+
+                        EntityManager.SetComponentData(prefabEntity, netGeometryData);
                     }
                 }
             }
