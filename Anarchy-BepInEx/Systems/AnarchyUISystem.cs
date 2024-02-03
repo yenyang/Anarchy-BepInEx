@@ -371,7 +371,11 @@ namespace Anarchy.Systems
 
             if (!m_AnarchySystem.IsToolAppropriate(tool.toolID))
             {
-                UnshowAnarchyOption();
+                if (m_LastTool != "Upgrade Tool" && tool.toolID != "Default Tool")
+                {
+                    UnshowAnarchyOption();
+                }
+
                 this.Enabled = false;
             }
             else
