@@ -16,6 +16,9 @@ Sully has prepared an Amazing! demo video about detailing with Anarchy available
 ## Change Log
 [Available on Github](https://github.com/yenyang/Anarchy-BepInEx/blob/master/CHANGELOG.md)
 
+## Donations
+If you want to say thank you with a donation you can do so on [Buy Me A Coffee](https://www.buymeacoffee.com/yenyang_mods).
+
 ## Detailed Descrption
 The mod also has: 
 * Optional Tool icon

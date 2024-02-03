@@ -1,4 +1,9 @@
 # Anarchy-BepInEx Change Log
+## Patch V1.3.1
+* Fixed drawing power poles with anarchy enabled causing terrain deformation below them.
+* Fixed NetCompositionData for newly built networks while using Anarchy.
+* Fixed CTD when trying to relocate owner building while placing building upgrades/extensions/subbuildings.
+
 ## Update V1.3.0
 * All bulldozing aspects of the mod have been forked over to a new mod called Better Bulldozer.
 * While using the net tool Anarchy will now let you violate the clearance of other networks. You should however avoid zoning under low bridges, but there is a new setting to help if you insist.

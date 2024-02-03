@@ -48,8 +48,12 @@ namespace Anarchy.Systems
                 {
                     All = new ComponentType[]
                     {
-                        ComponentType.ReadWrite<NetCompositionData>(),
                         ComponentType.ReadWrite<HeightRangeRecord>(),
+                    },
+                    Any = new ComponentType[]
+                    {
+                        ComponentType.ReadWrite<NetCompositionData>(),
+                        ComponentType.ReadWrite<NetGeometryData>(),
                     },
                 },
             });
@@ -81,7 +85,7 @@ namespace Anarchy.Systems
                 }
                 else
                 {
-                    m_Log.Warn($"{nameof(ResetNetCompositionDataSystem)}.{nameof(OnUpdate)} could not retrieve net composition data for Entity {currentEntity.Index}.{currentEntity.Version}.");
+                    m_Log.Warn($"{nameof(ResetNetCompositionDataSystem)}.{nameof(OnUpdate)} could not retrieve net composition or net geometry data for Entity {currentEntity.Index}.{currentEntity.Version}.");
                 }
             }
 
