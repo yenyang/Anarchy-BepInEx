@@ -142,7 +142,7 @@ namespace Anarchy.Systems
             // This script creates the Anarchy object if it doesn't exist.
             UIFileUtils.ExecuteScript(m_UiView, "if (yyAnarchy == null) var yyAnarchy = {};");
 
-            if (!m_AnarchySystem.IsToolAppropriate(m_ToolSystem.activeTool.toolID) || !AnarchyMod.Settings.ToolIcon)
+            if (!m_AnarchySystem.IsToolAppropriate(m_ToolSystem.activeTool.toolID))
             {
                 if (m_AnarchyOptionShown)
                 {
@@ -153,25 +153,17 @@ namespace Anarchy.Systems
                 return;
             }
 
-            if ((m_ToolSystem.activeTool == m_NetToolSystem && m_NetToolSystem.GetPrefab() != null) || (m_ToolSystem.activeTool == m_ObjectToolSystem && m_ObjectToolSystem.GetPrefab() != null))
+            if (m_ToolSystem.activePrefab != null && m_PrefabSystem.TryGetEntity(m_ToolSystem.activePrefab, out Entity prefabEntity))
             {
-                if (m_PrefabSystem.TryGetEntity(m_NetToolSystem.GetPrefab(), out Entity prefabEntity) || m_ToolSystem.activeTool == m_ObjectToolSystem)
+                if (EntityManager.HasComponent<MarkerNetData>(prefabEntity) || m_ToolSystem.activePrefab is MarkerObjectPrefab)
                 {
-                    if (EntityManager.HasComponent<MarkerNetData>(prefabEntity) || m_ObjectToolSystem.GetPrefab() is MarkerObjectPrefab)
+                    if (!m_PrefabIsMarker && (m_LastTool != m_BulldozeToolSystem.toolID || !m_RaycastingMarkers))
                     {
-                        if (!m_PrefabIsMarker && (m_LastTool != m_BulldozeToolSystem.toolID || !m_RaycastingMarkers))
-                        {
-                            m_LastShowMarkers = m_RenderingSystem.markersVisible;
-                        }
+                        m_LastShowMarkers = m_RenderingSystem.markersVisible;
+                    }
 
-                        m_RenderingSystem.markersVisible = true;
-                        m_PrefabIsMarker = true;
-                    }
-                    else if (m_PrefabIsMarker)
-                    {
-                        m_PrefabIsMarker = false;
-                        m_RenderingSystem.markersVisible = m_LastShowMarkers;
-                    }
+                    m_RenderingSystem.markersVisible = true;
+                    m_PrefabIsMarker = true;
                 }
                 else if (m_PrefabIsMarker)
                 {
