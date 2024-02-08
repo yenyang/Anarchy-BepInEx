@@ -97,7 +97,7 @@ namespace Anarchy.Systems
         protected override void OnCreate()
         {
             m_Log = AnarchyMod.Instance.Logger;
-            m_Log.effectivenessLevel = Level.Debug;
+            m_Log.effectivenessLevel = Level.Info;
             m_ToolSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<ToolSystem>();
             m_UiView = GameManager.instance.userInterface.view.View;
             m_AnarchySystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<AnarchySystem>();
