@@ -33,6 +33,7 @@ namespace Anarchy.Systems
         private AnarchySystem m_AnarchySystem;
         private RenderingSystem m_RenderingSystem;
         private PrefabSystem m_PrefabSystem;
+        private ObjectToolSystem m_ObjectToolSystem;
         private bool m_AnarchyOptionShown;
         private bool m_DisableAnarchyWhenCompleted;
         private string m_LastTool;
@@ -102,6 +103,7 @@ namespace Anarchy.Systems
             m_BulldozeToolSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<BulldozeToolSystem>();
             m_RenderingSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<RenderingSystem>();
             m_ResetNetCompositionDataSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<ResetNetCompositionDataSystem>();
+            m_ObjectToolSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<ObjectToolSystem>();
             m_PrefabSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<PrefabSystem>();
             ToolSystem toolSystem = m_ToolSystem; // I don't know why vanilla game did this.
             m_ToolSystem.EventToolChanged = (Action<ToolBaseSystem>)Delegate.Combine(toolSystem.EventToolChanged, new Action<ToolBaseSystem>(OnToolChanged));
@@ -140,14 +142,22 @@ namespace Anarchy.Systems
             // This script creates the Anarchy object if it doesn't exist.
             UIFileUtils.ExecuteScript(m_UiView, "if (yyAnarchy == null) var yyAnarchy = {};");
 
-
-
-
-            if (m_ToolSystem.activeTool == m_NetToolSystem && m_NetToolSystem.GetPrefab() != null)
+            if (!m_AnarchySystem.IsToolAppropriate(m_ToolSystem.activeTool.toolID) || !AnarchyMod.Settings.ToolIcon)
             {
-                if (m_PrefabSystem.TryGetEntity(m_NetToolSystem.GetPrefab(), out Entity prefabEntity))
+                if (m_AnarchyOptionShown)
                 {
-                    if (EntityManager.HasComponent<MarkerNetData>(prefabEntity))
+                    UnshowAnarchyOption();
+                }
+
+                Enabled = false;
+                return;
+            }
+
+            if ((m_ToolSystem.activeTool == m_NetToolSystem && m_NetToolSystem.GetPrefab() != null) || (m_ToolSystem.activeTool == m_ObjectToolSystem && m_ObjectToolSystem.GetPrefab() != null))
+            {
+                if (m_PrefabSystem.TryGetEntity(m_NetToolSystem.GetPrefab(), out Entity prefabEntity) || m_ToolSystem.activeTool == m_ObjectToolSystem)
+                {
+                    if (EntityManager.HasComponent<MarkerNetData>(prefabEntity) || m_ObjectToolSystem.GetPrefab() is MarkerObjectPrefab)
                     {
                         if (!m_PrefabIsMarker && (m_LastTool != m_BulldozeToolSystem.toolID || !m_RaycastingMarkers))
                         {
@@ -173,11 +183,6 @@ namespace Anarchy.Systems
             {
                 m_PrefabIsMarker = false;
                 m_RenderingSystem.markersVisible = m_LastShowMarkers;
-            }
-
-            if (!m_AnarchySystem.IsToolAppropriate(m_ToolSystem.activeTool.toolID) || !AnarchyMod.Settings.ToolIcon)
-            {
-                return;
             }
 
             if (m_AnarchyOptionShown == false)
@@ -369,18 +374,9 @@ namespace Anarchy.Systems
             // This script creates the Anarchy object if it doesn't exist.
             UIFileUtils.ExecuteScript(m_UiView, "if (yyAnarchy == null) var yyAnarchy = {};");
 
-            if (!m_AnarchySystem.IsToolAppropriate(tool.toolID))
+            if (m_AnarchySystem.IsToolAppropriate(tool.toolID))
             {
-                if (m_LastTool != "Upgrade Tool" && tool.toolID != "Default Tool")
-                {
-                    UnshowAnarchyOption();
-                }
-
-                this.Enabled = false;
-            }
-            else
-            {
-                this.Enabled = true;
+                Enabled = true;
             }
 
             // Makes it so Anarchic Bulldozer will work next frame when bulldoze tool is activated from other appropriate tool.
@@ -409,12 +405,6 @@ namespace Anarchy.Systems
                 m_AnarchySystem.AnarchyEnabled = true;
                 m_DisableAnarchyWhenCompleted = true;
                 ToggleAnarchyButton();
-            }
-
-            if (m_LastTool == m_NetToolSystem.toolID && m_NetToolSystem.GetPrefab() != null && tool != m_NetToolSystem && m_PrefabIsMarker)
-            {
-                m_PrefabIsMarker = false;
-                m_RenderingSystem.markersVisible = m_LastShowMarkers;
             }
 
             if (tool != m_NetToolSystem && m_LastTool == m_NetToolSystem.toolID)

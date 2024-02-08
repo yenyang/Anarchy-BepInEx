@@ -1,4 +1,9 @@
 # Anarchy-BepInEx Change Log
+## Patch V1.3.2
+* Fixed Anarchy Icon and row appearing with default tool.
+* Fixed showing marker when Escaping out of tool that showed markers
+* Added Marker Objects to automatically showing markers. 
+
 ## Patch V1.3.1
 * Fixed drawing power poles with anarchy enabled causing terrain deformation below them.
 * Fixed NetCompositionData for newly built networks while using Anarchy.
