@@ -129,30 +129,6 @@ namespace Anarchy.Systems
                 return;
             }
 
-            if (m_ToolSystem.activeTool.toolID == null)
-            {
-                if (m_AnarchyOptionShown == true)
-                {
-                    UnshowAnarchyOption();
-                }
-
-                return;
-            }
-
-            // This script creates the Anarchy object if it doesn't exist.
-            UIFileUtils.ExecuteScript(m_UiView, "if (yyAnarchy == null) var yyAnarchy = {};");
-
-            if (!m_AnarchySystem.IsToolAppropriate(m_ToolSystem.activeTool.toolID))
-            {
-                if (m_AnarchyOptionShown)
-                {
-                    UnshowAnarchyOption();
-                }
-
-                Enabled = false;
-                return;
-            }
-
             if (m_ToolSystem.activePrefab != null && m_PrefabSystem.TryGetEntity(m_ToolSystem.activePrefab, out Entity prefabEntity))
             {
                 if (EntityManager.HasComponent<MarkerNetData>(prefabEntity) || m_ToolSystem.activePrefab is MarkerObjectPrefab)
@@ -175,6 +151,31 @@ namespace Anarchy.Systems
             {
                 m_PrefabIsMarker = false;
                 m_RenderingSystem.markersVisible = m_LastShowMarkers;
+            }
+
+            if (m_ToolSystem.activeTool.toolID == null)
+            {
+                if (m_AnarchyOptionShown == true)
+                {
+                    UnshowAnarchyOption();
+                }
+
+                Enabled = false;
+                return;
+            }
+
+            // This script creates the Anarchy object if it doesn't exist.
+            UIFileUtils.ExecuteScript(m_UiView, "if (yyAnarchy == null) var yyAnarchy = {};");
+
+            if (!m_AnarchySystem.IsToolAppropriate(m_ToolSystem.activeTool.toolID))
+            {
+                if (m_AnarchyOptionShown)
+                {
+                    UnshowAnarchyOption();
+                }
+
+                Enabled = false;
+                return;
             }
 
             if (m_AnarchyOptionShown == false)
