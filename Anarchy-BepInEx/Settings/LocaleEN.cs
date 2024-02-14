@@ -4,7 +4,10 @@
 
 namespace Anarchy.Settings
 {
+    using System;
     using System.Collections.Generic;
+    using System.IO;
+    using System.Text;
     using Colossal;
 
     /// <summary>
@@ -14,6 +17,8 @@ namespace Anarchy.Settings
     {
         private readonly AnarchyModSettings m_Setting;
 
+        private Dictionary<string, string> m_Localization;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="LocaleEN"/> class.
         /// </summary>
@@ -21,12 +26,8 @@ namespace Anarchy.Settings
         public LocaleEN(AnarchyModSettings setting)
         {
             m_Setting = setting;
-        }
 
-        /// <inheritdoc/>
-        public IEnumerable<KeyValuePair<string, string>> ReadEntries(IList<IDictionaryEntryError> errors, Dictionary<string, int> indexCounts)
-        {
-            return new Dictionary<string, string>
+            m_Localization = new Dictionary<string, string>()
             {
                 { m_Setting.GetSettingsLocaleID(), "Anarchy" },
                 { m_Setting.GetOptionLabelLocaleID(nameof(AnarchyModSettings.AnarchicBulldozer)), "Always enable Anarchy with Bulldoze Tool" },
@@ -53,20 +54,72 @@ namespace Anarchy.Settings
                 { "YY_ANARCHY.Anarchy", "Anarchy" },
                 { "YY_ANARCHY.AnarchyButton", "Anarchy" },
                 { "YY_ANARCHY_DESCRIPTION.AnarchyButton", "Disables error checks for tools and does not display errors. When applicable, you can place vegetation and props (with DevUI 'Add Object' menu) overlapping or inside the boundaries of other objects and close together." },
-                { "YY_ANARCHY.RaycastSurfacesButton", "Target Surfaces" },
-                { "YY_ANARCHY_DESCRIPTION.RaycastSurfacesButton", "Makes the bulldozer EXCLUSIVELY target surfaces so you can remove them in one click. With Anarchy on you can bulldoze surfaces within buidings. You must turn this off to bulldoze anything else." },
-                { "YY_ANARCHY.RaycastMarkersButton", "Target Markers" },
-                { "YY_ANARCHY_DESCRIPTION.RaycastMarkersButton", "Shows and EXCLUSIVELY targets markers and invisible roads. With this and anarchy enabled you can demolish invisible roads, but SAVE FIRST! You cannot demolish invisible roads within buildings." },
-                { "YY_ANARCHY.GameplayManipulationButton", "Gameplay Manipulation" },
-                { "YY_ANARCHY_DESCRIPTION.GameplayManipulationButton", "Allows you to use the bulldozer on moving objects such as vehicles or cims." },
-                { "YY_ANARCHY.BypassConfirmationButton", "Bypass Confirmation" },
-                { "YY_ANARCHY_DESCRIPTION.BypassConfirmationButton", "Disables the prompt for whether you are sure you want to demolish a building." },
             };
+        }
+
+
+        /// <inheritdoc/>
+        public IEnumerable<KeyValuePair<string, string>> ReadEntries(IList<IDictionaryEntryError> errors, Dictionary<string, int> indexCounts)
+        {
+            return m_Localization;
         }
 
         /// <inheritdoc/>
         public void Unload()
         {
+        }
+
+        /// <summary>
+        /// Exports a localization CSV template with this files dictionary as default entries.
+        /// </summary>
+        /// <param name="folderPath">the path of where the file should be created.</param>
+        /// <param name="langCodes">the language codes to be included in the template file.</param>
+        /// <returns>True if the file is created. False if not.</returns>
+        public bool ExportLocalizationCSV(string folderPath, string[] langCodes)
+        {
+            System.IO.Directory.CreateDirectory(folderPath);
+            string localizationFilePath = Path.Combine(folderPath, $"l10n.csv");
+            if (!File.Exists(localizationFilePath))
+            {
+                try
+                {
+                    using (StreamWriter streamWriter = new(File.Create(localizationFilePath)))
+                    {
+                        StringBuilder topLine = new StringBuilder();
+                        topLine.Append("key\t");
+                        foreach (string langCode in langCodes)
+                        {
+                            topLine.Append(langCode);
+                            topLine.Append("\t");
+                        }
+
+                        streamWriter.WriteLine(topLine.ToString());
+
+                        foreach (KeyValuePair<string, string> kvp in m_Localization)
+                        {
+                            StringBuilder currentLine = new StringBuilder();
+                            currentLine.Append(kvp.Key);
+                            currentLine.Append("\t");
+                            foreach (string langCode in langCodes)
+                            {
+                                currentLine.Append(kvp.Value);
+                                currentLine.Append("\t");
+                            }
+
+                            streamWriter.WriteLine(currentLine.ToString());
+                        }
+
+                        return true;
+                    }
+                }
+                catch (Exception e)
+                {
+                    AnarchyMod.Instance.Logger.Warn($"{typeof(LocaleEN)}.{nameof(ExportLocalizationCSV)} Encountered Exception {e} while trying to export localization csv.");
+                    return false;
+                }
+            }
+
+            return false;
         }
     }
 }
