@@ -160,6 +160,9 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <AdditionalFiles Include="StyleCop\stylecop.json" />
+    <None Include="l10n\l10n.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Content Include="BepInEx\icon.png">
@@ -179,8 +182,6 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="l10n\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
