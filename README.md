@@ -19,6 +19,10 @@ Sully has prepared an Amazing! demo video about detailing with Anarchy available
 ## Donations
 If you want to say thank you with a donation you can do so on [Buy Me A Coffee](https://www.buymeacoffee.com/yenyang_mods).
 
+## Translations
+I am looking for volunteers to help translate the mod into the official languages. For those interested please go to [CrowdIn](https://crowdin.com/project/csl2-mod-anarchy).
+Current Localization Support: Spanish by Nyoko and German by Hendrix.
+
 ## Detailed Descrption
 The mod also has: 
 * Optional Tool icon
@@ -81,11 +85,11 @@ You can also manually trigger a prop refresh using a button in the options menu.
 Pro tip: Use the brush mode to remove trees and standalone props. If you unselect the brush snapping option for "Remove only matching type", and right click you can remove them within a radius and it only targets standalone props and trees.
 
 ## Invisible Paths, Roads, and Markers
-The mod will automatically toggle the DevUI setting to "Show Markers" when drawing or plopping invisible paths, roads, object markers, etc. This feature may be moved to a seperate unnamed mod at a later date.
+The mod will automatically toggle the DevUI setting to "Show Markers" when drawing or plopping invisible paths, roads, object markers, etc.
 
-You can toggle DevUI Setting to "Show Markers" yourself using DevUI -> Gameplay -> Show Markers. There is also a toggle in Extra Landscaping Tools 2.0 while drawing surfaces.
+You can toggle DevUI Setting to "Show Markers" yourself using DevUI -> Gameplay -> Show Markers. There is also a toggle in Extra Landscaping Tools 2.0 or later while drawing surfaces.
 
-ABSOLUTELY, NEVER, attach an invisible path or road to a growable building!!! Several triggers that will occur later will crash your game. You can attach an invisible path or road to a ploppable building, but if you later want to apply one of the various building upgdrades you will need to remove the attached invisible networks first.
+ABSOLUTELY, NEVER, attach an invisible path/road to an invisible paths/roads in growable/zoned buildings!!! Several triggers that will occur later will crash your game. You can attach an invisible path or road to an invisible paths/roads in ploppable building, but if you later want to apply one of the various building upgdrades you will need to remove the attached invisible networks first.
 
 ## Disclaimer
 This mod does NOT allow you to do everything including:
@@ -106,4 +110,5 @@ I will respond on the code modding channels on **Cities: Skylines Modding Discor
 * Algernon - Help with UI, Cooperative Development & Code Sharing
 * Bad Peanut - Image Credit for Flaming Chirper
 * T.D.W., Klyte45, krzychu124, & Quboid - Cooperative Development & Code Sharing
-* Dante - Testing, Feedback
+* Localization: Nyoko (Spanish) and Hendrix (German)
+* Dante, starrysum - Testing, Feedback

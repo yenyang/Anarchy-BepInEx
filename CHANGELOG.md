@@ -2,6 +2,7 @@
 ## Patch V1.3.2
 * Fixed Anarchy Icon and row appearing with default tool.
 * Added Marker Objects to automatically showing markers. 
+* Localization Support: Spanish by Nyoko and German by Hendrix
 
 ## Patch V1.3.1
 * Fixed drawing power poles with anarchy enabled causing terrain deformation below them.
