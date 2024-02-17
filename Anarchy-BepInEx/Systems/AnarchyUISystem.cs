@@ -370,6 +370,11 @@ namespace Anarchy.Systems
             // This script creates the Anarchy object if it doesn't exist.
             UIFileUtils.ExecuteScript(m_UiView, "if (yyAnarchy == null) var yyAnarchy = {};");
 
+            if (tool == null || tool.toolID == null)
+            {
+                return;
+            }
+
             if (m_AnarchySystem.IsToolAppropriate(tool.toolID))
             {
                 Enabled = true;
