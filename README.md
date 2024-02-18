@@ -21,7 +21,7 @@ If you want to say thank you with a donation you can do so on [Buy Me A Coffee](
 
 ## Translations
 I am looking for volunteers to help translate the mod into the official languages. For those interested please go to [CrowdIn](https://crowdin.com/project/csl2-mod-anarchy).
-Current Localization Support: Spanish by Nyoko and German by Hendrix.
+Current Localization Support: Spanish by Nyoko, German by Hendrix, and Chinese Simplified by RilkeXS.
 
 ## Detailed Descrption
 The mod also has: 
@@ -110,5 +110,5 @@ I will respond on the code modding channels on **Cities: Skylines Modding Discor
 * Algernon - Help with UI, Cooperative Development & Code Sharing
 * Bad Peanut - Image Credit for Flaming Chirper
 * T.D.W., Klyte45, krzychu124, & Quboid - Cooperative Development & Code Sharing
-* Localization: Nyoko (Spanish) and Hendrix (German)
+* Localization: Nyoko (Spanish), Hendrix (German), and RilkeXS (Chinese Simplified) 
 * Dante, starrysum - Testing, Feedback
