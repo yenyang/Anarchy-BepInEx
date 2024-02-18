@@ -14,7 +14,7 @@ namespace Anarchy
     /// <summary>
     /// Mod entry point for BepInEx configuaration.
     /// </summary>
-    [BepInPlugin(MyPluginInfo.PLUGIN_GUID, "Anarchy", "1.3.1")]
+    [BepInPlugin(MyPluginInfo.PLUGIN_GUID, "Anarchy", "1.3.2")]
     [HarmonyPatch]
     public class AnarchyPlugin : BaseUnityPlugin
     {

@@ -33,6 +33,8 @@ namespace Anarchy.Systems
         private AnarchySystem m_AnarchySystem;
         private RenderingSystem m_RenderingSystem;
         private PrefabSystem m_PrefabSystem;
+        private ObjectToolSystem m_ObjectToolSystem;
+        private DefaultToolSystem m_DefaultToolSystem;
         private bool m_AnarchyOptionShown;
         private bool m_DisableAnarchyWhenCompleted;
         private string m_LastTool;
@@ -102,6 +104,8 @@ namespace Anarchy.Systems
             m_BulldozeToolSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<BulldozeToolSystem>();
             m_RenderingSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<RenderingSystem>();
             m_ResetNetCompositionDataSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<ResetNetCompositionDataSystem>();
+            m_ObjectToolSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<ObjectToolSystem>();
+            m_DefaultToolSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<DefaultToolSystem>();
             m_PrefabSystem = World.DefaultGameObjectInjectionWorld?.GetOrCreateSystemManaged<PrefabSystem>();
             ToolSystem toolSystem = m_ToolSystem; // I don't know why vanilla game did this.
             m_ToolSystem.EventToolChanged = (Action<ToolBaseSystem>)Delegate.Combine(toolSystem.EventToolChanged, new Action<ToolBaseSystem>(OnToolChanged));
@@ -127,41 +131,18 @@ namespace Anarchy.Systems
                 return;
             }
 
-            if (m_ToolSystem.activeTool.toolID == null)
+            if (m_ToolSystem.activePrefab != null && m_PrefabSystem.TryGetEntity(m_ToolSystem.activePrefab, out Entity prefabEntity) && m_ToolSystem.activeTool != m_DefaultToolSystem)
             {
-                if (m_AnarchyOptionShown == true)
+                if (EntityManager.HasComponent<MarkerNetData>(prefabEntity) || m_ToolSystem.activePrefab is MarkerObjectPrefab)
                 {
-                    UnshowAnarchyOption();
-                }
-
-                return;
-            }
-
-            // This script creates the Anarchy object if it doesn't exist.
-            UIFileUtils.ExecuteScript(m_UiView, "if (yyAnarchy == null) var yyAnarchy = {};");
-
-
-
-
-            if (m_ToolSystem.activeTool == m_NetToolSystem && m_NetToolSystem.GetPrefab() != null)
-            {
-                if (m_PrefabSystem.TryGetEntity(m_NetToolSystem.GetPrefab(), out Entity prefabEntity))
-                {
-                    if (EntityManager.HasComponent<MarkerNetData>(prefabEntity))
+                    if (!m_PrefabIsMarker && (m_LastTool != m_BulldozeToolSystem.toolID || !m_RaycastingMarkers))
                     {
-                        if (!m_PrefabIsMarker && (m_LastTool != m_BulldozeToolSystem.toolID || !m_RaycastingMarkers))
-                        {
-                            m_LastShowMarkers = m_RenderingSystem.markersVisible;
-                        }
+                        m_LastShowMarkers = m_RenderingSystem.markersVisible;
+                        m_Log.Debug($"{nameof(AnarchyUISystem)}.{nameof(OnUpdate)} m_LastShowMarkers = {m_LastShowMarkers}");
+                    }
 
-                        m_RenderingSystem.markersVisible = true;
-                        m_PrefabIsMarker = true;
-                    }
-                    else if (m_PrefabIsMarker)
-                    {
-                        m_PrefabIsMarker = false;
-                        m_RenderingSystem.markersVisible = m_LastShowMarkers;
-                    }
+                    m_RenderingSystem.markersVisible = true;
+                    m_PrefabIsMarker = true;
                 }
                 else if (m_PrefabIsMarker)
                 {
@@ -175,8 +156,28 @@ namespace Anarchy.Systems
                 m_RenderingSystem.markersVisible = m_LastShowMarkers;
             }
 
-            if (!m_AnarchySystem.IsToolAppropriate(m_ToolSystem.activeTool.toolID) || !AnarchyMod.Settings.ToolIcon)
+            if (m_ToolSystem.activeTool.toolID == null)
             {
+                if (m_AnarchyOptionShown == true)
+                {
+                    UnshowAnarchyOption();
+                }
+
+                Enabled = false;
+                return;
+            }
+
+            // This script creates the Anarchy object if it doesn't exist.
+            UIFileUtils.ExecuteScript(m_UiView, "if (yyAnarchy == null) var yyAnarchy = {};");
+
+            if (!m_AnarchySystem.IsToolAppropriate(m_ToolSystem.activeTool.toolID))
+            {
+                if (m_AnarchyOptionShown)
+                {
+                    UnshowAnarchyOption();
+                }
+
+                Enabled = false;
                 return;
             }
 
@@ -369,18 +370,14 @@ namespace Anarchy.Systems
             // This script creates the Anarchy object if it doesn't exist.
             UIFileUtils.ExecuteScript(m_UiView, "if (yyAnarchy == null) var yyAnarchy = {};");
 
-            if (!m_AnarchySystem.IsToolAppropriate(tool.toolID))
+            if (tool == null || tool.toolID == null)
             {
-                if (m_LastTool != "Upgrade Tool" && tool.toolID != "Default Tool")
-                {
-                    UnshowAnarchyOption();
-                }
-
-                this.Enabled = false;
+                return;
             }
-            else
+
+            if (m_AnarchySystem.IsToolAppropriate(tool.toolID))
             {
-                this.Enabled = true;
+                Enabled = true;
             }
 
             // Makes it so Anarchic Bulldozer will work next frame when bulldoze tool is activated from other appropriate tool.
@@ -409,12 +406,6 @@ namespace Anarchy.Systems
                 m_AnarchySystem.AnarchyEnabled = true;
                 m_DisableAnarchyWhenCompleted = true;
                 ToggleAnarchyButton();
-            }
-
-            if (m_LastTool == m_NetToolSystem.toolID && m_NetToolSystem.GetPrefab() != null && tool != m_NetToolSystem && m_PrefabIsMarker)
-            {
-                m_PrefabIsMarker = false;
-                m_RenderingSystem.markersVisible = m_LastShowMarkers;
             }
 
             if (tool != m_NetToolSystem && m_LastTool == m_NetToolSystem.toolID)
